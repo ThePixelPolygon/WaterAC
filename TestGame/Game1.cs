@@ -16,7 +16,7 @@ namespace TestGame
 
         protected override void Initialize()
         {
-            Screen.ChangeScreen(new TestScreen(Screen.Game, Screen, Window));
+            Screen.ChangeScreen(new TestScreen());
             base.Initialize();
         }
 

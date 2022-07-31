@@ -13,13 +13,18 @@ namespace TestGame.Screens
 {
     public class TestScreen : Screen
     {
-        public TestScreen(GameObjectManager game, GameObjectScreen screen, GameWindow window)
+        public TestScreen()
+        {
+            
+        }
+
+        public override void Initialize()
         {
             var box = new Sprite(new(10, 10, 1280, 720), "Assets/Chiruuu.png")
             {
                 Layout = Layout.Center
             };
-            screen.AddChild(game.AddObject(box));
+            ScreenManager.AddChild(Game.AddObject(box));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

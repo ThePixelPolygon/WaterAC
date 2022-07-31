@@ -29,18 +29,20 @@ namespace Water
             IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromMilliseconds(8.33);
             _graphics.ApplyChanges();
-            Screen = new();
+            
+            gameObjectManager = new(GraphicsDevice);
+
+            Screen = new(gameObjectManager, Window);
             Screen.RelativePosition = GraphicsDevice.Viewport.Bounds;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
-            gameObjectManager = new(GraphicsDevice);
             Screen.ChangeScreen(new DefaultScreen());
             gameObjectManager.AddObject(Screen);
             Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 #if DEBUG
-            Screen.AddScreen(new DebugOverlay(gameObjectManager, Screen, Window));
+            Screen.AddScreen(new DebugOverlay());
 #endif
         }
 

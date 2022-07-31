@@ -13,8 +13,20 @@ namespace Water.Graphics.Screens
         public List<Screen> Screens { get; } = new();
         public bool HasScreens { get => Screens.Count > 0; }
 
+        private GameObjectManager gameObjectManager;
+        private GameWindow window;
+        public GameObjectScreen(GameObjectManager gameObjectManager, GameWindow window)
+        {
+            this.gameObjectManager = gameObjectManager;
+            this.window = window;
+        }
+
         public void AddScreen(Screen screen)
         {
+            screen.Game = gameObjectManager;
+            screen.ScreenManager = this;
+            screen.Window = window;
+            screen.Initialize();
             Screens.Add(screen);
         }
 
@@ -39,7 +51,7 @@ namespace Water.Graphics.Screens
 
         public void ChangeScreen(Screen screen)
         {
-            RemoveAllScreens();
+            RemoveAllScreens();   
             AddScreen(screen);
         }
 

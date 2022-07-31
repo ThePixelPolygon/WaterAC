@@ -10,6 +10,11 @@ namespace Water.Graphics.Screens
 {
     public class DefaultScreen : Screen
     {
+        public override void Initialize()
+        {
+            
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
 
