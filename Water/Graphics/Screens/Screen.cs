@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace Water.Graphics.Screens
 {
-    public abstract class Screen : IDrawableThing
+    public abstract class Screen : GameObject
     {
-        public virtual GameObjectManager Game { get; set; }
-
         public virtual GameObjectScreen ScreenManager { get; set; }
 
         public virtual GameWindow Window { get; set; }
 
-        public abstract void Initialize();
-        public abstract void Update(GameTime gameTime);
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice);
     }
 }

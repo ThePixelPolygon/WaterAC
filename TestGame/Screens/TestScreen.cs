@@ -24,7 +24,7 @@ namespace TestGame.Screens
             {
                 Layout = Layout.Center
             };
-            ScreenManager.AddChild(Game.AddObject(box));
+            AddChild(Game.AddObject(box));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

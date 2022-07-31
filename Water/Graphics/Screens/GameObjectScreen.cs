@@ -21,13 +21,27 @@ namespace Water.Graphics.Screens
             this.window = window;
         }
 
-        public void AddScreen(Screen screen)
+        private Screen InitializeScreen(Screen screen)
         {
-            screen.Game = gameObjectManager;
+            screen.Game = new GameObjectManager(gameObjectManager.GraphicsDevice);
             screen.ScreenManager = this;
             screen.Window = window;
+            screen.ActualPosition = ActualPosition;
+            screen.RelativePosition = RelativePosition;
+            screen.Game.AddObject(screen);
+            screen.CalculateChildrenPositions();
             screen.Initialize();
-            Screens.Add(screen);
+            return screen;
+        }
+
+        public void AddScreen(Screen screen)
+        {
+            Screens.Add(InitializeScreen(screen));
+        }
+
+        public void InsertScreen(int index, Screen screen)
+        {
+            Screens.Insert(index, InitializeScreen(screen));
         }
 
         public void RemoveScreen(Screen screen)
@@ -59,19 +73,25 @@ namespace Water.Graphics.Screens
         {
             if (!HasScreens) return;
             foreach (var screen in Screens)
-                screen.Update(gameTime);
+                screen.Game.Update(gameTime);
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             if (!HasScreens) return;
             foreach (var screen in Screens)
-                screen.Draw(gameTime, spriteBatch, graphicsDevice);
+                screen.Game.Draw(gameTime, spriteBatch, graphicsDevice);
         }
 
         public void UpdateScreenSize(Rectangle newSize)
         {
             ActualPosition = newSize;
             RelativePosition = newSize;
+            foreach (var screen in Screens)
+            {
+                screen.ActualPosition = newSize;
+                screen.RelativePosition = newSize;
+                screen.CalculateChildrenPositions();
+            }
             CalculateChildrenPositions();
         }
     }

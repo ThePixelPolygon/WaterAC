@@ -19,7 +19,6 @@ namespace Water.Screens
         private double drawsPerSecond;
 
         private TextBlock updateText;
-        private string projectName;
 
         public DebugOverlay()
         {
@@ -30,18 +29,17 @@ namespace Water.Screens
         {
             var box = new Box(new(0, 0, 500, 200), new(255, 255, 255, 100));
             box.Layout = Layout.AnchorTop;
-            updateText = new(new(0, 0, 10, 10), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 15), "updates per second", Color.Gray)
+            updateText = new(new(0, 0, 10, 10), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 15), "updates per second", Color.Black)
             {
                 Layout = Layout.Fill,
                 TextWrapping = TextWrapMode.WordWrap,
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Top
             };
-            ScreenManager.AddChild(box);
+            Game.AddObject(box);
+            AddChild(box);
             Game.AddObject(updateText);
             box.AddChild(updateText);
-
-            projectName = Window.Title; // lol this is so hacky
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -62,7 +60,6 @@ namespace Water.Screens
 
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
             updateText.Text = $"{Math.Round(updatesPerSecond, 2)} updates per second|n{Math.Round(drawsPerSecond, 2)} draws per second|n{Game.AllObjects.Count} objects|n{string.Join("|n", intersectedObjects)}";
-            Window.Title = $"{projectName} - {updateText.Text}";
         }
     }
 }
