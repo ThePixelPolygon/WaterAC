@@ -19,6 +19,7 @@ namespace Water.Screens
         private double drawsPerSecond;
 
         private TextBlock updateText;
+        private string projectName;
 
         public DebugOverlay()
         {
@@ -39,6 +40,8 @@ namespace Water.Screens
             ScreenManager.AddChild(box);
             Game.AddObject(updateText);
             box.AddChild(updateText);
+
+            projectName = Window.Title; // lol this is so hacky
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -59,6 +62,7 @@ namespace Water.Screens
 
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
             updateText.Text = $"{Math.Round(updatesPerSecond, 2)} updates per second|n{Math.Round(drawsPerSecond, 2)} draws per second|n{Game.AllObjects.Count} objects|n{string.Join("|n", intersectedObjects)}";
+            Window.Title = $"{projectName} - {updateText.Text}";
         }
     }
 }
