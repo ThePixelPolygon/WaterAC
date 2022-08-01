@@ -18,13 +18,15 @@ namespace TestGame.Screens
             
         }
 
+        private Sprite sprite;
+
         public override void Initialize()
         {
-            var box = new Sprite(new(10, 10, 1280, 720), "Assets/Sylux6.png")
+            sprite = new Sprite(new(10, 10, 1280, 720), "Assets/Chiruuu.png")
             {
                 Layout = Layout.Center
             };
-            AddChild(Game.AddObject(box));
+            AddChild(Game.AddObject(sprite));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -32,9 +34,18 @@ namespace TestGame.Screens
             
         }
 
+        private int counter = 100;
+
         public override void Update(GameTime gameTime)
         {
-            
+            counter--;
+            if (counter < 0)
+            {
+                counter = 100;
+                var bubble = new Bubble();
+                sprite.AddChild(bubble);
+                Game.AddObject(bubble);
+            }
         }
     }
 }
