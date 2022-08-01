@@ -35,7 +35,12 @@ namespace TestGame.Screens
             stackPanel.AddChild(Game.AddObject(new Aquarium()
             {
                 Layout = Layout.Fill,
-            }));  
+            }));
+            stackPanel.AddChild(Game.AddObject(new Aquarium()
+            {
+                Layout = Layout.Fill,
+            }));
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
