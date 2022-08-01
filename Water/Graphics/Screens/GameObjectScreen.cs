@@ -28,7 +28,8 @@ namespace Water.Graphics.Screens
             screen.Window = window;
             screen.ActualPosition = ActualPosition;
             screen.RelativePosition = RelativePosition;
-            screen.Game.AddObject(screen);
+            screen.Game.AssignRootObject(screen);
+            screen.Game.AddObject(screen); 
             screen.CalculateChildrenPositions();
             screen.Initialize();
             return screen;

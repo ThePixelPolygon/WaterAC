@@ -27,8 +27,8 @@ namespace Water
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.SynchronizeWithVerticalRetrace = false;
             Window.AllowUserResizing = true;
-            IsFixedTimeStep = false;
-            //TargetElapsedTime = TimeSpan.FromMilliseconds(8.33);
+            IsFixedTimeStep = true;
+            TargetElapsedTime = TimeSpan.FromMilliseconds(1);
             _graphics.ApplyChanges();
             
             gameObjectManager = new(GraphicsDevice);
@@ -38,13 +38,14 @@ namespace Water
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             Screen.ChangeScreen(new DefaultScreen());
+            gameObjectManager.AssignRootObject(Screen);
             gameObjectManager.AddObject(Screen);
-            Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 #if DEBUG
             Screen.AddScreen(new DebugOverlay());
 #endif
+            Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)

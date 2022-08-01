@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Water.Graphics
 {
@@ -22,6 +23,17 @@ namespace Water.Graphics
             GraphicsDevice = graphicsDevice;
             Textures = new TextureCache(graphicsDevice);
             Fonts = new FontCache();
+        }
+
+        private GameObject rootObject;
+
+        /// <summary>
+        /// Assigns the object that will start the layout tree. Required for rendering to work at all
+        /// </summary>
+        /// <param name="obj"></param>
+        public void AssignRootObject(GameObject obj)
+        {
+            rootObject = obj;
         }
 
         public GameObject AddObject(GameObject obj)
@@ -51,11 +63,27 @@ namespace Water.Graphics
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            foreach (var obj in AllObjects)
+            rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
+            DrawRecursively(rootObject);
+            void DrawRecursively(GameObject relativeTo)
             {
-                graphicsDevice.ScissorRectangle = obj.ActualPosition;
-                obj.Draw(gameTime, spriteBatch, graphicsDevice);
-                graphicsDevice.ScissorRectangle = default;
+                foreach (var child in relativeTo.Children)
+                {
+                    if (child is GameObject e)
+                    {
+                        e.Draw(gameTime, spriteBatch, graphicsDevice);
+                        DrawRecursively(e);
+                    }
+
+                    foreach (var nya in child.Children.Where(x => x is GameObject))
+                    {
+                        if (nya is GameObject obj)
+                        {
+                            obj.Draw(gameTime, spriteBatch, graphicsDevice);
+                            DrawRecursively(obj);
+                        }
+                    }
+                }
             }
         }
     }
