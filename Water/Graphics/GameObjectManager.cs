@@ -64,27 +64,7 @@ namespace Water.Graphics
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
-            DrawRecursively(rootObject);
-            void DrawRecursively(GameObject relativeTo)
-            {
-                foreach (var child in relativeTo.Children)
-                {
-                    if (child is GameObject e)
-                    {
-                        e.Draw(gameTime, spriteBatch, graphicsDevice);
-                        DrawRecursively(e);
-                    }
-
-                    foreach (var nya in child.Children.Where(x => x is GameObject))
-                    {
-                        if (nya is GameObject obj)
-                        {
-                            obj.Draw(gameTime, spriteBatch, graphicsDevice);
-                            DrawRecursively(obj);
-                        }
-                    }
-                }
-            }
+            rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
         }
     }
 }
