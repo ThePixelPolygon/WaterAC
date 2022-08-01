@@ -35,6 +35,11 @@ namespace Water.Graphics
             child.Parent = this;
             Children.Add(child);
         }
+        public virtual void RemoveChild(IContainer child)
+        {
+            child.Parent = null;
+            Children.Remove(child);
+        }
 
         public virtual void CalculateChildrenPositions()
         {

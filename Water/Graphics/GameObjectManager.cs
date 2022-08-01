@@ -46,6 +46,7 @@ namespace Water.Graphics
         public GameObject RemoveObject(GameObject obj)
         {
             objectsToRemove.Add(obj);
+            obj.Parent.RemoveChild(obj);
             return obj;
         }
         public void Update(GameTime gameTime)

@@ -18,6 +18,9 @@ namespace Water.Graphics
         public Layout Layout { get; set; }
         public int Margin { get; set; }
 
+        public void AddChild(IContainer child);
+        public void RemoveChild(IContainer child);
+
         public void CalculateChildrenPositions();
     }
     public enum Layout
