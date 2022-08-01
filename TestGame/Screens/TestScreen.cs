@@ -34,7 +34,7 @@ namespace TestGame.Screens
             
         }
 
-        private int counter = 100;
+        private int counter = 500;
 
         public override void Update(GameTime gameTime)
         {

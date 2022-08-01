@@ -13,7 +13,16 @@ namespace Water.Graphics
     {
         public Rectangle ActualPosition { get; set; }
 
-        public Rectangle RelativePosition { get; set; }
+        private Rectangle relativePosition;
+        public Rectangle RelativePosition
+        {
+            get => relativePosition;
+            set
+            {
+                relativePosition = value;
+                if (Parent is not null) Parent.CalculateChildrenPositions();
+            }
+        }
         public IContainer Parent { get; set; }
         public List<IContainer> Children { get; private set; } = new();
 

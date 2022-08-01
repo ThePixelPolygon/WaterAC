@@ -26,16 +26,23 @@ namespace TestGame.Screens
 
         public override void Initialize()
         {
-            RelativePosition = new(Random.Shared.Next(0, Parent.RelativePosition.Width), Random.Shared.Next(0, Parent.RelativePosition.Height), 50, 50);
+            RelativePosition = new(Random.Shared.Next(0, Parent.RelativePosition.Width), Random.Shared.Next(0, Parent.RelativePosition.Height), 10, 10);
             base.Initialize();
         }
 
+        private int counter = 10;
+
         public override void Update(GameTime gameTime)
         {
-            RelativePosition = new(RelativePosition.X, RelativePosition.Y - 1, RelativePosition.Width, RelativePosition.Height);
+            counter--;
+            if (counter < 0)
+            {
+                counter = 10;
+                RelativePosition = new(RelativePosition.X, RelativePosition.Y - 1, RelativePosition.Width, RelativePosition.Height);
 
-            if (RelativePosition.Y < (0 - RelativePosition.Height))
-                Game.RemoveObject(this);
+                if (RelativePosition.Y < (0 - RelativePosition.Height))
+                    Game.RemoveObject(this);
+            }
             base.Update(gameTime);
         }
     }

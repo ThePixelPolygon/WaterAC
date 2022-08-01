@@ -55,7 +55,7 @@ namespace Water
         protected override void Initialize()
         {
 #if DEBUG
-            Window.Title = $"{ProjectName ?? "Water Engine"} - DEBUG running on Water {Assembly.GetExecutingAssembly().GetName().Version}";
+            Window.Title = $"DEBUG: Water {Assembly.GetExecutingAssembly().GetName().Version} running \"{ProjectName ?? "Water Engine"}\"";
 #else
             Window.Title = ProjectName ?? "Water Engine";
 #endif
