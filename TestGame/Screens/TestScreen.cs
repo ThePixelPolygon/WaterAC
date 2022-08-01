@@ -20,7 +20,7 @@ namespace TestGame.Screens
 
         public override void Initialize()
         {
-            var box = new Sprite(new(10, 10, 1280, 720), "Assets/Chiruuu.png")
+            var box = new Sprite(new(10, 10, 1280, 720), "Assets/Sylux6.png")
             {
                 Layout = Layout.Center
             };

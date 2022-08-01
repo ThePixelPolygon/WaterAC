@@ -26,7 +26,13 @@
     <ProjectReference Include="..\Water\Water.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Assets\93fce805f48992ab4771accd06ed3e31.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Chiruuu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Sylux6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
