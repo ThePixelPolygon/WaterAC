@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using Water.Graphics;
 using Water.Graphics.Screens;
 using Water.Screens;
@@ -53,7 +54,11 @@ namespace Water
 
         protected override void Initialize()
         {
-            
+#if DEBUG
+            Window.Title = $"{ProjectName ?? "Water Engine"} - DEBUG running on Water {Assembly.GetExecutingAssembly().GetName().Version}";
+#else
+            Window.Title = ProjectName ?? "Water Engine";
+#endif
             base.Initialize();
         }
 
@@ -68,11 +73,9 @@ namespace Water
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-                
-
             // TODO: Add your update logic here
             gameObjectManager.Update(gameTime);
-            Window.Title = ProjectName ?? "Water Engine";
+
             base.Update(gameTime);
         }
 
