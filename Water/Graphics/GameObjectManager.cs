@@ -52,7 +52,11 @@ namespace Water.Graphics
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             foreach (var obj in AllObjects)
+            {
+                graphicsDevice.ScissorRectangle = obj.ActualPosition;
                 obj.Draw(gameTime, spriteBatch, graphicsDevice);
+                graphicsDevice.ScissorRectangle = default;
+            }
         }
     }
 }

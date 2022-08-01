@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Water.Graphics;
+using Water.Graphics.Containers;
 using Water.Graphics.Controls;
 using Water.Graphics.Screens;
 
@@ -18,15 +19,23 @@ namespace TestGame.Screens
             
         }
 
-        private Sprite sprite;
-
         public override void Initialize()
         {
-            sprite = new Sprite(new(10, 10, 1280, 720), "Assets/Chiruuu.png")
+            var stackPanel = new StackContainer()
             {
-                Layout = Layout.Center
+                RelativePosition = new(0, 0, 100, 100),
+                Layout = Layout.Fill,
+                Orientation = Orientation.Horizontal,
             };
-            AddChild(Game.AddObject(sprite));
+            AddChild(stackPanel);
+            stackPanel.AddChild(Game.AddObject(new Aquarium()
+            {
+                Layout = Layout.Fill,
+            }));
+            stackPanel.AddChild(Game.AddObject(new Aquarium()
+            {
+                Layout = Layout.Fill,
+            }));  
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -34,18 +43,10 @@ namespace TestGame.Screens
             
         }
 
-        private int counter = 500;
 
         public override void Update(GameTime gameTime)
         {
-            counter--;
-            if (counter < 0)
-            {
-                counter = 100;
-                var bubble = new Bubble();
-                sprite.AddChild(bubble);
-                Game.AddObject(bubble);
-            }
+
         }
     }
 }

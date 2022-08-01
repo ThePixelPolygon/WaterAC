@@ -12,10 +12,7 @@ namespace TestGame.Screens
 {
     public class Bubble : Box
     {
-        private Color color;
-        private Texture2D sprite;
-
-        public Bubble() : base(new(0, 0, 0, 0), Color.CornflowerBlue)
+        public Bubble() : base(new(0, 0, 0, 0), Color.White)
         {
         }
 
@@ -26,7 +23,7 @@ namespace TestGame.Screens
 
         public override void Initialize()
         {
-            RelativePosition = new(Random.Shared.Next(0, Parent.RelativePosition.Width), Random.Shared.Next(0, Parent.RelativePosition.Height), 10, 10);
+            RelativePosition = new(Random.Shared.Next(0, Parent.ActualPosition.Width), Random.Shared.Next(0, Parent.ActualPosition.Height), 10, 10);
             base.Initialize();
         }
 
