@@ -67,6 +67,11 @@ namespace Water.Graphics.Screens
         {
         }
 
+        public override void Deinitialize()
+        {
+       
+        }
+
         public void ChangeScreen(Screen screen)
         {
             RemoveAllScreens();   

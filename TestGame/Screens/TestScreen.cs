@@ -40,6 +40,12 @@ namespace TestGame.Screens
             AddChild(stackPanel);
         }
 
+        public override void Deinitialize()
+        {
+            Game.Input.KeyDown -= Input_KeyDown;
+            Game.Input.KeyUp -= Input_KeyUp;
+        }
+
         private void Input_KeyUp(object sender, Water.Input.KeyEventArgs e)
         {
             if (e.Key == Microsoft.Xna.Framework.Input.Keys.Space)

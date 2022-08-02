@@ -11,6 +11,7 @@ namespace Water.Graphics
         public GameObjectManager Game { get; set; }
 
         public abstract void Initialize();
+        public abstract void Deinitialize();
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice);

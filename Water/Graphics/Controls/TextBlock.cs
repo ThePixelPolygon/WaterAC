@@ -73,6 +73,11 @@ namespace Water.Graphics.Controls
        
         }
 
+        public override void Deinitialize()
+        {
+ 
+        }
+
         public override void Update(GameTime gameTime)
         {
           

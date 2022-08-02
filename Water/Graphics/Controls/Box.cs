@@ -29,6 +29,11 @@ namespace Water.Graphics.Controls
             sprite.SetData(new[] { Color.White });
         }
 
+        public override void Deinitialize()
+        {
+
+        }
+
         public override void Update(GameTime gameTime)
         {
 

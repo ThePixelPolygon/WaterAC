@@ -29,6 +29,11 @@ namespace TestGame.Screens
             AddChild(Game.AddObject(sprite));
         }
 
+        public override void Deinitialize()
+        {
+           
+        }
+
         private int counter = 500;
 
         public override void Update(GameTime gameTime)

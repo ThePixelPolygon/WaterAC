@@ -28,6 +28,11 @@ namespace Water.Graphics.Controls
             sprite = Game.Textures.Get(path);
         }
 
+        public override void Deinitialize()
+        {
+       
+        }
+
         public override void Update(GameTime gameTime)
         {
  

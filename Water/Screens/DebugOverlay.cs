@@ -42,6 +42,11 @@ namespace Water.Screens
             box.AddChild(updateText);
         }
 
+        public override void Deinitialize()
+        {
+    
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             drawsPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;

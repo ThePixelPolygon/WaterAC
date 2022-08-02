@@ -42,6 +42,7 @@ namespace Water.Graphics
         }
         public GameObject RemoveObject(GameObject obj)
         {
+            obj.Deinitialize();
             objectsToRemove.Add(obj);
             obj.Parent.RemoveChild(obj);
             return obj;

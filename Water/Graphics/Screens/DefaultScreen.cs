@@ -15,6 +15,11 @@ namespace Water.Graphics.Screens
             
         }
 
+        public override void Deinitialize()
+        {
+         
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
 
