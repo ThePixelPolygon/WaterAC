@@ -24,7 +24,7 @@ namespace TestGame.Screens
             sprite = new Box(new(0, 0, 10, 10), Color.CornflowerBlue)
             {
                 Layout = Layout.Fill,
-                Margin = 20
+                Margin = 2
             };
             AddChild(Game.AddObject(sprite));
         }

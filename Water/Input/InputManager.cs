@@ -13,6 +13,8 @@ namespace Water.Input
     {
         public event EventHandler<KeyEventArgs> KeyDown;
 
+        public event EventHandler<KeyEventArgs> KeyUp;
+
         private readonly GameObjectManager game;
 
         public InputManager(GameObjectManager game)
@@ -31,6 +33,10 @@ namespace Water.Input
             foreach (var key in pressedKeys.Where(x => !previousPressedKeys.Contains(x)))
             {
                 KeyDown?.Invoke(this, new(key));
+            }
+            foreach (var key in previousPressedKeys.Where(x => !pressedKeys.Contains(x)))
+            {
+                KeyUp?.Invoke(this, new(key));
             }
 
             previousState = state;

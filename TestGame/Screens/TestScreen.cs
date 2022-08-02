@@ -30,6 +30,7 @@ namespace TestGame.Screens
         public override void Initialize()
         {
             Game.Input.KeyDown += Input_KeyDown;
+            Game.Input.KeyUp += Input_KeyUp;
             stackPanel = new StackContainer()
             {
                 RelativePosition = new(0, 0, 100, 100),
@@ -37,6 +38,17 @@ namespace TestGame.Screens
                 Orientation = Orientation.Horizontal,
             };
             AddChild(stackPanel);
+        }
+
+        private void Input_KeyUp(object sender, Water.Input.KeyEventArgs e)
+        {
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.Space)
+            {
+                stackPanel.AddChild(Game.AddObject(new Aquarium()
+                {
+                    Layout = Layout.Fill,
+                }));
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

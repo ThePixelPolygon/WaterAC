@@ -34,11 +34,13 @@ namespace Water.Graphics
         {
             child.Parent = this;
             Children.Add(child);
+            CalculateChildrenPositions();
         }
         public virtual void RemoveChild(IContainer child)
         {
             child.Parent = null;
             Children.Remove(child);
+            CalculateChildrenPositions();
         }
 
         public virtual void CalculateChildrenPositions()

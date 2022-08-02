@@ -61,7 +61,6 @@ namespace Water.Graphics.Screens
         public override void AddChild(IContainer child)
         {
             base.AddChild(child);
-            CalculateChildrenPositions();
         }
 
         public override void Initialize()
