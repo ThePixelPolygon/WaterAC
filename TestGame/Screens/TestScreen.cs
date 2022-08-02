@@ -14,33 +14,29 @@ namespace TestGame.Screens
 {
     public class TestScreen : Screen
     {
-        public TestScreen()
+        private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
         {
-            
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.Space)
+            {
+                stackPanel.AddChild(Game.AddObject(new Aquarium()
+                {
+                    Layout = Layout.Fill,
+                }));
+            }
         }
+
+        private StackContainer stackPanel;
 
         public override void Initialize()
         {
-            var stackPanel = new StackContainer()
+            Game.Input.KeyDown += Input_KeyDown;
+            stackPanel = new StackContainer()
             {
                 RelativePosition = new(0, 0, 100, 100),
                 Layout = Layout.Fill,
                 Orientation = Orientation.Horizontal,
             };
             AddChild(stackPanel);
-            stackPanel.AddChild(Game.AddObject(new Aquarium()
-            {
-                Layout = Layout.Fill,
-            }));
-            stackPanel.AddChild(Game.AddObject(new Aquarium()
-            {
-                Layout = Layout.Fill,
-            }));
-            stackPanel.AddChild(Game.AddObject(new Aquarium()
-            {
-                Layout = Layout.Fill,
-            }));
-
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Water.Input;
 
 namespace Water.Graphics
 {
@@ -13,6 +14,7 @@ namespace Water.Graphics
         public GraphicsDevice GraphicsDevice { get; }
         public TextureCache Textures { get; private set; }
         public FontCache Fonts { get; private set; }
+        public InputManager Input { get; private set; }
         public float GameSpeed { get; set; } = 100f;
 
         private readonly List<GameObject> objectsToAdd = new();
@@ -23,6 +25,7 @@ namespace Water.Graphics
             GraphicsDevice = graphicsDevice;
             Textures = new TextureCache(graphicsDevice);
             Fonts = new FontCache();
+            Input = new InputManager(this);
         }
 
         /// <summary>
@@ -45,6 +48,8 @@ namespace Water.Graphics
         }
         public void Update(GameTime gameTime)
         {
+            Input.Update(gameTime);
+
             foreach (var obj in AllObjects)
                 obj.Update(gameTime);
 
