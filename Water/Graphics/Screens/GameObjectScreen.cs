@@ -23,12 +23,12 @@ namespace Water.Graphics.Screens
 
         private Screen InitializeScreen(Screen screen)
         {
-            screen.Game = new GameObjectManager(gameObjectManager.GraphicsDevice);
+            screen.Game = gameObjectManager;
             screen.ScreenManager = this;
             screen.Window = window;
             screen.ActualPosition = ActualPosition;
             screen.RelativePosition = RelativePosition;
-            screen.Game.AssignRootObject(screen);
+
             screen.Game.AddObject(screen); 
             screen.CalculateChildrenPositions();
             screen.Initialize();
@@ -38,20 +38,24 @@ namespace Water.Graphics.Screens
         public void AddScreen(Screen screen)
         {
             Screens.Add(InitializeScreen(screen));
+            gameObjectManager.RootObjects = new(Screens);
         }
 
         public void InsertScreen(int index, Screen screen)
         {
             Screens.Insert(index, InitializeScreen(screen));
+            gameObjectManager.RootObjects = new(Screens);
         }
 
         public void RemoveScreen(Screen screen)
         {
             Screens.Remove(screen);
+            gameObjectManager.RootObjects.Remove(screen);
         }
         public void RemoveAllScreens()
         {
             Screens.Clear();
+            gameObjectManager.RootObjects.Clear();
         }
 
         public override void AddChild(IContainer child)
@@ -74,13 +78,13 @@ namespace Water.Graphics.Screens
         {
             if (!HasScreens) return;
             foreach (var screen in Screens)
-                screen.Game.Update(gameTime);
+                screen.Update(gameTime);
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             if (!HasScreens) return;
             foreach (var screen in Screens)
-                screen.Game.Draw(gameTime, spriteBatch, graphicsDevice);
+                screen.Draw(gameTime, spriteBatch, graphicsDevice);
         }
 
         public void UpdateScreenSize(Rectangle newSize)

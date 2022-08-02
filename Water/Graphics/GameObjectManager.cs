@@ -25,16 +25,10 @@ namespace Water.Graphics
             Fonts = new FontCache();
         }
 
-        private GameObject rootObject;
-
         /// <summary>
-        /// Assigns the object that will start the layout tree. Required for rendering to work at all
+        /// The objects that begin rendering
         /// </summary>
-        /// <param name="obj"></param>
-        public void AssignRootObject(GameObject obj)
-        {
-            rootObject = obj;
-        }
+        public List<GameObject> RootObjects { get; set; } = new();
 
         public GameObject AddObject(GameObject obj)
         {
@@ -64,8 +58,11 @@ namespace Water.Graphics
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
-            rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
+            foreach (var rootObject in RootObjects)
+            {
+                rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
+                rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
+            }
         }
     }
 }

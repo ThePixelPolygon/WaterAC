@@ -38,7 +38,7 @@ namespace Water
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             Screen.ChangeScreen(new DefaultScreen());
-            gameObjectManager.AssignRootObject(Screen);
+            //gameObjectManager.AssignRootObject(Screen);
             gameObjectManager.AddObject(Screen);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
