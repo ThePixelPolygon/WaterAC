@@ -12,8 +12,9 @@ namespace TestGame.Screens
 {
     public class Bubble : Box
     {
-        public Bubble() : base(new(0, 0, 0, 0), Color.White)
+        public Bubble() : base()
         {
+            Color = Color.White;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

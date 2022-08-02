@@ -23,9 +23,7 @@ namespace Water
         public WaterGame()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = 1600;
-            _graphics.PreferredBackBufferHeight = 900;
-            _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.SynchronizeWithVerticalRetrace = true;
             Window.AllowUserResizing = true;
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1);
@@ -38,7 +36,6 @@ namespace Water
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             Screen.ChangeScreen(new DefaultScreen());
-            //gameObjectManager.AssignRootObject(Screen);
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;

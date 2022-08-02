@@ -27,8 +27,12 @@ namespace Water.Screens
 
         public override void Initialize()
         {
-            var box = new Box(new(0, 0, 100, 50), new(255, 255, 255, 1));
-            box.Layout = Layout.AnchorBottomRight;
+            var box = new Box()
+            {
+                RelativePosition = new(0, 0, 100, 50),
+                Color = new(255, 255, 255, 1),
+                Layout = Layout.AnchorBottomRight
+            };
             updateText = new(new(0, 0, 10, 10), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 15), "updates per second", Color.Black)
             {
                 Layout = Layout.Fill,
