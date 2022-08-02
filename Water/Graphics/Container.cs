@@ -183,7 +183,6 @@ namespace Water.Graphics
             
             foreach (var child in Children)
             {
-                spriteBatch.Begin();
                 if (child is GameObject obj) DrawObject(obj);
                 else
                 {
@@ -193,7 +192,6 @@ namespace Water.Graphics
                         if (child2 is GameObject obj2) DrawObject(obj2);
                     }
                 }
-                spriteBatch.End();
             }
         }
 

@@ -62,15 +62,44 @@ namespace Water.Graphics
             }
             objectsToRemove.Clear();
         }
+        private Rectangle scissor, previousScissor;
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-
             foreach (var rootObject in RootObjects)
             {
-                rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
-                rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
-            }
+                var objectsInOrder = ExtensionClass.FlattenWithLevel<IContainer>(rootObject, x => x.Children);
 
+                foreach (var y in objectsInOrder)
+                {
+                    scissor = y.Item1.ActualPosition;
+                    previousScissor = graphicsDevice.ScissorRectangle;
+                    graphicsDevice.ScissorRectangle = scissor;
+
+                    spriteBatch.Begin(SpriteSortMode.Deferred, rasterizerState: new() { ScissorTestEnable = true });
+                    if (y.Item1 is GameObject b)
+                        b.Draw(gameTime, spriteBatch, graphicsDevice);
+                    spriteBatch.End();
+                    graphicsDevice.ScissorRectangle = previousScissor;
+                }
+            }
+        }
+ 
+    }
+
+    public static class ExtensionClass
+    {
+        public static IEnumerable<(T, int)> FlattenWithLevel<T>(this T item, Func<T, IEnumerable<T>> getChilds)
+        {
+            var stack = new Stack<(T, int)>();
+            stack.Push(new (item, 1));
+
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
+                yield return current;
+                foreach (var child in getChilds(current.Item1))
+                    stack.Push(new (child, current.Item2 + 1));
+            }
         }
     }
 }

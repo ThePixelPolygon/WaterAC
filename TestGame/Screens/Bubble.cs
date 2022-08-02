@@ -38,7 +38,7 @@ namespace TestGame.Screens
                 counter = 10;
                 RelativePosition = new(RelativePosition.X, RelativePosition.Y - 1, RelativePosition.Width, RelativePosition.Height);
 
-                if (RelativePosition.Y < (0 - RelativePosition.Height))
+                if (/*RelativePosition.Y < (0 - RelativePosition.Height)*/ActualPosition.Y < 0)
                     Game.RemoveObject(this);
             }
             base.Update(gameTime);
