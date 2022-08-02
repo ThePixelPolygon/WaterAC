@@ -18,7 +18,9 @@ namespace Water.Screens
         private double updatesPerSecond;
         private double drawsPerSecond;
 
-        private TextBlock updateText;
+        private TextBlock framerateText;
+        private StackContainer sc;
+        private Box box;
 
         public DebugOverlay()
         {
@@ -27,23 +29,57 @@ namespace Water.Screens
 
         public override void Initialize()
         {
-            var box = new Box()
+            Game.Input.KeyDown += Input_KeyDown;
+            Game.Input.KeyUp += Input_KeyUp;
+            sc = new StackContainer()
             {
-                RelativePosition = new(0, 0, 100, 50),
-                Color = new(255, 255, 255, 1),
-                Layout = Layout.AnchorBottomRight
+                RelativePosition = new(0, 0, 100, 20),
+                Orientation = Orientation.Vertical,
+                Layout = Layout.AnchorTopRight,
+                Margin = 2
             };
-            updateText = new(new(0, 0, 10, 10), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 15), "updates per second", Color.Black)
+            box = new Box()
+            {
+                RelativePosition = new(0, 0, 100, 20),
+                Color = Color.White * 0.3f,
+                Layout = Layout.AnchorBottom
+            };
+            framerateText = new(new(0, 0, 10, 10), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 15), "", Color.Black)
             {
                 Layout = Layout.Fill,
                 TextWrapping = TextWrapMode.WordWrap,
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Center
             };
+
+            AddChild(sc);
             Game.AddObject(box);
-            AddChild(box);
-            Game.AddObject(updateText);
-            box.AddChild(updateText);
+            sc.AddChild(box);
+            Game.AddObject(framerateText);
+            box.AddChild(framerateText);
+        }
+
+        private bool showExtended = false;
+        private void Input_KeyUp(object sender, Input.KeyEventArgs e)
+        {
+            if (e.Key == Keys.LeftControl)
+            {
+                sc.RelativePosition = new(0, 0, 100, 20);
+                box.Color = Color.White * 0.3f;
+
+                showExtended = false;
+            }
+        }
+
+        private void Input_KeyDown(object sender, Input.KeyEventArgs e)
+        {
+            if (e.Key == Keys.LeftControl)
+            {
+                sc.RelativePosition = new(0, 0, 400, 20);
+                box.Color = Color.White;
+
+                showExtended = true;      
+            }
         }
 
         public override void Deinitialize()
@@ -66,9 +102,9 @@ namespace Water.Screens
             //        intersectedObjects.Add($"{obj.ToString().ToUpper()} Actual: {obj.ActualPosition} Relative: {obj.RelativePosition} Parent: {obj.Parent} Children: {string.Join(',', obj.Children)}");
             //    }
             //}
-
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
-            updateText.Text = $"{Math.Round(drawsPerSecond, 2)} fps";
+            if (showExtended) framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} frames/s, {Math.Round(updatesPerSecond, 0)} updates/s, {Game.AllObjects.Count} objects, {ScreenManager.Screens.Count} screens";
+            else framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} fps";
         }
     }
 }

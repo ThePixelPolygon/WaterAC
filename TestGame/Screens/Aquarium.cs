@@ -26,7 +26,7 @@ namespace TestGame.Screens
             sprite = new Box()
             {
                 RelativePosition = new(0, 0, 10, 10),
-                Color = Color.CornflowerBlue,
+                Color = Color.CornflowerBlue * 0.5f,
                 Layout = Layout.Fill,
                 Margin = 2
             };

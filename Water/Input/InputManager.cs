@@ -42,10 +42,7 @@ namespace Water.Input
             previousState = state;
         }
 
-        public bool IsKeyHeld(Keys key)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsKeyHeld(Keys key) => Keyboard.GetState().GetPressedKeys().Contains(key);
     }
 
     public class KeyEventArgs : EventArgs
