@@ -44,7 +44,7 @@ namespace Water.Graphics
         {
             obj.Deinitialize();
             objectsToRemove.Add(obj);
-            obj.Parent.RemoveChild(obj);
+            obj.Parent?.RemoveChild(obj);
             return obj;
         }
         public void Update(GameTime gameTime)
@@ -64,11 +64,13 @@ namespace Water.Graphics
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
+
             foreach (var rootObject in RootObjects)
             {
                 rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
                 rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
             }
+
         }
     }
 }

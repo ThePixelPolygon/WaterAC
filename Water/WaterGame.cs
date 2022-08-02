@@ -82,9 +82,9 @@ namespace Water
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
+
             gameObjectManager.Draw(gameTime, _spriteBatch, GraphicsDevice);
-            _spriteBatch.End();
+            
             base.Draw(gameTime);
         }
     }
