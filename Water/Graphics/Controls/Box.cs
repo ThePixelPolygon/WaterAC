@@ -10,17 +10,16 @@ namespace Water.Graphics.Controls
 {
     public class Box : GameObject
     {
-        private Color color;
+        public Color Color { get; set; }
         private Texture2D sprite;
-        public Box(Rectangle relativePosition, Color color)
+        public Box()
         {
-            RelativePosition = relativePosition;
-            this.color = color;
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            spriteBatch.Draw(sprite, ActualPosition, color);
+            spriteBatch.Draw(sprite, ActualPosition, Color);
         }
 
         public override void Initialize()

@@ -17,21 +17,42 @@ namespace TestGame.Screens
             
         }
 
-        private GameObject sprite;
+        private Box sprite;
 
         public override void Initialize()
         {
-            sprite = new Box(new(0, 0, 10, 10), Color.CornflowerBlue)
+            Game.Input.KeyDown += Input_KeyDown;
+            Game.Input.KeyUp += Input_KeyUp;
+            sprite = new Box()
             {
+                RelativePosition = new(0, 0, 10, 10),
+                Color = Color.CornflowerBlue,
                 Layout = Layout.Fill,
                 Margin = 2
             };
             AddChild(Game.AddObject(sprite));
         }
 
+        private void Input_KeyUp(object sender, Water.Input.KeyEventArgs e)
+        {
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.A)
+            {
+                sprite.Color = Color.CornflowerBlue;
+            }
+        }
+
+        private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
+        {
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.A)
+            {
+                sprite.Color = Color.ForestGreen;
+            }
+        }
+
         public override void Deinitialize()
         {
-           
+            Game.Input.KeyDown -= Input_KeyDown;
+            Game.Input.KeyUp -= Input_KeyUp;
         }
 
         private int counter = 500;
