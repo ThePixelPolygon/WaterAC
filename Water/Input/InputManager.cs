@@ -22,14 +22,19 @@ namespace Water.Input
             this.game = game;
         }
 
-        private KeyboardState previousState;
+        private KeyboardState previousKbState;
+        private KeyboardState currentKbState;
+
+        private MouseState previousMouseState;
+        private MouseState currentMouseState;
 
         public void Update(GameTime gameTime)
         {
-            var state = Keyboard.GetState();
+            currentKbState = Keyboard.GetState();
+            currentMouseState = Mouse.GetState();
 
-            var pressedKeys = state.GetPressedKeys();
-            var previousPressedKeys = previousState.GetPressedKeys();
+            var pressedKeys = currentKbState.GetPressedKeys();
+            var previousPressedKeys = previousKbState.GetPressedKeys();
             foreach (var key in pressedKeys.Where(x => !previousPressedKeys.Contains(x)))
             {
                 KeyDown?.Invoke(this, new(key));
@@ -39,10 +44,16 @@ namespace Water.Input
                 KeyUp?.Invoke(this, new(key));
             }
 
-            previousState = state;
+            previousKbState = currentKbState;
+            previousMouseState = currentMouseState;
         }
 
-        public bool IsKeyHeld(Keys key) => Keyboard.GetState().GetPressedKeys().Contains(key);
+        public Point GetMousePositionRelativeTo(IContainer container)
+        {
+            return new(container.ActualPosition.X + currentMouseState.X, container.ActualPosition.Y + currentMouseState.Y);
+        }
+
+        public bool IsKeyHeld(Keys key) => currentKbState.GetPressedKeys().Contains(key);
     }
 
     public class KeyEventArgs : EventArgs
