@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Water.Graphics.Screens;
+using Water.Utils;
 
 namespace Water.Graphics
 {
@@ -129,7 +130,7 @@ namespace Water.Graphics
                             parentPosition.X + child.Margin,
                             parentPosition.Y + child.Margin
                         ),
-                        CalculateAspectRatioMaintainingFill(parentPosition, child.RelativePosition)
+                        InterfaceUtils.CalculateAspectRatioMaintainingFill(parentPosition, child.RelativePosition)
                     ),
                     Layout.DockLeft => new
                     (
@@ -193,16 +194,6 @@ namespace Water.Graphics
             }
         }
 
-        private Point CalculateAspectRatioMaintainingFill(Rectangle parentPosition, Rectangle childPosition)
-        {
-            float parentAspectRatio = parentPosition.Width / parentPosition.Height;
-            float childAspectRatio = childPosition.Width / childPosition.Height;
-
-            float scalingFactor;
-            if (parentAspectRatio > childAspectRatio) scalingFactor = parentPosition.Width / childPosition.Width;
-            else scalingFactor = parentPosition.Height / childPosition.Height;
-
-            return new((int)(childPosition.Width * scalingFactor), (int)(childPosition.Height * scalingFactor));
-        }
+        
     }
 }
