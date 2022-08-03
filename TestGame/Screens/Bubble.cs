@@ -25,18 +25,32 @@ namespace TestGame.Screens
         public override void Initialize()
         {
             RelativePosition = new(Random.Shared.Next(0, Parent.ActualPosition.Width), Random.Shared.Next(0, Parent.ActualPosition.Height), 10, 10);
+            Game.Input.PrimaryMouseButtonDown += Input_PrimaryMouseButtonDown;
             base.Initialize();
+        }
+
+        private void Input_PrimaryMouseButtonDown(object sender, Water.Input.MousePressEventArgs e)
+        {
+            if (Game.Input.IsMouseWithin(this)) Game.RemoveObject(this);
+        }
+
+        public override void Deinitialize()
+        {
+            Game.Input.PrimaryMouseButtonDown -= Input_PrimaryMouseButtonDown;
+            base.Deinitialize();
         }
 
         private int counter = 10;
 
         public override void Update(GameTime gameTime)
         {
+            if (Game.Input.IsMouseWithin(this)) Color = Color.Red;
+            else Color = Color.White;
             counter--;
             if (counter < 0)
             {
                 counter = 10;
-                RelativePosition = new(RelativePosition.X, RelativePosition.Y - 1, RelativePosition.Width, RelativePosition.Height);
+                RelativePosition = new(RelativePosition.X, (int)Math.Round(RelativePosition.Y - 1 * gameTime.ElapsedGameTime.TotalMilliseconds), RelativePosition.Width, RelativePosition.Height);
 
                 if (/*RelativePosition.Y < (0 - RelativePosition.Height)*/ActualPosition.Y < 0)
                     Game.RemoveObject(this);
