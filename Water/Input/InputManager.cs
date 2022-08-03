@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Water.Graphics;
+using Water.Graphics.Containers;
 
 namespace Water.Input
 {
@@ -61,12 +63,66 @@ namespace Water.Input
 
         public Point GetMousePositionRelativeTo(IContainer container)
         {
-            return new(container.ActualPosition.X + currentMouseState.X, container.ActualPosition.Y + currentMouseState.Y);
+            float scaleFactorX = 1;
+            float scaleFactorY = 1;
+
+            int offsetX = 0;
+            int offsetY = 0;
+
+            var x = container;
+            RenderContainer parentRenderContainer = null;
+            if (x.Parent is not null)
+            {
+                while (x.Parent is not null)
+                {
+                    x = x.Parent;
+                    if (x is RenderContainer rc)
+                    {
+                        parentRenderContainer = rc;
+                        break;
+                    }
+                }
+            }
+
+            if (parentRenderContainer is not null)
+            {
+                scaleFactorX = (float) 720 / (float)1920;
+                scaleFactorY = (float) 567 / (float)1080;
+                Point result = new(parentRenderContainer.ActualPosition.X + (int)Math.Round(currentMouseState.X * (scaleFactorX * 1)), 
+                    parentRenderContainer.ActualPosition.Y + (int)Math.Round(currentMouseState.Y * (scaleFactorY * 1)));
+                return result;
+            }
+            //return new(100, 100);
+            //else
+                return new((int)Math.Round((container.RelativePosition.X + currentMouseState.X + offsetX) * (scaleFactorX * 1)), (int)Math.Round((container.RelativePosition.Y + currentMouseState.Y + offsetY) * (scaleFactorY * 1)));
         }
 
         public bool IsMouseWithin(IContainer container)
         {
-            return currentMouseState.X >= container.ActualPosition.X && currentMouseState.X <= (container.ActualPosition.X + container.ActualPosition.Width) &&
+            var x = container;
+            RenderContainer parentRenderContainer = null;
+            if (x.Parent is not null)
+            {
+                while (x.Parent is not null)
+                {
+                    x = x.Parent;
+                    if (x is RenderContainer rc)
+                    {
+                        parentRenderContainer = rc;
+                        break;
+                    }
+                }
+            }
+            
+
+            if (parentRenderContainer is not null)
+            {
+                var relativeMousePos = GetMousePositionRelativeTo(parentRenderContainer);
+                return relativeMousePos.X >= container.RelativePosition.X && relativeMousePos.X <= (container.RelativePosition.X + container.RelativePosition.Width) &&
+                   relativeMousePos.Y >= container.RelativePosition.Y && relativeMousePos.Y <= (container.RelativePosition.Y + container.RelativePosition.Height);
+            }
+            else
+                return currentMouseState.X >= container.ActualPosition.X && currentMouseState.X <= (container.ActualPosition.X + container.ActualPosition.Width) &&
                    currentMouseState.Y >= container.ActualPosition.Y && currentMouseState.Y <= (container.ActualPosition.Y + container.ActualPosition.Height);
         }
 

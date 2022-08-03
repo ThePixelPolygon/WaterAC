@@ -40,19 +40,21 @@ namespace TestGame.Screens
             base.Deinitialize();
         }
 
-        private int counter = 10;
+        private int counter = 1000;
 
         public override void Update(GameTime gameTime)
         {
-            if (Game.Input.IsMouseWithin(this)) Color = Color.Red;
-            else Color = Color.White;
+            //if (Game.Input.IsMouseWithin(Parent)) Color = Color.Red;
+            //else Color = Color.White;
+            var pos = Game.Input.GetMousePositionRelativeTo(Parent.Parent);
+            RelativePosition = new(pos.X, pos.Y, 10, 10);
             counter--;
             if (counter < 0)
             {
-                counter = 10;
-                RelativePosition = new(RelativePosition.X, (int)Math.Round(RelativePosition.Y - 1 * gameTime.ElapsedGameTime.TotalMilliseconds), RelativePosition.Width, RelativePosition.Height);
+                counter = 1000;
+                //RelativePosition = new(RelativePosition.X, (int)Math.Round(RelativePosition.Y - 1 * gameTime.ElapsedGameTime.TotalMilliseconds), RelativePosition.Width, RelativePosition.Height);
 
-                if (RelativePosition.Y < (0 - RelativePosition.Height))
+                //if (RelativePosition.Y < (0 - RelativePosition.Height))
                     Game.RemoveObject(this);
             }
             base.Update(gameTime);

@@ -33,9 +33,8 @@ namespace TestGame.Screens
             Game.Input.KeyUp += Input_KeyUp;
             var rc = new RenderContainer(Game.GraphicsDevice)
             {
-                RelativePosition = new(0, 0, 1920, 1080),
-                Layout = Layout.AspectRatioMaintainingFill,
-                Margin = 20
+                RelativePosition = new(0, 0, 720, 576),
+                Layout = Layout.Center
             };
             stackPanel = new StackContainer()
             {
