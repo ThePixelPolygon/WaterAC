@@ -105,6 +105,8 @@ namespace Water.Screens
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
             if (showExtended) framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} frames/s, {Math.Round(updatesPerSecond, 0)} updates/s, {Game.AllObjects.Count} objects, {ScreenManager.Screens.Count} screens";
             else framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} fps";
+
+            if (WaterGame.UseExperimentalDrawingMode) framerateText.Text += " EXD";
         }
     }
 }

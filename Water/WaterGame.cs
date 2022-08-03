@@ -13,6 +13,8 @@ namespace Water
 {
     public class WaterGame : Game
     {
+        public static bool UseExperimentalDrawingMode { get; private set; } = false;
+
         public GameObjectScreen Screen { get; private set; }
         public virtual string ProjectName { get; }
 
@@ -43,6 +45,24 @@ namespace Water
             Screen.AddScreen(new DebugOverlay());
 #endif
             Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
+
+            gameObjectManager.Input.KeyDown += Input_KeyDown;
+        }
+
+        private void Input_KeyDown(object sender, Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Keys.Escape:
+                    Exit();
+                    break;
+                case Keys.F11:
+                    _graphics.ToggleFullScreen();
+                    break;
+                case Keys.F10:
+                    UseExperimentalDrawingMode = !UseExperimentalDrawingMode;
+                    break;
+            }
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -69,8 +89,8 @@ namespace Water
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
             // TODO: Add your update logic here
             gameObjectManager.Update(gameTime);
 

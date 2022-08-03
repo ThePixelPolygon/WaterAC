@@ -65,21 +65,34 @@ namespace Water.Graphics
         private Rectangle scissor, previousScissor;
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            foreach (var rootObject in RootObjects)
+            if (!WaterGame.UseExperimentalDrawingMode)
             {
-                var objectsInOrder = ExtensionClass.FlattenWithLevel<IContainer>(rootObject, x => x.Children);
-
-                foreach (var y in objectsInOrder)
+                spriteBatch.Begin();
+                foreach (var rootObject in RootObjects)
                 {
-                    scissor = y.Item1.ActualPosition;
-                    previousScissor = graphicsDevice.ScissorRectangle;
-                    graphicsDevice.ScissorRectangle = scissor;
+                    rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
+                    rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
+                }
+                spriteBatch.End();
+            }
+            else
+            {
+                foreach (var rootObject in RootObjects)
+                {
+                    var objectsInOrder = ExtensionClass.FlattenWithLevel<IContainer>(rootObject, x => x.Children);
 
-                    spriteBatch.Begin(SpriteSortMode.Deferred, rasterizerState: new() { ScissorTestEnable = true });
-                    if (y.Item1 is GameObject b)
-                        b.Draw(gameTime, spriteBatch, graphicsDevice);
-                    spriteBatch.End();
-                    graphicsDevice.ScissorRectangle = previousScissor;
+                    foreach (var y in objectsInOrder)
+                    {
+                        scissor = y.Item1.ActualPosition;
+                        previousScissor = graphicsDevice.ScissorRectangle;
+                        graphicsDevice.ScissorRectangle = scissor;
+
+                        spriteBatch.Begin(SpriteSortMode.Deferred, rasterizerState: new() { ScissorTestEnable = true });
+                        if (y.Item1 is GameObject b)
+                            b.Draw(gameTime, spriteBatch, graphicsDevice);
+                        spriteBatch.End();
+                        graphicsDevice.ScissorRectangle = previousScissor;
+                    }
                 }
             }
         }
