@@ -174,24 +174,22 @@ namespace Water.Graphics
         } 
 
         public virtual void DrawChildren(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
-        {
-            void DrawObject(GameObject obj)
-            {   
-                obj.Draw(gameTime, spriteBatch, graphicsDevice);
-                obj.DrawChildren(gameTime, spriteBatch, graphicsDevice);
-            }
-            
+        {    
             foreach (var child in Children)
             {
-                if (child is GameObject obj) DrawObject(obj);
+                if (child is GameObject obj)
+                {
+                    obj.Draw(gameTime, spriteBatch, graphicsDevice);
+                }
                 else
                 {
                     var childrenThatHaveObjectsInThem = child.Children.Where(x => x is GameObject);
                     foreach (var child2 in childrenThatHaveObjectsInThem)
                     {
-                        if (child2 is GameObject obj2) DrawObject(obj2);
+                        if (child2 is GameObject obj2) obj2.Draw(gameTime, spriteBatch, graphicsDevice);
                     }
                 }
+                child.DrawChildren(gameTime, spriteBatch, graphicsDevice);
             }
         }
 

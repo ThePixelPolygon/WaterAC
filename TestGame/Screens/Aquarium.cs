@@ -28,7 +28,6 @@ namespace TestGame.Screens
                 RelativePosition = new(0, 0, 10, 10),
                 Color = Color.CornflowerBlue * 0.5f,
                 Layout = Layout.Fill,
-                Margin = 50
             };
             AddChild(Game.AddObject(sprite));
         }

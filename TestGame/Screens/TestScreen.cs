@@ -31,13 +31,24 @@ namespace TestGame.Screens
         {
             Game.Input.KeyDown += Input_KeyDown;
             Game.Input.KeyUp += Input_KeyUp;
+            var rc = new RenderContainer(Game.GraphicsDevice)
+            {
+                RelativePosition = new(0, 0, 100, 100),
+                Layout = Layout.Fill,
+                Margin = 20
+            };
             stackPanel = new StackContainer()
             {
                 RelativePosition = new(0, 0, 100, 100),
                 Layout = Layout.Fill,
                 Orientation = Orientation.Horizontal,
             };
-            AddChild(stackPanel);
+            rc.AddChild(Game.AddObject(new Aquarium()
+            {
+                RelativePosition = new(0, 0, 1920, 1080)
+            }));
+            
+            AddChild(rc);
         }
 
         public override void Deinitialize()
