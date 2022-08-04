@@ -54,6 +54,8 @@ namespace Water
                     Exit();
                     break;
                 case Keys.F11:
+                    Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                    Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                     Graphics.ToggleFullScreen();
                     break;
                 case Keys.F10:

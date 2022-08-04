@@ -14,8 +14,14 @@ namespace Water.Graphics.Controls
         public TextWrapMode TextWrapping;
         public HorizontalTextAlignment HorizontalTextAlignment;
         public VerticalTextAlignment VerticalTextAlignment;
-        public string Text { get; set; }
+        private string text;
+        public string Text
+        {
+            get => text.Replace("|n", "\n");
+            set => text = value.Replace("\n", "|n").Replace("\r", "");
+        }
         public const string LineSeparator = "|n";
+        public int LineSpacing { get; set; } = 20;
 
         private DynamicSpriteFont font;
         private Color color;
@@ -28,15 +34,16 @@ namespace Water.Graphics.Controls
             this.color = color;
             this.font = font;
             Text = text;
+            LineSpacing = (int)font.Size;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             var finalText = TextWrapping switch // TODO: don't calculate this EVERY frame
             {
-                TextWrapMode.LetterWrap => LetterWrap(font, Text, ActualPosition.Width),
-                TextWrapMode.WordWrap => WordWrap(font, Text, ActualPosition.Width),
-                TextWrapMode.None or _ => Text
+                TextWrapMode.LetterWrap => LetterWrap(font, text, ActualPosition.Width),
+                TextWrapMode.WordWrap => WordWrap(font, text, ActualPosition.Width),
+                TextWrapMode.None or _ => text
             };
             var pos = new Vector2(ActualPosition.X, ActualPosition.Y);
 
@@ -63,7 +70,7 @@ namespace Water.Graphics.Controls
                 }
                 spriteBatch.DrawString(font, line, pos, color);
 
-                pos.Y += 20; // space between lines TODO: base this off of the font or make this configurable
+                pos.Y += LineSpacing;
                 i++;
             }
         }

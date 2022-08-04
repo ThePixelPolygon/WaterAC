@@ -1,0 +1,9 @@
+Developed by Squid Grill for the August 2022 bits & Bytes Game Jam
+
+--Music--
+Main Menu - "Fashionable cafe" by Notzan ACT (https://dova-s.jp/EN/bgm/download11995.html)
+
+--Voice Lines--
+JPlexer by JPlexer
+
+Thank you for playing! <3

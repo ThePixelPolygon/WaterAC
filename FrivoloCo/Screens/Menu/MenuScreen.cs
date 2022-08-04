@@ -25,56 +25,69 @@ namespace FrivoloCo.Screens.Menu
             
         }
 
+        private Sprite sp;
+        private Sprite logo;
+        private Sprite bt;
+        private Sprite bt2;
+        private Sprite bt3;
+        private Sprite bt4;
+
         public override void Initialize()
         {
             rc = new RenderContainer(Game.GraphicsDevice)
             {
                 Layout = Water.Graphics.Layout.Fill
             };
-            var sp = new Sprite("Assets/FrivoloCoBackground.png")
+            sp = new Sprite("Assets/FrivoloCoBackground.png")
             {
                 RelativePosition = new(0, 0, 1920, 1080)
             };
             rc.AddChild(Game.AddObject(sp));
             AddChild(rc);
 
-            var logo = new Sprite("Assets/logo.png")
+            logo = new Sprite("Assets/frivologo.png")
             {
-                RelativePosition = new(0, 0, 491, 308),
+                RelativePosition = new(0, 0, 393, 225),
                 Layout = Water.Graphics.Layout.AnchorTop,
-                Margin = 10
+                Margin = 50
             };
             AddChild(Game.AddObject(logo));
 
-            //var sc = new StackContainer()
-            //{
-            //    RelativePosition = new(0, 0, 560, 630),
-            //};
-            var bt = new SpriteButton("Assets/indulge.png", "Assets/indulgeA.png", () => { throw new Exception("Test"); })
+            bt = new SpriteButton("Assets/indulge.png", "Assets/indulgeA.png", () => { throw new Exception("Test"); })
             {
-                RelativePosition = new(0, 400, 250, 100),
+                RelativePosition = new(0, 300, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
             AddChild(Game.AddObject(bt));
 
-            var bt2 = new SpriteButton("Assets/options.png", "Assets/optionsA.png", () => { throw new Exception("Test"); })
+            bt2 = new SpriteButton("Assets/options.png", "Assets/optionsA.png", () => { throw new Exception("Test"); })
             {
-                RelativePosition = new(0, 550, 250, 100),
+                RelativePosition = new(0, 450, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
             AddChild(Game.AddObject(bt2));
 
-            var bt3 = new SpriteButton("Assets/exit.png", "Assets/exitA.png", () => { Environment.Exit(0); })
+            bt3 = new SpriteButton("Assets/credits.png", "Assets/creditsA.png", () => { ScreenManager.ChangeScreen(new CreditsScreen()); })
             {
-                RelativePosition = new(0, 700, 250, 100),
+                RelativePosition = new(0, 600, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
             AddChild(Game.AddObject(bt3));
+
+            bt4 = new SpriteButton("Assets/exit.png", "Assets/exitA.png", () => { Environment.Exit(0); })
+            {
+                RelativePosition = new(0, 750, 250, 100),
+                Layout = Water.Graphics.Layout.HorizontalCenter
+            };
+            AddChild(Game.AddObject(bt4));
         }
 
+        private double counter = 0;
         public override void Update(GameTime gameTime)
         {
-            
+            counter += gameTime.ElapsedGameTime.TotalSeconds;
+
+            sp.Color = logo.Color = bt.Color = bt2.Color = bt3.Color = bt4.Color = Color.White * (float)counter;
         }
     }
 }

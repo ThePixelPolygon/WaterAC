@@ -1,6 +1,7 @@
 ﻿using FrivoloCo.Screens.Menu;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,10 @@ namespace FrivoloCo.Screens
             };
             rc.AddChild(Game.AddObject(sp));
             AddChild(rc);
+
+            MediaPlayer.Volume = 0.5f; // TODO: volume control
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(Song.FromUri("mainmenu", new("Assets/Music/mainmenu.ogg", UriKind.Relative)));
         }
 
         private double counter = 0;
