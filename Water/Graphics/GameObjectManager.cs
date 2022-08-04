@@ -12,6 +12,7 @@ namespace Water.Graphics
     public class GameObjectManager : IDrawableThing
     {
         public List<GameObject> AllObjects { get; private set; } = new();
+        public WaterGame MainGame { get; }
         public GraphicsDevice GraphicsDevice { get; }
         public TextureCache Textures { get; private set; }
         public FontCache Fonts { get; private set; }
@@ -22,9 +23,10 @@ namespace Water.Graphics
         private readonly List<GameObject> objectsToAdd = new();
         private readonly List<GameObject> objectsToRemove = new();
 
-        public GameObjectManager(GraphicsDevice graphicsDevice)
+        public GameObjectManager(GraphicsDevice graphicsDevice, WaterGame waterGame)
         {
             GraphicsDevice = graphicsDevice;
+            MainGame = waterGame;
             Textures = new TextureCache(graphicsDevice);
             Fonts = new FontCache();
             Input = new InputManager(this);

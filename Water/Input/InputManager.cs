@@ -51,11 +51,11 @@ namespace Water.Input
                 KeyUp?.Invoke(this, new(key));
             }
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed) PrimaryMouseButtonDown?.Invoke(this, new());
-            if (currentMouseState.LeftButton == ButtonState.Released) PrimaryMouseButtonUp?.Invoke(this, new());
+            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton != ButtonState.Pressed && game.MainGame.IsActive) PrimaryMouseButtonDown?.Invoke(this, new());
+            if (currentMouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton != ButtonState.Released && game.MainGame.IsActive) PrimaryMouseButtonUp?.Invoke(this, new());
 
-            if (currentMouseState.RightButton == ButtonState.Pressed) SecondaryMouseButtonDown?.Invoke(this, new());
-            if (currentMouseState.RightButton == ButtonState.Released) SecondaryMouseButtonUp?.Invoke(this, new());
+            if (currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton != ButtonState.Pressed && game.MainGame.IsActive) SecondaryMouseButtonDown?.Invoke(this, new());
+            if (currentMouseState.RightButton == ButtonState.Released && previousMouseState.RightButton != ButtonState.Released && game.MainGame.IsActive) SecondaryMouseButtonUp?.Invoke(this, new());
 
             previousKbState = currentKbState;
             previousMouseState = currentMouseState;

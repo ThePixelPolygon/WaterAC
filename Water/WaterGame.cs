@@ -31,7 +31,7 @@ namespace Water
             TargetElapsedTime = TimeSpan.FromMilliseconds(1);
             Graphics.ApplyChanges();
             
-            gameObjectManager = new(GraphicsDevice);
+            gameObjectManager = new(GraphicsDevice, this);
 
             Screen = new(gameObjectManager, Window);
             Screen.RelativePosition = GraphicsDevice.Viewport.Bounds;
