@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Water.Audio;
 using Water.Graphics;
 using Water.Graphics.Containers;
 using Water.Graphics.Controls;
@@ -22,6 +25,19 @@ namespace TestGame.Screens
                 {
                     Layout = Layout.Fill,
                 }));
+            }
+            else if (e.Key == Microsoft.Xna.Framework.Input.Keys.E)
+            {
+                //var x = new AudioTrack(Game.Audio, @"Assets/03. Dream Walker.mp3");
+                //x.Volume = 1f;
+                //x.Play();
+                MediaPlayer.Volume = 0.4f;
+                MediaPlayer.Play(Song.FromUri("03. Dream Walker", new("Assets/03. Dream Walker.ogg", UriKind.Relative)));
+            }
+            else if (e.Key == Microsoft.Xna.Framework.Input.Keys.R)
+            {
+                SoundEffect.MasterVolume = 0.5f;
+                SoundEffect.FromFile("Assets/you_あ、見つかりましたぁ.wav").Play();
             }
         }
 
