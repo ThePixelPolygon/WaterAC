@@ -61,11 +61,16 @@ namespace Water.Graphics.Screens
 
         public void RemoveScreen(Screen screen)
         {
+            ClearAllObjectsFromScreen(screen);
             Screens.Remove(screen);
             gameObjectManager.RootObjects.Remove(screen);
         }
         public void RemoveAllScreens()
         {
+            foreach (var screen in Screens)
+            {
+                ClearAllObjectsFromScreen(screen);
+            }
             Screens.Clear();
             gameObjectManager.RootObjects.Clear();
         }
@@ -92,15 +97,15 @@ namespace Water.Graphics.Screens
 
         public override void Update(GameTime gameTime)
         {
-            if (!HasScreens) return;
-            foreach (var screen in Screens)
-                screen.Update(gameTime);
+            //if (!HasScreens) return;
+            //foreach (var screen in Screens)
+            //    screen.Update(gameTime);
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            if (!HasScreens) return;
-            foreach (var screen in Screens)
-                screen.Draw(gameTime, spriteBatch, graphicsDevice);
+            //if (!HasScreens) return;
+            //foreach (var screen in Screens)
+            //    screen.Draw(gameTime, spriteBatch, graphicsDevice);
         }
 
         public void UpdateScreenSize(Rectangle newSize)
@@ -114,6 +119,20 @@ namespace Water.Graphics.Screens
                 screen.CalculateChildrenPositions();
             }
             CalculateChildrenPositions();
+        }
+
+        private void ClearAllObjectsFromScreen(Screen screen)
+        {
+            var objectsToRemove = new List<GameObject>();
+            foreach (var obj in screen.Children)
+            {
+                if (obj is GameObject gObj) objectsToRemove.Add(gObj);
+            }
+            foreach (var obj in objectsToRemove)
+            {
+                gameObjectManager.RemoveObject(obj);
+            }
+            gameObjectManager.RemoveObject(screen);
         }
     }
 }

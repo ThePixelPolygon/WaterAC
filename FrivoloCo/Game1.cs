@@ -9,7 +9,7 @@ namespace FrivoloCo
 {
     public class Game1 : WaterGame
     {
-        public override string ProjectName => "FrivoloCo: The Game";
+        public override string ProjectName => "Ian Clary's First Day At FrivoloCo!";
 
         public Game1() : base()
         {
