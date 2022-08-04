@@ -41,9 +41,6 @@ namespace Water
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-#if DEBUG
-            Screen.AddScreen(new DebugOverlay());
-#endif
             Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
 
             gameObjectManager.Input.KeyDown += Input_KeyDown;

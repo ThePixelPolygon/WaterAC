@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Water.Screens;
 
 namespace Water.Graphics.Screens
 {
@@ -15,6 +16,9 @@ namespace Water.Graphics.Screens
 
         private GameObjectManager gameObjectManager;
         private GameWindow window;
+#if DEBUG
+        private DebugOverlay debugOverlay = new();
+#endif
         public GameObjectScreen(GameObjectManager gameObjectManager, GameWindow window)
         {
             this.gameObjectManager = gameObjectManager;
@@ -38,12 +42,20 @@ namespace Water.Graphics.Screens
         public void AddScreen(Screen screen)
         {
             Screens.Add(InitializeScreen(screen));
+#if DEBUG
+            if (!Screens.Contains(debugOverlay))
+            AddScreen(debugOverlay);
+#endif
             gameObjectManager.RootObjects = new(Screens);
         }
 
         public void InsertScreen(int index, Screen screen)
         {
             Screens.Insert(index, InitializeScreen(screen));
+#if DEBUG
+            if (!Screens.Contains(debugOverlay))
+                AddScreen(debugOverlay);
+#endif
             gameObjectManager.RootObjects = new(Screens);
         }
 
