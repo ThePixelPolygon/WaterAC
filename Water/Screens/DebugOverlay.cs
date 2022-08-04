@@ -84,7 +84,8 @@ namespace Water.Screens
 
         public override void Deinitialize()
         {
-    
+            Game.Input.KeyDown -= Input_KeyDown;
+            Game.Input.KeyUp -= Input_KeyUp;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

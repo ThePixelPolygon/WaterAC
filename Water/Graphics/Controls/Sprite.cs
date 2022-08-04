@@ -12,8 +12,18 @@ namespace Water.Graphics.Controls
     {
         public Color Color { get; set; } = Color.White;
 
+        public string Path
+        {
+            get => path;
+            set
+            {
+                path = value;
+                Initialize();
+            }
+        }
+
         private Texture2D sprite;
-        private readonly string path;
+        private string path;
         public Sprite(string path)
         {
             this.path = path;

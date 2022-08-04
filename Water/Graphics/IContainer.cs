@@ -38,6 +38,8 @@ namespace Water.Graphics
         AnchorBottom,
         AnchorBottomLeft,
         Center,
+        HorizontalCenter,
+        VerticalCenter,
         DockLeft,
         DockTop,
         DockRight,

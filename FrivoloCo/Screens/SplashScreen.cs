@@ -49,6 +49,9 @@ namespace FrivoloCo.Screens
         {
             counter += gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (Game.Input.IsKeyHeld(Microsoft.Xna.Framework.Input.Keys.Space))
+                ScreenManager.ChangeScreen(new MenuScreen());
+
             if (stage == 0)
             {
                 sp.Color = Color.White * (float)counter;

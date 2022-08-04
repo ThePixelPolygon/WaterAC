@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace Water.Graphics.Screens
 
         public void AddScreen(Screen screen)
         {
+            Debug.WriteLine($"Added {screen}");
             Screens.Add(InitializeScreen(screen));
 #if DEBUG
             if (!Screens.Contains(debugOverlay))
@@ -51,6 +53,7 @@ namespace Water.Graphics.Screens
 
         public void InsertScreen(int index, Screen screen)
         {
+            Debug.WriteLine($"Inserted {screen} to {index}");
             Screens.Insert(index, InitializeScreen(screen));
 #if DEBUG
             if (!Screens.Contains(debugOverlay))
@@ -61,12 +64,14 @@ namespace Water.Graphics.Screens
 
         public void RemoveScreen(Screen screen)
         {
+            Debug.WriteLine($"Removed {screen}");
             ClearAllObjectsFromScreen(screen);
             Screens.Remove(screen);
             gameObjectManager.RootObjects.Remove(screen);
         }
         public void RemoveAllScreens()
         {
+            Debug.WriteLine("Remove all screens!");
             foreach (var screen in Screens)
             {
                 ClearAllObjectsFromScreen(screen);

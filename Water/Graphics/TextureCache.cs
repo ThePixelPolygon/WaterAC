@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Water.Graphics
             {
                 texture = Texture2D.FromFile(graphicsDevice, path);
                 Cache.Add(path, texture);
+                Debug.WriteLine($"Texture Cache: Caching {path}!");
             }
             return texture;
         }

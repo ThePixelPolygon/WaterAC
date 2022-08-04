@@ -116,6 +116,13 @@ namespace Water.Graphics
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
+                    Layout.HorizontalCenter => new
+                    (
+                        parentPosition.X + ((parentPosition.Width - child.RelativePosition.Width) / 2),
+                        child.RelativePosition.Y,
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
+                    ),
                     Layout.Fill => new
                     (
                         parentPosition.X + child.Margin,
