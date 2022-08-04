@@ -1,4 +1,5 @@
-﻿using FrivoloCo.Screens.Menu;
+﻿using FrivoloCo.Screens;
+using FrivoloCo.Screens.Menu;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,7 +18,11 @@ namespace FrivoloCo
 
         protected override void Initialize()
         {
-            Screen.ChangeScreen(new MenuScreen());
+            Graphics.PreferredBackBufferWidth = 854;
+            Graphics.PreferredBackBufferHeight = 480;
+            Graphics.ApplyChanges();
+            Screen.UpdateScreenSize(new(0, 0, 854, 480));
+            Screen.ChangeScreen(new SplashScreen());
             base.Initialize();
         }
 

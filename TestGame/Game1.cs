@@ -16,6 +16,7 @@ namespace TestGame
 
         protected override void Initialize()
         {
+
             Screen.InsertScreen(0, new TestScreen());
             base.Initialize();
         }

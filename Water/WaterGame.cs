@@ -18,18 +18,18 @@ namespace Water
         public GameObjectScreen Screen { get; private set; }
         public virtual string ProjectName { get; }
 
-        private GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager Graphics;
         private SpriteBatch _spriteBatch;
 
         private GameObjectManager gameObjectManager;
         public WaterGame()
         {
-            _graphics = new GraphicsDeviceManager(this);
-            _graphics.SynchronizeWithVerticalRetrace = true;
+            Graphics = new GraphicsDeviceManager(this);
+            Graphics.SynchronizeWithVerticalRetrace = true;
             Window.AllowUserResizing = true;
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1);
-            _graphics.ApplyChanges();
+            Graphics.ApplyChanges();
             
             gameObjectManager = new(GraphicsDevice);
 
@@ -54,7 +54,7 @@ namespace Water
                     Exit();
                     break;
                 case Keys.F11:
-                    _graphics.ToggleFullScreen();
+                    Graphics.ToggleFullScreen();
                     break;
                 case Keys.F10:
                     UseExperimentalDrawingMode = !UseExperimentalDrawingMode;

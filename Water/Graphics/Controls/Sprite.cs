@@ -10,17 +10,18 @@ namespace Water.Graphics.Controls
 {
     public class Sprite : GameObject
     {
+        public Color Color { get; set; } = Color.White;
+
         private Texture2D sprite;
         private readonly string path;
-        public Sprite(Rectangle relativePosition, string path)
+        public Sprite(string path)
         {
-            RelativePosition = relativePosition;
             this.path = path;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            spriteBatch.Draw(sprite, ActualPosition, Color.White);
+            spriteBatch.Draw(sprite, ActualPosition, Color);
         }
 
         public override void Initialize()
