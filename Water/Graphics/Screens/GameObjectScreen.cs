@@ -127,16 +127,24 @@ namespace Water.Graphics.Screens
 
         private void ClearAllObjectsFromScreen(Screen screen)
         {
-            var objectsToRemove = new List<GameObject>();
-            foreach (var obj in screen.Children)
+            var containers = ExtensionClass.FlattenWithLevel<IContainer>(screen, x => x.Children);
+            
+            foreach (var container in containers)
             {
-                if (obj is GameObject gObj) objectsToRemove.Add(gObj);
+                if (container.Item1 is GameObject obj)
+                    gameObjectManager.RemoveObject(obj);
             }
-            foreach (var obj in objectsToRemove)
-            {
-                gameObjectManager.RemoveObject(obj);
-            }
-            gameObjectManager.RemoveObject(screen);
+            //var objectsToRemove = new List<GameObject>();
+            
+            //foreach (var obj in screen.Children)
+            //{
+            //    if (obj is GameObject gObj) objectsToRemove.Add(gObj);
+            //}
+            //foreach (var obj in objectsToRemove)
+            //{
+            //    gameObjectManager.RemoveObject(obj);
+            //}
+            //gameObjectManager.RemoveObject(screen);
         }
     }
 }
