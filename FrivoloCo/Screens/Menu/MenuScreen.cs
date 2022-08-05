@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace FrivoloCo.Screens.Menu
             };
             AddChild(Game.AddObject(logo));
 
-            bt = new SpriteButton("Assets/indulge.png", "Assets/indulgeA.png", () => { throw new Exception("Test"); })
+            bt = new SpriteButton("Assets/indulge.png", "Assets/indulgeA.png", () => { Debug.WriteLine("a"); })
             {
                 RelativePosition = new(0, 300, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
@@ -79,6 +80,7 @@ namespace FrivoloCo.Screens.Menu
                 RelativePosition = new(0, 750, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
+
             AddChild(Game.AddObject(bt4));
         }
 

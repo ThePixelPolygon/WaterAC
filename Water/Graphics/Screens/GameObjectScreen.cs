@@ -36,7 +36,6 @@ namespace Water.Graphics.Screens
 
             screen.Game.AddObject(screen); 
             screen.CalculateChildrenPositions();
-            screen.Initialize();
             return screen;
         }
 

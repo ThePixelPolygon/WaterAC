@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,13 +25,14 @@ namespace Water.Graphics.Controls
 
         public override void Initialize()
         {
+            Debug.WriteLine($"Initialized SB {this} - {regularPath} {activatedPath}");
             Game.Input.PrimaryMouseButtonDown += Input_PrimaryMouseButtonDown;
             base.Initialize();
         }
 
         private void Input_PrimaryMouseButtonDown(object sender, Input.MousePressEventArgs e)
         {
-            if (Game.Input.IsMouseWithin(this)) onClicked.Invoke();
+            if (spriteState) onClicked.Invoke();
         }
 
         public override void Deinitialize()

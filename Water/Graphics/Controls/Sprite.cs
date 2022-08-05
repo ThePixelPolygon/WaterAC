@@ -18,7 +18,7 @@ namespace Water.Graphics.Controls
             set
             {
                 path = value;
-                Initialize();
+                UpdateSprite();
             }
         }
 
@@ -29,15 +29,17 @@ namespace Water.Graphics.Controls
             this.path = path;
         }
 
+        private void UpdateSprite()
+        {
+            sprite = Game.Textures.Get(path);
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             spriteBatch.Draw(sprite, ActualPosition, Color);
         }
 
-        public override void Initialize()
-        {
-            sprite = Game.Textures.Get(path);
-        }
+        public override void Initialize() => UpdateSprite();
 
         public override void Deinitialize()
         {
