@@ -24,14 +24,14 @@ namespace Water.Graphics.Controls
         public int LineSpacing { get; set; } = 20;
 
         private DynamicSpriteFont font;
-        private Color color;
+        public Color Color { get; set; }
 
         // code taken from https://github.com/redteam-os/thundershock/blob/master/src/Thundershock/Gui/Elements/TextBlock.cs
 
         public TextBlock(Rectangle relativePosition, DynamicSpriteFont font, string text, Color color)
         {
             RelativePosition = relativePosition;
-            this.color = color;
+            Color = color;
             this.font = font;
             Text = text;
             LineSpacing = (int)font.Size;
@@ -68,7 +68,7 @@ namespace Water.Graphics.Controls
                     else if (VerticalTextAlignment == VerticalTextAlignment.Center)
                         pos.Y += (ActualPosition.Height - m.Y) / 2;
                 }
-                spriteBatch.DrawString(font, line, pos, color);
+                spriteBatch.DrawString(font, line, pos, Color);
 
                 pos.Y += LineSpacing;
                 i++;
