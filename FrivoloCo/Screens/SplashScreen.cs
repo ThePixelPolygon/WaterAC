@@ -20,7 +20,7 @@ namespace FrivoloCo.Screens
 
         public override void Deinitialize()
         {
-            
+            rc.Dispose();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

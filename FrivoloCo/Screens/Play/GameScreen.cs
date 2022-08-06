@@ -26,6 +26,7 @@ namespace FrivoloCo.Screens.Play
         public override void Deinitialize()
         {
             Game.Input.KeyDown -= Input_KeyDown;
+            rc.Dispose();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -35,6 +36,7 @@ namespace FrivoloCo.Screens.Play
 
         private TextBlock moneyTb;
         private TextBlock statusTb;
+        private RenderContainer rc;
 
         public override void Initialize()
         {
@@ -42,7 +44,7 @@ namespace FrivoloCo.Screens.Play
 
             MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
             // Playfield
-            var rc = new RenderContainer(Game.GraphicsDevice)
+            rc = new RenderContainer(Game.GraphicsDevice)
             {
                 Layout = Layout.Fill
             };

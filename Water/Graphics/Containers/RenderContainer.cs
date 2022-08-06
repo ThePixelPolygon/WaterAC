@@ -65,6 +65,10 @@ namespace Water.Graphics.Containers
             }
         }
 
+        public void Dispose()
+        {
+            renderTarget.Dispose();
+        }
     }
 
     public enum ScaleMode

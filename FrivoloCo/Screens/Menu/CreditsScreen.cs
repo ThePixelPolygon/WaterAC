@@ -16,7 +16,7 @@ namespace FrivoloCo.Screens.Menu
     {
         public override void Deinitialize()
         {
-            
+            rc.Dispose();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -24,9 +24,11 @@ namespace FrivoloCo.Screens.Menu
             
         }
 
+        private RenderContainer rc;
+
         public override void Initialize()
         {
-            var rc = new RenderContainer(Game.GraphicsDevice)
+            rc = new RenderContainer(Game.GraphicsDevice)
             {
                 Layout = Water.Graphics.Layout.Fill
             };
