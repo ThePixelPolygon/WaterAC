@@ -50,9 +50,6 @@ namespace Water
         {
             switch (e.Key)
             {
-                case Keys.Escape:
-                    Exit();
-                    break;
                 case Keys.F11:
                     Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                     Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;

@@ -133,6 +133,8 @@ namespace Water.Input
                    currentMouseState.Y >= container.ActualPosition.Y && currentMouseState.Y <= (container.ActualPosition.Y + container.ActualPosition.Height);
         }
 
+        public bool IsPrimaryMouseButtonHeld() => currentMouseState.LeftButton == ButtonState.Pressed;
+
         public bool IsKeyHeld(Keys key) => currentKbState.GetPressedKeys().Contains(key);
     }
 

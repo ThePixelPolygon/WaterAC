@@ -1,4 +1,5 @@
 ﻿using FrivoloCo.Screens.Menu;
+using FrivoloCo.Screens.Play.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
@@ -24,7 +25,7 @@ namespace FrivoloCo.Screens.Play
 
         public override void Deinitialize()
         {
-            
+            Game.Input.KeyDown -= Input_KeyDown;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -37,11 +38,13 @@ namespace FrivoloCo.Screens.Play
 
         public override void Initialize()
         {
+            Game.Input.KeyDown += Input_KeyDown;
+
             MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
             // Playfield
             var rc = new RenderContainer(Game.GraphicsDevice)
             {
-                Layout = Water.Graphics.Layout.Fill
+                Layout = Layout.Fill
             };
             var sp = new Sprite("Assets/Gameplay/gameplayday.png")
             {
@@ -53,11 +56,18 @@ namespace FrivoloCo.Screens.Play
                 RelativePosition = new(0, 0, 1920, 1080),
                 Layout = Layout.Center
             };
+
             co.AddChild(Game.AddObject(sp));
 
             rc.AddChild(co);
 
             AddChild(rc);
+
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Placeholder)
+            {
+                Layout = Layout.AnchorBottom,
+                RelativePosition = new(50, 0, 120, 230)
+            }));
             // HUD
             var moneyBox = new Box()
             {
@@ -92,6 +102,17 @@ namespace FrivoloCo.Screens.Play
                 Margin = 2
             };
             statusBox.AddChild(Game.AddObject(statusTb));
+        }
+
+        private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
+        {
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+            {
+                MediaPlayer.Stop();
+                ScreenManager.ChangeScreen(new MenuScreen());
+            }
+            else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
+                ScreenManager.ChangeScreen(new GameScreen(new GameState()));
         }
 
         private double timeLeft = 120000; // 2 minutes in milliseconds
