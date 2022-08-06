@@ -17,8 +17,8 @@ namespace FrivoloCo.Screens.Play
 {
     public class GameScreen : Screen
     {
-        private GameState state;
-        public GameScreen(GameState state)
+        private ProgressState state;
+        public GameScreen(ProgressState state)
         {
             this.state = state;
         }
@@ -65,11 +65,11 @@ namespace FrivoloCo.Screens.Play
 
             AddChild(rc);
 
-            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Placeholder)
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Tray, State)
             {
                 Layout = Layout.AnchorBottom,
-                RelativePosition = new(50, 0, 120, 230)
             }));
+            CalculateChildrenPositions();
             // HUD
             var moneyBox = new Box()
             {
@@ -114,17 +114,17 @@ namespace FrivoloCo.Screens.Play
                 ScreenManager.ChangeScreen(new MenuScreen());
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
-                ScreenManager.ChangeScreen(new GameScreen(new GameState()));
+                ScreenManager.ChangeScreen(new GameScreen(new ProgressState()));
         }
 
-        private double timeLeft = 120000; // 2 minutes in milliseconds
+        public GameState State { get; private set; } = new();
 
         public override void Update(GameTime gameTime)
         {
-            timeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            State.TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
             moneyTb.Text = $"${state.Money:0..00}";
-            statusTb.Text = $"Day {state.Day}    {timeLeft} (<- placeholder)";
+            statusTb.Text = $"Day {state.Day}    {State.TimeLeft} (<- placeholder)";
         }
     }
 }

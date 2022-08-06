@@ -13,10 +13,12 @@ namespace FrivoloCo.Screens.Play.Items
     public class ItemDispenser : GameObject
     {
         private ItemType type;
+        private GameState state;
 
-        public ItemDispenser(ItemType type)
+        public ItemDispenser(ItemType type, GameState state)
         {
             this.type = type;
+            this.state = state;
         }
 
         public override void Deinitialize()
@@ -34,6 +36,8 @@ namespace FrivoloCo.Screens.Play.Items
             Game.Input.PrimaryMouseButtonDown += Input_PrimaryMouseButtonDown;
 
             var x = GetItemForItemType(type);
+
+            RelativePosition = x.RelativePosition;
 
             var sp = new Sprite(x.Path)
             {
@@ -71,12 +75,14 @@ namespace FrivoloCo.Screens.Play.Items
 
         private Item GetItemForItemType(ItemType type) => type switch
         {
-            ItemType.Placeholder or _ => new Item("Assets/Gameplay/Items/placeholder.png", true)
+            ItemType.Tray => new Tray(true, state),
+            ItemType.Placeholder or _ => new Item("Assets/Gameplay/Items/placeholder.png", true, state)
         };
     }
 
     public enum ItemType
     {
+        Tray,
         Placeholder
     }
 }

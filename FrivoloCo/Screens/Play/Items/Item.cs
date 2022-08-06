@@ -15,9 +15,13 @@ namespace FrivoloCo.Screens.Play.Items
 
         public virtual string Name => "Placeholder";
 
-        public Item(string texturePath, bool isBeingDragged) : base(texturePath)
+        private GameState state;
+
+        public Item(string texturePath, bool isBeingDragged, GameState state) : base(texturePath)
         {
+            RelativePosition = new(0, 0, 120, 230);
             IsBeingDragged = isBeingDragged;
+            this.state = state;
         }
 
         public override void Initialize()
@@ -39,7 +43,10 @@ namespace FrivoloCo.Screens.Play.Items
         private void Input_PrimaryMouseButtonUp(object sender, Water.Input.MousePressEventArgs e)
         {
             if (Game.Input.IsMouseWithin(this))
+            {
                 IsBeingDragged = false;
+                state.CurrentlyDraggedItem = null;
+            }
         }
 
         public override void Deinitialize()
@@ -53,14 +60,17 @@ namespace FrivoloCo.Screens.Play.Items
         {
             if (IsBeingDragged)
             {
+                state.CurrentlyDraggedItem = this;
                 var pos = Game.Input.GetMousePositionRelativeTo(Parent);
-                RelativePosition = new(pos.X - 60, pos.Y - 115, 120, 230);
+                RelativePosition = new(pos.X - (RelativePosition.Width / 2), pos.Y - (RelativePosition.Height / 2), RelativePosition.Width, RelativePosition.Height);
             }
             else
             {
                 if (Parent is not null)
-                    if (RelativePosition.Y <= Parent.ActualPosition.Height - 230)
-                        RelativePosition = new(RelativePosition.X, RelativePosition.Y + 1, 120, 230);
+                {
+                    if (RelativePosition.Y <= Parent.ActualPosition.Height - state.TableTopOffset + RelativePosition.Height)
+                        RelativePosition = new(RelativePosition.X, RelativePosition.Y + 1, RelativePosition.Width, RelativePosition.Height);
+                }
             }
             base.Update(gameTime);
         }

@@ -15,9 +15,9 @@ namespace FrivoloCo.Screens.Play
 {
     public class PreGameScreen : Screen
     {
-        private GameState state;
+        private ProgressState state;
 
-        public PreGameScreen(GameState state)
+        public PreGameScreen(ProgressState state)
         {
             this.state = state;
         }

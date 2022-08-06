@@ -77,7 +77,7 @@ namespace FrivoloCo.Screens.Menu
 
             if (counter <= 0)
             {
-                ScreenManager.ChangeScreen(new PreGameScreen(new GameState()));
+                ScreenManager.ChangeScreen(new PreGameScreen(new ProgressState()));
                 beginGame = false;
                 return;
             }
