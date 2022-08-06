@@ -16,9 +16,10 @@ namespace FrivoloCo.Screens.Play
 {
     public class GameScreen : Screen
     {
+        private GameState state;
         public GameScreen(GameState state)
         {
-
+            this.state = state;
         }
 
         public override void Deinitialize()
@@ -31,11 +32,13 @@ namespace FrivoloCo.Screens.Play
             
         }
 
-        GameObject b;
+        private TextBlock moneyTb;
+        private TextBlock statusTb;
+
         public override void Initialize()
         {
             MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
-
+            // Playfield
             var rc = new RenderContainer(Game.GraphicsDevice)
             {
                 Layout = Water.Graphics.Layout.Fill
@@ -52,26 +55,53 @@ namespace FrivoloCo.Screens.Play
             };
             co.AddChild(Game.AddObject(sp));
 
-            b = new SpriteButton("Assets/back.png", "Assets/backA.png", () => { ScreenManager.ChangeScreen(new MenuScreen()); })
-            {
-                Layout = Water.Graphics.Layout.Center,
-                RelativePosition = new(0, 0, 250, 100)
-            };
-            co.AddChild(Game.AddObject(b));
-
             rc.AddChild(co);
 
             AddChild(rc);
+            // HUD
+            var moneyBox = new Box()
+            {
+                RelativePosition = new(0, 0, 250, 30),
+                Layout = Layout.AnchorTopRight,
+                Margin = 10,
+                Color = Color.White
+            };
+            AddChild(Game.AddObject(moneyBox));
+            moneyTb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 28), "", Color.Black)
+            {
+                Layout = Layout.Fill,
+                HorizontalTextAlignment = HorizontalTextAlignment.Left,
+                VerticalTextAlignment = VerticalTextAlignment.Center,
+                Margin = 2
+            };
+            moneyBox.AddChild(Game.AddObject(moneyTb));
+
+            var statusBox = new Box()
+            {
+                RelativePosition = new(0, 0, 250, 30),
+                Layout = Layout.AnchorTopLeft,
+                Margin = 10,
+                Color = Color.White
+            };
+            AddChild(Game.AddObject(statusBox));
+            statusTb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 28), "", Color.Black)
+            {
+                Layout = Layout.Fill,
+                HorizontalTextAlignment = HorizontalTextAlignment.Left,
+                VerticalTextAlignment = VerticalTextAlignment.Center,
+                Margin = 2
+            };
+            statusBox.AddChild(Game.AddObject(statusTb));
         }
+
+        private double timeLeft = 120000; // 2 minutes in milliseconds
 
         public override void Update(GameTime gameTime)
         {
-            //var pos = Game.Input.GetMousePositionRelativeTo(this);
-            //if (pos.Y >= 540)
-            //{
+            timeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            //}
-            //b.RelativePosition = new(pos.X, pos.Y, 250, 100);
+            moneyTb.Text = $"${state.Money:0..00}";
+            statusTb.Text = $"Day {state.Day}    {timeLeft} (<- placeholder)";
         }
     }
 }
