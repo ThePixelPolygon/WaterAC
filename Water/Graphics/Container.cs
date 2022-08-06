@@ -48,10 +48,8 @@ namespace Water.Graphics
         {
             foreach (var child in Children)
             {
-                if (this is GameObjectScreen)
-                        Console.WriteLine("it's true!");
                 var parentPosition = child.Parent?.ActualPosition ?? RelativePosition; // can be null for the root object
-                Rectangle tempForDebugging = child.Layout switch
+                child.ActualPosition = child.Layout switch
                 {
                     Layout.AnchorLeft => new
                     (
@@ -176,7 +174,6 @@ namespace Water.Graphics
                     )
 
                 };
-                child.ActualPosition = tempForDebugging;
                 child.CalculateChildrenPositions();
             }
         } 

@@ -10,7 +10,7 @@ namespace Water.Graphics.Screens
 {
     public abstract class Screen : GameObject
     {
-        public virtual GameObjectScreen ScreenManager { get; set; }
+        public virtual ScreenManager ScreenManager { get; set; }
 
         public virtual GameWindow Window { get; set; }
 

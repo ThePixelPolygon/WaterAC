@@ -15,7 +15,7 @@ namespace Water
     {
         public static bool UseExperimentalDrawingMode { get; private set; } = false;
 
-        public GameObjectScreen Screen { get; private set; }
+        public ScreenManager Screen { get; private set; }
         public virtual string ProjectName { get; }
 
         public GraphicsDeviceManager Graphics;
@@ -34,14 +34,15 @@ namespace Water
             gameObjectManager = new(GraphicsDevice, this);
 
             Screen = new(gameObjectManager, Window);
-            Screen.RelativePosition = GraphicsDevice.Viewport.Bounds;
+            Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
+
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             Screen.ChangeScreen(new DefaultScreen());
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
+            
 
             gameObjectManager.Input.KeyDown += Input_KeyDown;
         }
@@ -57,6 +58,9 @@ namespace Water
                     break;
                 case Keys.F10:
                     UseExperimentalDrawingMode = !UseExperimentalDrawingMode;
+                    break;
+                case Keys.F9:
+                    GC.Collect(2);
                     break;
             }
         }

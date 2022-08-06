@@ -10,17 +10,19 @@ using Water.Screens;
 
 namespace Water.Graphics.Screens
 {
-    public class GameObjectScreen : GameObject
+    public class ScreenManager
     {
         public List<Screen> Screens { get; } = new();
         public bool HasScreens { get => Screens.Count > 0; }
 
         private GameObjectManager gameObjectManager;
         private GameWindow window;
+
+        private Rectangle currentScreenSize;
 #if DEBUG
         private DebugOverlay debugOverlay = new();
 #endif
-        public GameObjectScreen(GameObjectManager gameObjectManager, GameWindow window)
+        public ScreenManager(GameObjectManager gameObjectManager, GameWindow window)
         {
             this.gameObjectManager = gameObjectManager;
             this.window = window;
@@ -31,8 +33,8 @@ namespace Water.Graphics.Screens
             screen.Game = gameObjectManager;
             screen.ScreenManager = this;
             screen.Window = window;
-            screen.ActualPosition = ActualPosition;
-            screen.RelativePosition = RelativePosition;
+            screen.ActualPosition = currentScreenSize;
+            screen.RelativePosition = currentScreenSize;
 
             screen.Game.AddObject(screen); 
             screen.CalculateChildrenPositions();
@@ -79,50 +81,21 @@ namespace Water.Graphics.Screens
             gameObjectManager.RootObjects.Clear();
         }
 
-        public override void AddChild(IContainer child)
-        {
-            base.AddChild(child);
-        }
-
-        public override void Initialize()
-        {
-        }
-
-        public override void Deinitialize()
-        {
-       
-        }
-
         public void ChangeScreen(Screen screen)
         {
             RemoveAllScreens();   
             AddScreen(screen);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            //if (!HasScreens) return;
-            //foreach (var screen in Screens)
-            //    screen.Update(gameTime);
-        }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
-        {
-            //if (!HasScreens) return;
-            //foreach (var screen in Screens)
-            //    screen.Draw(gameTime, spriteBatch, graphicsDevice);
-        }
-
         public void UpdateScreenSize(Rectangle newSize)
         {
-            ActualPosition = newSize;
-            RelativePosition = newSize;
+            currentScreenSize = newSize;
             foreach (var screen in Screens)
             {
                 screen.ActualPosition = newSize;
                 screen.RelativePosition = newSize;
                 screen.CalculateChildrenPositions();
             }
-            CalculateChildrenPositions();
         }
 
         private void ClearAllObjectsFromScreen(Screen screen)
@@ -134,17 +107,6 @@ namespace Water.Graphics.Screens
                 if (container.Item1 is GameObject obj)
                     gameObjectManager.RemoveObject(obj);
             }
-            //var objectsToRemove = new List<GameObject>();
-            
-            //foreach (var obj in screen.Children)
-            //{
-            //    if (obj is GameObject gObj) objectsToRemove.Add(gObj);
-            //}
-            //foreach (var obj in objectsToRemove)
-            //{
-            //    gameObjectManager.RemoveObject(obj);
-            //}
-            //gameObjectManager.RemoveObject(screen);
         }
     }
 }
