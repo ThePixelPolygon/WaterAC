@@ -53,6 +53,9 @@ namespace FrivoloCo.Screens.Play
         private double jingleFadeLength = 3.5;
         public override void Update(GameTime gameTime)
         {
+            if (Game.Input.IsKeyHeld(Microsoft.Xna.Framework.Input.Keys.Space))
+                jingleFadeLength = 0;
+
             if (fadeIn <= 1)
             {
                 fadeIn += gameTime.ElapsedGameTime.TotalSeconds * 5;

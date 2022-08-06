@@ -31,6 +31,7 @@ namespace FrivoloCo.Screens.Play
             
         }
 
+        GameObject b;
         public override void Initialize()
         {
             MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
@@ -47,24 +48,30 @@ namespace FrivoloCo.Screens.Play
             var co = new Container()
             {
                 RelativePosition = new(0, 0, 1920, 1080),
-                Layout = Layout.Fill
+                Layout = Layout.Center
             };
             co.AddChild(Game.AddObject(sp));
 
-            co.AddChild(Game.AddObject(new SpriteButton("Assets/back.png", "Assets/bankA.png", () => { ScreenManager.ChangeScreen(new MenuScreen()); })
+            b = new SpriteButton("Assets/back.png", "Assets/backA.png", () => { ScreenManager.ChangeScreen(new MenuScreen()); })
             {
                 Layout = Water.Graphics.Layout.Center,
                 RelativePosition = new(0, 0, 250, 100)
-            }));
+            };
+            co.AddChild(Game.AddObject(b));
 
             rc.AddChild(co);
-            
+
             AddChild(rc);
         }
 
         public override void Update(GameTime gameTime)
         {
-            
+            //var pos = Game.Input.GetMousePositionRelativeTo(this);
+            //if (pos.Y >= 540)
+            //{
+
+            //}
+            //b.RelativePosition = new(pos.X, pos.Y, 250, 100);
         }
     }
 }

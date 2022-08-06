@@ -71,7 +71,8 @@ namespace Water.Input
 
             var x = container;
             RenderContainer parentRenderContainer = null;
-            if (x.Parent is not null)
+            if (x is RenderContainer y) parentRenderContainer = y;
+            else if (x.Parent is not null)
             {
                 while (x.Parent is not null)
                 {
@@ -86,11 +87,17 @@ namespace Water.Input
 
             if (parentRenderContainer is not null)
             {
-                scaleFactorX = (float) 720 / (float)1920;
-                scaleFactorY = (float) 567 / (float)1080;
-                Point result = new(parentRenderContainer.ActualPosition.X + (int)Math.Round(currentMouseState.X * (scaleFactorX * 1)), 
-                    parentRenderContainer.ActualPosition.Y + (int)Math.Round(currentMouseState.Y * (scaleFactorY * 1)));
-                return result;
+                
+                var rcVirtualized = parentRenderContainer.Children[0].RelativePosition;
+
+                var scaleX = (float)rcVirtualized.Width / parentRenderContainer.ActualPosition.Width /*/ rcVirtualized.Width*/;
+                var scaleY = (float)rcVirtualized.Height / parentRenderContainer.ActualPosition.Height /*/ rcVirtualized.Height*/;
+
+                var aa = ((container.RelativePosition.X + currentMouseState.X) * scaleX);
+                var a = parentRenderContainer.ActualPosition.X + (int)Math.Round(aa);
+                var b = parentRenderContainer.ActualPosition.Y + (int)Math.Round((float)( container.RelativePosition.Y + currentMouseState.Y) * scaleY);
+                return new(a,
+                    b);
             }
             //return new(100, 100);
             //else
@@ -118,8 +125,8 @@ namespace Water.Input
             if (parentRenderContainer is not null)
             {
                 var relativeMousePos = GetMousePositionRelativeTo(parentRenderContainer);
-                return relativeMousePos.X >= container.RelativePosition.X && relativeMousePos.X <= (container.RelativePosition.X + container.RelativePosition.Width) &&
-                   relativeMousePos.Y >= container.RelativePosition.Y && relativeMousePos.Y <= (container.RelativePosition.Y + container.RelativePosition.Height);
+                return relativeMousePos.X >= container.ActualPosition.X && relativeMousePos.X <= (container.ActualPosition.X + container.ActualPosition.Width) &&
+                   relativeMousePos.Y >= container.ActualPosition.Y && relativeMousePos.Y <= (container.ActualPosition.Y + container.ActualPosition.Height);
             }
             else
                 return currentMouseState.X >= container.ActualPosition.X && currentMouseState.X <= (container.ActualPosition.X + container.ActualPosition.Width) &&
