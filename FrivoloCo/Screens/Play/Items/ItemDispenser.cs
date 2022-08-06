@@ -75,14 +75,14 @@ namespace FrivoloCo.Screens.Play.Items
 
         private Item GetItemForItemType(ItemType type) => type switch
         {
-            ItemType.Tray => new Tray(true, state),
-            ItemType.Placeholder or _ => new Item("Assets/Gameplay/Items/placeholder.png", true, state)
+            ItemType.FlatWhite => new Item("Assets/Gameplay/Items/flatwhite.png", true, "Flat White", ItemType.FlatWhite, state),
+            ItemType.Placeholder or _ => new Item("Assets/Gameplay/Items/placeholder.png", true, "Placeholder", ItemType.Placeholder, state)
         };
     }
 
     public enum ItemType
     {
-        Tray,
+        FlatWhite,
         Placeholder
     }
 }

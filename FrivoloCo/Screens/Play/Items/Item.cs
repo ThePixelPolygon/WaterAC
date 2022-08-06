@@ -13,14 +13,18 @@ namespace FrivoloCo.Screens.Play.Items
     {
         public bool IsBeingDragged { get; private set; } = false;
 
-        public virtual string Name => "Placeholder";
+        public virtual string Name { get; set; } = "Placeholder";
+
+        public ItemType Type { get; set; } = ItemType.Placeholder;
 
         private GameState state;
 
-        public Item(string texturePath, bool isBeingDragged, GameState state) : base(texturePath)
+        public Item(string texturePath, bool isBeingDragged, string name, ItemType type, GameState state) : base(texturePath)
         {
             RelativePosition = new(0, 0, 120, 230);
             IsBeingDragged = isBeingDragged;
+            Name = name;
+            Type = type;
             this.state = state;
         }
 

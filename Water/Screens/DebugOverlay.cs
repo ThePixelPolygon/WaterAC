@@ -19,7 +19,7 @@ namespace Water.Screens
         private double drawsPerSecond;
 
         private TextBlock framerateText;
-        private StackContainer sc;
+        private UniformStackContainer sc;
         private Box box;
 
         public DebugOverlay()
@@ -31,7 +31,7 @@ namespace Water.Screens
         {
             Game.Input.KeyDown += Input_KeyDown;
             Game.Input.KeyUp += Input_KeyUp;
-            sc = new StackContainer()
+            sc = new UniformStackContainer()
             {
                 RelativePosition = new(0, 0, 100, 20),
                 Orientation = Orientation.Vertical,

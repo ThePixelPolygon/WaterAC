@@ -41,7 +41,7 @@ namespace TestGame.Screens
             }
         }
 
-        private StackContainer stackPanel;
+        private UniformStackContainer stackPanel;
 
         public override void Initialize()
         {
@@ -52,7 +52,7 @@ namespace TestGame.Screens
                 RelativePosition = new(0, 0, 720, 576),
                 Layout = Layout.Center
             };
-            stackPanel = new StackContainer()
+            stackPanel = new UniformStackContainer()
             {
                 RelativePosition = new(0, 0, 100, 100),
                 Layout = Layout.Fill,

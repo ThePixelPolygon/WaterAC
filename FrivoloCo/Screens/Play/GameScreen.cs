@@ -65,11 +65,10 @@ namespace FrivoloCo.Screens.Play
 
             AddChild(rc);
 
-            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Tray, State)
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
             {
-                Layout = Layout.AnchorBottom,
+                Layout = Layout.AnchorBottomLeft,
             }));
-            CalculateChildrenPositions();
             // HUD
             var moneyBox = new Box()
             {
@@ -121,6 +120,7 @@ namespace FrivoloCo.Screens.Play
 
         public override void Update(GameTime gameTime)
         {
+            Game.MainGame.Window.Title = State.CurrentlyDraggedItem?.ToString() ?? "nothing";
             State.TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
             moneyTb.Text = $"${state.Money:0..00}";
