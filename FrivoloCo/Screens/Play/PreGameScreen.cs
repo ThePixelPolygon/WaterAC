@@ -69,7 +69,7 @@ namespace FrivoloCo.Screens.Play
             }
             if (jingleFadeLength <= 0)
             {
-                ScreenManager.ChangeScreen(new MenuScreen());
+                ScreenManager.ChangeScreen(new GameScreen(state));
             }
         }
     }
