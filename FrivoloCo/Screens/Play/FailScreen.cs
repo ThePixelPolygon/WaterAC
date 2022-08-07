@@ -9,15 +9,17 @@ using Water.Graphics.Containers;
 using Water.Graphics.Screens;
 using Water.Graphics;
 using Water.Graphics.Controls;
+using FrivoloCo.Screens.Menu;
+using Microsoft.Xna.Framework.Media;
 
 namespace FrivoloCo.Screens.Play
 {
-    public class PauseOverlay : Screen
+    public class FailScreen : Screen
     {
-        private readonly GameScreen game;
-        public PauseOverlay(GameScreen game)
+        private readonly ProgressState progress;
+        public FailScreen(ProgressState progress)
         {
-            this.game = game;
+            this.progress = progress;
         }
 
         public override void Deinitialize()
@@ -33,6 +35,8 @@ namespace FrivoloCo.Screens.Play
         public override void Initialize()
         {
             Game.Input.KeyDown += Input_KeyDown;
+
+            MediaPlayer.Play(Song.FromUri("failure", new("Assets/Gameplay/failure.ogg", UriKind.Relative)));
 
             var rc = new RenderContainer(Game.GraphicsDevice)
             {
@@ -51,7 +55,7 @@ namespace FrivoloCo.Screens.Play
             {
                 Layout = Layout.Fill,
                 RelativePosition = new(0, 0, 0, 0),
-                Color = Color.Black * 0.5f
+                Color = Color.Black
             };
             co.AddChild(Game.AddObject(box));
 
@@ -61,7 +65,7 @@ namespace FrivoloCo.Screens.Play
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Center
             };
-            tb.Text = "Paused (hit esc to unpause)";
+            tb.Text = "FAILED\nYour terrible performance caused people to stop going to FrivoloCo,\nso you were fired.\n(press esc to go back)";
             co.AddChild(Game.AddObject(tb));
         }
 
@@ -69,8 +73,8 @@ namespace FrivoloCo.Screens.Play
         {
             if (e.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
             {
-                ScreenManager.RemoveScreen(this);
-                game.State.Paused = false;
+                MediaPlayer.Stop();
+                ScreenManager.ChangeScreen(new MenuScreen());
             }
         }
 

@@ -102,6 +102,7 @@ namespace FrivoloCo.Screens.Play
             else if (customer.Happiness <= 0)
             {
                 SoundEffect.FromFile(customer.ImDoneSound).Play();
+                state.Strikes++;
                 happy = false;
             }
             if (happy)

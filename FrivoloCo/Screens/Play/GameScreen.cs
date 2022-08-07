@@ -154,6 +154,14 @@ namespace FrivoloCo.Screens.Play
         public override void Update(GameTime gameTime)
         {
             if (State.Paused) return;
+
+            if (State.Strikes >= 3)
+            {
+                MediaPlayer.Stop();
+                ScreenManager.ChangeScreen(new FailScreen(state));
+                return;
+            }
+
             //Game.MainGame.Window.Title = State.CurrentlyDraggedItem?.ToString() ?? "nothing";
             State.TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
 

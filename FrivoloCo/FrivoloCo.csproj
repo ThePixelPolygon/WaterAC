@@ -92,6 +92,9 @@
     <None Update="Assets\Gameplay\Customers\JPlexer\wrongorder.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Gameplay\failure.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Gameplay\gameplayday.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
