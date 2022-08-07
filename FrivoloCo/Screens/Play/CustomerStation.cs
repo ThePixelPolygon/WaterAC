@@ -65,6 +65,33 @@ namespace FrivoloCo.Screens.Play
             SoundEffect.FromFile(customer.WantToOrderSound).Play();
         }
 
+        private void CustomerLeaves()
+        {
+            Game.RemoveObject(sp);
+            Game.RemoveObject(box);
+            Game.RemoveObject(tb);
+            sp = null;
+            box = null;
+            tb = null;
+            if (!customer.HasBeenImpatient && customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
+            {
+                SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
+            }
+            else if (!customer.HasBeenImpatienter && customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
+            {
+                SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
+            }
+            else if (!customer.HasBeenAngery && customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
+            {
+                SoundEffect.FromFile(customer.ThankYouAngerySound).Play();
+            }
+            else if (customer.Happiness <= 0)
+            {
+                SoundEffect.FromFile(customer.ImDoneSound).Play();
+            }
+            customer = null;
+        }
+
         public override void Deinitialize()
         {
             
@@ -84,6 +111,28 @@ namespace FrivoloCo.Screens.Play
         {
             if (customer is null) return;
 
+            customer.Patience -= gameTime.ElapsedGameTime.TotalSeconds;
+            if (!customer.HasBeenImpatient && customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
+            {
+                SoundEffect.FromFile(customer.ImpatientSound).Play();
+                customer.HasBeenImpatient = true;
+            }
+            else if (!customer.HasBeenImpatienter && customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
+            {
+                SoundEffect.FromFile(customer.ImpatienterSound).Play();
+                customer.HasBeenImpatienter = true;
+            }
+            else if (!customer.HasBeenAngery && customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
+            {
+                SoundEffect.FromFile(customer.AngerySound).Play();
+                customer.HasBeenAngery = true;
+            }
+            else if (customer.Happiness <= 0)
+            {
+                CustomerLeaves();
+                return;
+            }    
+
             var sb = new StringBuilder();
             sb.AppendLine("I WANT 2 ORDER");
             foreach (var x in customer.Order)
@@ -100,9 +149,9 @@ namespace FrivoloCo.Screens.Play
     {
         public string Name { get; set; } = "JPlexer";
 
-        public int MaxPatience { get; set; } = 20; // in seconds
+        public double MaxPatience { get; set; } = 20; // in seconds
 
-        public int Patience { get; set; } = 20; // in seconds
+        public double Patience { get; set; } = 20; // in seconds
 
         public double Happiness => Patience / MaxPatience;
 
@@ -125,6 +174,12 @@ namespace FrivoloCo.Screens.Play
         public string ThankYouAngerySound { get; set; } = "Assets/Gameplay/Customers/JPlexer/angerythankyou.wav";
 
         public string WrongOrderSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/wrongorder.wav";
+
+        public bool HasBeenImpatient { get; set; } = false;
+
+        public bool HasBeenImpatienter { get; set; } = false;
+
+        public bool HasBeenAngery { get; set; } = false;
 
         public List<OrderItem> Order { get; set; }
     }
