@@ -72,7 +72,23 @@ namespace FrivoloCo.Screens.Play
 
             co.AddChild(Game.AddObject(new CustomerStation(State, state)
             {
-                RelativePosition = new(21, 98, 365, 534)
+                RelativePosition = new(18, 98, 365, 534)
+            }));
+            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            {
+                RelativePosition = new(398, 98, 365, 534)
+            }));
+            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            {
+                RelativePosition = new(778, 98, 365, 534)
+            }));
+            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            {
+                RelativePosition = new(1158, 98, 365, 534)
+            }));
+            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            {
+                RelativePosition = new(1538, 98, 365, 534)
             }));
             // HUD
             var moneyBox = new Box()

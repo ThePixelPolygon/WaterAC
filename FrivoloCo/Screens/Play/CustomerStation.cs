@@ -18,10 +18,12 @@ namespace FrivoloCo.Screens.Play
 
         private readonly GameState state;
         private readonly ProgressState progress;
+        private double minIntervalBetweenCustomers; // in ms
         public CustomerStation(GameState state, ProgressState progress)
         {
             this.state = state;
             this.progress = progress;
+            ResetMinInterval();
         }
 
         private Sprite sp;
@@ -37,7 +39,7 @@ namespace FrivoloCo.Screens.Play
                     new()
                     {
                         Type = ItemType.FlatWhite,
-                        Amount = 5
+                        Amount = 1
                     }
                 }
             };
@@ -63,6 +65,13 @@ namespace FrivoloCo.Screens.Play
             AddChild(Game.AddObject(box));
             box.AddChild(Game.AddObject(tb));
             SoundEffect.FromFile(customer.WantToOrderSound).Play();
+        }
+
+        private void ResetMinInterval()
+        {
+            var min = 5000 / progress.Day;
+            var max = 15000 / progress.Day;
+            minIntervalBetweenCustomers = Random.Shared.Next(min, max);
         }
 
         private void CustomerLeaves()
@@ -116,7 +125,6 @@ namespace FrivoloCo.Screens.Play
         public override void Initialize()
         {
             Game.Input.PrimaryMouseButtonUp += Input_PrimaryMouseButtonUp;
-            AddCustomer();
         }
 
         private GameObject scheduledObjectRemoval;
@@ -144,39 +152,54 @@ namespace FrivoloCo.Screens.Play
         {
             if (scheduledObjectRemoval is not null) Game.RemoveObject(scheduledObjectRemoval);
 
-            if (customer is null) return;
+            if (customer is null)
+            {
+                minIntervalBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (minIntervalBetweenCustomers <= 0)
+                {
+                    var diceRoll = Random.Shared.Next(0, 101);
+                    if (diceRoll == 5)
+                    {
+                        AddCustomer();
+                        ResetMinInterval();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                customer.Patience -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (!customer.HasBeenImpatient && customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
+                {
+                    SoundEffect.FromFile(customer.ImpatientSound).Play();
+                    customer.HasBeenImpatient = true;
+                }
+                else if (!customer.HasBeenImpatienter && customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
+                {
+                    SoundEffect.FromFile(customer.ImpatienterSound).Play();
+                    customer.HasBeenImpatienter = true;
+                }
+                else if (!customer.HasBeenAngery && customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
+                {
+                    SoundEffect.FromFile(customer.AngerySound).Play();
+                    customer.HasBeenAngery = true;
+                }
+                else if (customer.Happiness <= 0)
+                {
+                    CustomerLeaves();
+                    return;
+                }
 
-            customer.Patience -= gameTime.ElapsedGameTime.TotalSeconds;
-            if (!customer.HasBeenImpatient && customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
-            {
-                SoundEffect.FromFile(customer.ImpatientSound).Play();
-                customer.HasBeenImpatient = true;
+                var sb = new StringBuilder();
+                sb.AppendLine("I WANT 2 ORDER");
+                foreach (var x in customer.Order)
+                {
+                    sb.AppendLine($"{x.Amount} {x.Type} (was given {x.AmountGotten})");
+                }
+                sb.AppendLine();
+                sb.AppendLine($"{customer.Happiness * 100:F1}% happiness");
+                tb.Text = sb.ToString();
             }
-            else if (!customer.HasBeenImpatienter && customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
-            {
-                SoundEffect.FromFile(customer.ImpatienterSound).Play();
-                customer.HasBeenImpatienter = true;
-            }
-            else if (!customer.HasBeenAngery && customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
-            {
-                SoundEffect.FromFile(customer.AngerySound).Play();
-                customer.HasBeenAngery = true;
-            }
-            else if (customer.Happiness <= 0)
-            {
-                CustomerLeaves();
-                return;
-            }    
-
-            var sb = new StringBuilder();
-            sb.AppendLine("I WANT 2 ORDER");
-            foreach (var x in customer.Order)
-            {
-                sb.AppendLine($"{x.Amount} {x.Type} (was given {x.AmountGotten})");
-            }
-            sb.AppendLine();
-            sb.AppendLine($"{customer.Happiness * 100:F1}% happiness");
-            tb.Text = sb.ToString();
         }
     }
 
