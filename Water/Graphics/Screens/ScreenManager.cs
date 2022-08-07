@@ -44,10 +44,14 @@ namespace Water.Graphics.Screens
         public void AddScreen(Screen screen)
         {
             Debug.WriteLine($"Added {screen}");
+#if DEBUG
+            if (Screens.Contains(debugOverlay))
+                RemoveScreen(debugOverlay);
+#endif
             Screens.Add(InitializeScreen(screen));
 #if DEBUG
             if (!Screens.Contains(debugOverlay))
-            AddScreen(debugOverlay);
+                AddScreen(debugOverlay);
 #endif
             gameObjectManager.RootObjects = new(Screens);
         }

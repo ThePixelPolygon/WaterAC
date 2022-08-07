@@ -150,6 +150,8 @@ namespace FrivoloCo.Screens.Play
 
         public override void Update(GameTime gameTime)
         {
+            if (state.Paused) return;
+
             if (scheduledObjectRemoval is not null) Game.RemoveObject(scheduledObjectRemoval);
 
             if (customer is null)

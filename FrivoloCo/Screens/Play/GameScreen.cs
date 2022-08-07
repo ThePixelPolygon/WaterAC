@@ -1,6 +1,7 @@
 ﻿using FrivoloCo.Screens.Menu;
 using FrivoloCo.Screens.Play.Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
@@ -18,6 +19,7 @@ namespace FrivoloCo.Screens.Play
     public class GameScreen : Screen
     {
         private ProgressState state;
+        private string title;
         public GameScreen(ProgressState state)
         {
             this.state = state;
@@ -40,6 +42,7 @@ namespace FrivoloCo.Screens.Play
 
         public override void Initialize()
         {
+            title = Game.MainGame.Window.Title;
             Game.Input.KeyDown += Input_KeyDown;
 
             MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
@@ -130,8 +133,17 @@ namespace FrivoloCo.Screens.Play
         {
             if (e.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
             {
-                MediaPlayer.Stop();
-                ScreenManager.ChangeScreen(new MenuScreen());
+                State.Paused = !State.Paused;
+                if (State.Paused)
+                {
+                    MediaPlayer.Pause();
+                    Window.Title = "Game paused, hit ESC to continue";
+                }
+                else
+                {
+                    MediaPlayer.Resume();
+                    Window.Title = title;
+                } // temporary stopgap solution
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
                 ScreenManager.ChangeScreen(new GameScreen(new ProgressState()));
@@ -141,6 +153,7 @@ namespace FrivoloCo.Screens.Play
 
         public override void Update(GameTime gameTime)
         {
+            if (State.Paused) return;
             //Game.MainGame.Window.Title = State.CurrentlyDraggedItem?.ToString() ?? "nothing";
             State.TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
 

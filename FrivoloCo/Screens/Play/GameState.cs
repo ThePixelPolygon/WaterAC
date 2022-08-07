@@ -14,5 +14,7 @@ namespace FrivoloCo.Screens.Play
         public double TableTopOffset { get; set; } = 448; // Pixels to top edge of visible table
 
         public Item CurrentlyDraggedItem { get; set; } = null;
+
+        public bool Paused { get; set; } = false;
     }
 }

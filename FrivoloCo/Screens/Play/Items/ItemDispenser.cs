@@ -64,7 +64,7 @@ namespace FrivoloCo.Screens.Play.Items
 
         private void Input_PrimaryMouseButtonDown(object sender, Water.Input.MousePressEventArgs e)
         {
-            if (Game.Input.IsMouseWithin(this))
+            if (Game.Input.IsMouseWithin(this) && !state.Paused)
                 Parent.AddChild(Game.AddObject(GetItemForItemType(type)));
         }
 

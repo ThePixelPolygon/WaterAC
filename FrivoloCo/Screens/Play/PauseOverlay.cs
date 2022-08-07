@@ -1,0 +1,82 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Water.Graphics.Containers;
+using Water.Graphics.Screens;
+using Water.Graphics;
+using Water.Graphics.Controls;
+
+namespace FrivoloCo.Screens.Play
+{
+    public class PauseOverlay : Screen
+    {
+        private readonly GameScreen game;
+        public PauseOverlay(GameScreen game)
+        {
+            this.game = game;
+        }
+
+        public override void Deinitialize()
+        {
+            Game.Input.KeyDown -= Input_KeyDown;
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        {
+            
+        }
+
+        public override void Initialize()
+        {
+            Game.Input.KeyDown += Input_KeyDown;
+
+            var rc = new RenderContainer(Game.GraphicsDevice)
+            {
+                Layout = Layout.Fill,
+                RelativePosition = new(0, 0, 0, 0)
+            };
+            var co = new Container()
+            {
+                Layout = Layout.Fill,
+                RelativePosition = new(0, 0, 1920, 1080)
+            };
+            AddChild(rc);
+            rc.AddChild(co);
+
+            var box = new Box()
+            {
+                Layout = Layout.Fill,
+                RelativePosition = new(0, 0, 0, 0),
+                Color = Color.Black * 0.5f
+            };
+            co.AddChild(Game.AddObject(box));
+
+            var tb = new TextBlock(new(0, 50, 1000, 100), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 50), "", Color.White)
+            {
+                Layout = Layout.HorizontalCenter,
+                HorizontalTextAlignment = HorizontalTextAlignment.Center,
+                VerticalTextAlignment = VerticalTextAlignment.Center
+            };
+            tb.Text = "Paused (hit esc to unpause)";
+            co.AddChild(Game.AddObject(tb));
+        }
+
+        private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
+        {
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+            {
+                ScreenManager.RemoveScreen(this);
+                game.State.Paused = false;
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            
+        }
+    }
+}

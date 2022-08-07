@@ -62,6 +62,8 @@ namespace FrivoloCo.Screens.Play.Items
 
         public override void Update(GameTime gameTime)
         {
+            if (state.Paused) return;
+
             if (IsBeingDragged)
             {
                 state.CurrentlyDraggedItem = this;
