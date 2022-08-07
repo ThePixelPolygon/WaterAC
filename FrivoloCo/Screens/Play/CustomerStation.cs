@@ -37,7 +37,7 @@ namespace FrivoloCo.Screens.Play
                     new()
                     {
                         Type = ItemType.FlatWhite,
-                        Amount = 1
+                        Amount = 5
                     }
                 }
             };
@@ -73,28 +73,39 @@ namespace FrivoloCo.Screens.Play
             sp = null;
             box = null;
             tb = null;
-            if (!customer.HasBeenImpatient && customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
+            var happy = true;
+            if (customer.Happiness >= 0.61)
+            {
+                SoundEffect.FromFile(customer.ThankYouHappySound).Play();
+            }
+            else if (customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
             {
                 SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
             }
-            else if (!customer.HasBeenImpatienter && customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
+            else if (customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
             {
                 SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
             }
-            else if (!customer.HasBeenAngery && customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
+            else if (customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
             {
                 SoundEffect.FromFile(customer.ThankYouAngerySound).Play();
             }
             else if (customer.Happiness <= 0)
             {
                 SoundEffect.FromFile(customer.ImDoneSound).Play();
+                happy = false;
+            }
+            if (happy)
+            {
+                progress.Money += (decimal)(10 * customer.Happiness * progress.Day);
+                SoundEffect.FromFile("Assets/Gameplay/kaching.wav").Play();
             }
             customer = null;
         }
 
         public override void Deinitialize()
         {
-            
+            Game.Input.PrimaryMouseButtonUp -= Input_PrimaryMouseButtonUp;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -104,11 +115,35 @@ namespace FrivoloCo.Screens.Play
 
         public override void Initialize()
         {
+            Game.Input.PrimaryMouseButtonUp += Input_PrimaryMouseButtonUp;
             AddCustomer();
+        }
+
+        private GameObject scheduledObjectRemoval;
+
+        private void Input_PrimaryMouseButtonUp(object sender, Water.Input.MousePressEventArgs e)
+        {
+            if (Game.Input.IsMouseWithin(this) && state.CurrentlyDraggedItem != null)
+            {
+                foreach (var entry in customer.Order)
+                {
+                    if (entry.Type == state.CurrentlyDraggedItem.Type)
+                        entry.AmountGotten++;
+                }
+                scheduledObjectRemoval = state.CurrentlyDraggedItem;
+                foreach (var entry in customer.Order)
+                {
+                    if (entry.AmountGotten < entry.Amount)
+                        return;
+                }
+                CustomerLeaves();
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (scheduledObjectRemoval is not null) Game.RemoveObject(scheduledObjectRemoval);
+
             if (customer is null) return;
 
             customer.Patience -= gameTime.ElapsedGameTime.TotalSeconds;
@@ -140,7 +175,7 @@ namespace FrivoloCo.Screens.Play
                 sb.AppendLine($"{x.Amount} {x.Type} (was given {x.AmountGotten})");
             }
             sb.AppendLine();
-            sb.AppendLine($"{customer.Happiness * 100}% happiness");
+            sb.AppendLine($"{customer.Happiness * 100:F1}% happiness");
             tb.Text = sb.ToString();
         }
     }
@@ -169,7 +204,7 @@ namespace FrivoloCo.Screens.Play
 
         public string ThankYouHappySound { get; set; } = "Assets/Gameplay/Customers/JPlexer/thankyou.wav";
 
-        public string ThankYouImpatientSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/impatientthankyou";
+        public string ThankYouImpatientSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/impatientthankyou.wav";
 
         public string ThankYouAngerySound { get; set; } = "Assets/Gameplay/Customers/JPlexer/angerythankyou.wav";
 

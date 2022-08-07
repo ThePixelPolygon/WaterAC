@@ -101,6 +101,9 @@
     <None Update="Assets\Gameplay\Items\placeholder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Gameplay\kaching.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Gameplay\tray.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
