@@ -18,11 +18,12 @@ namespace FrivoloCo.Screens.Play
 {
     public class GameScreen : Screen
     {
-        private ProgressState state;
+        private ProgressState progressState;
         private string title;
-        public GameScreen(ProgressState state)
+        public GameScreen(ProgressState progressState)
         {
-            this.state = state;
+            this.progressState = progressState;
+            State.TimeDelayBetweenCustomers = 5500 - (500 * progressState.Day); // TODO: better algo
         }
 
         public override void Deinitialize()
@@ -73,23 +74,23 @@ namespace FrivoloCo.Screens.Play
                 Layout = Layout.AnchorBottomLeft,
             }));
 
-            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
             {
                 RelativePosition = new(18, 98, 365, 534)
             }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
             {
                 RelativePosition = new(398, 98, 365, 534)
             }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
             {
                 RelativePosition = new(778, 98, 365, 534)
             }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
             {
                 RelativePosition = new(1158, 98, 365, 534)
             }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, state)
+            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
             {
                 RelativePosition = new(1538, 98, 365, 534)
             }));
@@ -158,15 +159,17 @@ namespace FrivoloCo.Screens.Play
             if (State.Strikes >= 3)
             {
                 MediaPlayer.Stop();
-                ScreenManager.ChangeScreen(new FailScreen(state));
+                ScreenManager.ChangeScreen(new FailScreen(progressState));
                 return;
             }
 
             //Game.MainGame.Window.Title = State.CurrentlyDraggedItem?.ToString() ?? "nothing";
+            //Game.MainGame.Window.Title = State.TimeDelayBetweenCustomers.ToString();
             State.TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            State.TimeDelayBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            moneyTb.Text = $"${state.Money:0..00}";
-            statusTb.Text = $"Day {state.Day}    {State.TimeLeft} (<- placeholder)";
+            moneyTb.Text = $"${progressState.Money:0..00}";
+            statusTb.Text = $"Day {progressState.Day}    {State.TimeLeft} (<- placeholder)";
         }
     }
 }

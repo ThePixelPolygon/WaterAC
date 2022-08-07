@@ -29,8 +29,9 @@ namespace FrivoloCo.Screens.Play
         private Sprite sp;
         private Box box;
         private TextBlock tb;
+        private int timeSinceLastCustomer;
 
-        private void AddCustomer()
+        private void CustomerEnters()
         {
             customer = new Customer()
             {
@@ -65,6 +66,8 @@ namespace FrivoloCo.Screens.Play
             AddChild(Game.AddObject(box));
             box.AddChild(Game.AddObject(tb));
             SoundEffect.FromFile(customer.WantToOrderSound).Play();
+
+            state.TimeDelayBetweenCustomers = state.TimeDelayBetweenCustomersMax;
         }
 
         private void ResetMinInterval()
@@ -160,10 +163,10 @@ namespace FrivoloCo.Screens.Play
                 minIntervalBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (minIntervalBetweenCustomers <= 0)
                 {
-                    var diceRoll = Random.Shared.Next(0, 101);
-                    if (diceRoll == 5)
+                    var diceRoll = Random.Shared.Next(0, 5000);
+                    if (diceRoll == 5 && state.TimeDelayBetweenCustomers <= 0)
                     {
-                        AddCustomer();
+                        CustomerEnters();
                         ResetMinInterval();
                         return;
                     }

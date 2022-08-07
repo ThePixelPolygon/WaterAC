@@ -13,6 +13,10 @@ namespace FrivoloCo.Screens.Play
 
         public double TableTopOffset { get; set; } = 448; // Pixels to top edge of visible table
 
+        public double TimeDelayBetweenCustomersMax { get; set; } = 5000; // in milliseconds
+
+        public double TimeDelayBetweenCustomers { get; set; } = 5000; // in milliseconds
+
         public int Strikes { get; set; } = 0;
 
         public Item CurrentlyDraggedItem { get; set; } = null;
