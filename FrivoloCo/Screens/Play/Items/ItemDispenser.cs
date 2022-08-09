@@ -37,8 +37,6 @@ namespace FrivoloCo.Screens.Play.Items
 
             var x = GetItemForItemType(type);
 
-            //RelativePosition = x.RelativePosition;
-
             var sp = new Sprite(x.Path)
             {
                 Layout = Layout.Fill,

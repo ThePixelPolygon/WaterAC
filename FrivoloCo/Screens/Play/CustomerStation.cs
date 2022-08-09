@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,8 +33,13 @@ namespace FrivoloCo.Screens.Play
 
         private void CustomerEnters()
         {
+            var possibleCustomers = Directory.EnumerateDirectories("Assets/Gameplay/Customers");
+            var selectedCustomer = possibleCustomers.ToList()[Random.Shared.Next(0, possibleCustomers.Count())];
+            var customerMeta = File.ReadAllText(Path.Combine(Path.GetFullPath(selectedCustomer), "meta.txt"));
             customer = new Customer()
             {
+                Name = customerMeta,
+                RootPath = Path.GetFullPath(selectedCustomer)
             };
 
             int patience = 50;    // TODO: reimplement these as algorithms instead of this mess lol
@@ -43,8 +49,12 @@ namespace FrivoloCo.Screens.Play
                 patience = 40;
             else if (progress.Day >= 5 && progress.Day <= 6)
                 patience = 30;
-            else if (progress.Day >= 7)
+            else if (progress.Day >= 7 && progress.Day <= 9)
                 patience = 20;
+            else if (progress.Day >= 10 && progress.Day <= 15)
+                patience = 10;
+            else if (progress.Day >= 16)
+                patience = 5;
 
             customer.MaxPatience = customer.Patience = patience;
 
@@ -55,8 +65,10 @@ namespace FrivoloCo.Screens.Play
                 amountOfEntries = 2;
             else if (progress.Day >= 7 && progress.Day <= 9)
                 amountOfEntries = 3;
-            else if (progress.Day >= 10)
+            else if (progress.Day >= 10 && progress.Day <= 13)
                 amountOfEntries = 4;
+            else if (progress.Day >= 15)
+                amountOfEntries = 5;
 
             for (int i = 0; i < amountOfEntries; i++)
             {
@@ -67,7 +79,7 @@ namespace FrivoloCo.Screens.Play
                     customer.Order.Add(new()
                     {
                         Type = type,
-                        Amount = Random.Shared.Next(1, 4)
+                        Amount = 1
                     });
                 }
             }
@@ -170,6 +182,7 @@ namespace FrivoloCo.Screens.Play
                         wasRightOrder = true;
                     }
                 }
+                SoundEffect.FromFile("Assets/Gameplay/Ian/hereyougo.wav").Play();
                 scheduledObjectRemoval = state.CurrentlyDraggedItem;
                 if (!wasRightOrder)
                 {
@@ -242,12 +255,12 @@ namespace FrivoloCo.Screens.Play
                 }
 
                 var sb = new StringBuilder();
-                sb.AppendLine("I WANT 2 ORDER");
+                sb.AppendLine(customer.Name);
                 foreach (var x in customer.Order)
                 {
-                    sb.AppendLine($"{x.Amount} {x.Type} (was given {x.AmountGotten})");
+                    if (x.AmountGotten < x.Amount)
+                        sb.AppendLine($"{x.Type}");
                 }
-                sb.AppendLine();
                 sb.AppendLine($"{customer.Happiness * 100:F1}% happiness");
                 tb.Text = sb.ToString();
             }
@@ -264,25 +277,27 @@ namespace FrivoloCo.Screens.Play
 
         public double Happiness => Patience / MaxPatience;
 
-        public string Sprite { get; set; } = "Assets/Gameplay/Customers/Victor/person.png";
+        public string RootPath { get; set; }
 
-        public string WantToOrderSound { get; set; } = "Assets/Gameplay/Customers/Victor/iwanttoorder.wav";
+        public string Sprite => Path.Combine(RootPath, "person.png");
 
-        public string ImpatientSound { get; set; } = "Assets/Gameplay/Customers/Victor/impatient.wav";
+        public string WantToOrderSound => Path.Combine(RootPath, "iwanttoorder.wav");
 
-        public string ImpatienterSound { get; set; } = "Assets/Gameplay/Customers/Victor/impatienter.wav";
+        public string ImpatientSound => Path.Combine(RootPath, "impatient.wav");
 
-        public string ImDoneSound { get; set; } = "Assets/Gameplay/Customers/Victor/imdone.wav";
+        public string ImpatienterSound => Path.Combine(RootPath, "impatienter.wav");
 
-        public string AngerySound { get; set; } = "Assets/Gameplay/Customers/Victor/angery.wav";
+        public string ImDoneSound => Path.Combine(RootPath, "imdone.wav");
 
-        public string ThankYouHappySound { get; set; } = "Assets/Gameplay/Customers/Victor/thankyou.wav";
+        public string AngerySound => Path.Combine(RootPath, "angery.wav");
 
-        public string ThankYouImpatientSound { get; set; } = "Assets/Gameplay/Customers/Victor/impatientthankyou.wav";
+        public string ThankYouHappySound => Path.Combine(RootPath, "thankyou.wav");
 
-        public string ThankYouAngerySound { get; set; } = "Assets/Gameplay/Customers/Victor/angerythankyou.wav";
+        public string ThankYouImpatientSound => Path.Combine(RootPath, "impatientthankyou.wav");
 
-        public string WrongOrderSound { get; set; } = "Assets/Gameplay/Customers/Victor/wrongorder.wav";
+        public string ThankYouAngerySound => Path.Combine(RootPath, "angerythankyou.wav");
+
+        public string WrongOrderSound => Path.Combine(RootPath, "wrongorder.wav");
 
         public bool HasBeenImpatient { get; set; } = false;
 

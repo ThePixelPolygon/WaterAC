@@ -106,27 +106,27 @@ namespace FrivoloCo.Screens.Play
 
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
             {
-                RelativePosition = new(0, 850, 120, 230)
+                RelativePosition = new(550, 850, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.IceTea, State)
             {
-                RelativePosition = new(120, 850, 120, 230)
+                RelativePosition = new(690, 850, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.HotChocolate, State)
             {
-                RelativePosition = new(240, 850, 120, 230)
+                RelativePosition = new(830, 850, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Latte, State)
             {
-                RelativePosition = new(360, 850, 120, 230)
+                RelativePosition = new(970, 850, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Espresso, State)
             {
-                RelativePosition = new(480, 850, 120, 230)
+                RelativePosition = new(1110, 850, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Cappuccino, State)
             {
-                RelativePosition = new(600, 850, 120, 230)
+                RelativePosition = new(1250, 850, 120, 230)
             }));
 
             co.CalculateChildrenPositions();

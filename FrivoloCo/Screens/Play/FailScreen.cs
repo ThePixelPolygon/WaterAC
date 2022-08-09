@@ -95,7 +95,7 @@ namespace FrivoloCo.Screens.Play
             if (!hasPlayedDontFireMe && counter >= 9.6)
             {
                 hasPlayedDontFireMe = true;
-                SoundEffect.FromFile("Assets/Gameplay/Customers/Ian/dontfiremepls.wav").Play();
+                SoundEffect.FromFile("Assets/Gameplay/Ian/dontfiremepls.wav").Play();
             }
         }
     }
