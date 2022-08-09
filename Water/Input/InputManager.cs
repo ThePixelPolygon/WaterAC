@@ -69,6 +69,8 @@ namespace Water.Input
             int offsetX = 0;
             int offsetY = 0;
 
+            if (container is null) return new(0, 0);
+
             var x = container;
             RenderContainer parentRenderContainer = null;
             if (x is RenderContainer y) parentRenderContainer = y;

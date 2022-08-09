@@ -52,11 +52,13 @@ namespace FrivoloCo.Screens.Play.Items
                 RelativePosition = new(0, 0, 0, 100),
                 Layout = Layout.DockBottom
             };
-            var tb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 30), x.Name, Color.White)
+            var tb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 30), x.Name, Color.White)
             {
                 Layout = Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
-                VerticalTextAlignment = VerticalTextAlignment.Center
+                VerticalTextAlignment = VerticalTextAlignment.Center,
+                TextWrapping = TextWrapMode.LetterWrap,
+                Margin = 1
             };
             labelBox.AddChild(Game.AddObject(tb));
             AddChild(Game.AddObject(labelBox));

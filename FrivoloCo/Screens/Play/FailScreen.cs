@@ -59,13 +59,13 @@ namespace FrivoloCo.Screens.Play
             };
             co.AddChild(Game.AddObject(box));
 
-            var tb = new TextBlock(new(0, 50, 1000, 100), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 50), "", Color.White)
+            var tb = new TextBlock(new(0, 50, 1000, 100), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 50), "", Color.White)
             {
                 Layout = Layout.HorizontalCenter,
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Center
             };
-            tb.Text = "FAILED\nYour terrible performance caused people to stop going to FrivoloCo,\nso you were fired.\n(press esc to go back)";
+            tb.Text = $"FAILED\nYour terrible performance caused people to stop going to FrivoloCo,\nso you were fired.\n(press esc to go back)\n\nScore: ${progress.Money:0..00}";
             co.AddChild(Game.AddObject(tb));
         }
 

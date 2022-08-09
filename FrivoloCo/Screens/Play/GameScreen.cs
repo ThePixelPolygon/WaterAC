@@ -127,7 +127,7 @@ namespace FrivoloCo.Screens.Play
                 Color = Color.White
             };
             AddChild(Game.AddObject(moneyBox));
-            moneyTb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 28), "", Color.Black)
+            moneyTb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 28), "", Color.Black)
             {
                 Layout = Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,
@@ -144,7 +144,7 @@ namespace FrivoloCo.Screens.Play
                 Color = Color.White
             };
             AddChild(Game.AddObject(statusBox));
-            statusTb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 28), "", Color.Black)
+            statusTb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 28), "", Color.Black)
             {
                 Layout = Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,
@@ -172,6 +172,8 @@ namespace FrivoloCo.Screens.Play
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
                 ScreenManager.ChangeScreen(new GameScreen(new ProgressState()));
+            else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F4)
+                State.TimeLeft = 2000;
         }
 
         public GameState State { get; private set; } = new();
@@ -184,6 +186,13 @@ namespace FrivoloCo.Screens.Play
             {
                 MediaPlayer.Stop();
                 ScreenManager.ChangeScreen(new FailScreen(progressState));
+                return;
+            }
+
+            if (State.TimeLeft <= 0)
+            {
+                progressState.Day++;
+                ScreenManager.ChangeScreen(new PreGameScreen(progressState));
                 return;
             }
 

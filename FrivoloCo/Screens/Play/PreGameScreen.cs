@@ -34,14 +34,14 @@ namespace FrivoloCo.Screens.Play
         private TextBlock tb;
         public override void Initialize()
         {
-            tb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/Fonts/parisienne-regular.ttf", 90), "", Color.White)
+            tb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 90), "", Color.White)
             {
                 Layout = Water.Graphics.Layout.Center,
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Center,
                 LineSpacing = 110
             };
-            tb.Text = $"Day\n{state.Day}\nat FrivoloCo!\n\n${state.Money}";
+            tb.Text = $"Day\n{state.Day}\nat FrivoloCo!\n\n${state.Money:0..00}";
             AddChild(Game.AddObject(tb));
             MediaPlayer.Stop();
             var fx = SoundEffect.FromFile("Assets/Music/gamestart.wav");

@@ -35,15 +35,43 @@ namespace FrivoloCo.Screens.Play
         {
             customer = new Customer()
             {
-                Order = new()
-                {
-                    new()
-                    {
-                        Type = (ItemType)Random.Shared.Next(0, 6),
-                        Amount = Random.Shared.Next(1, 4)
-                    }
-                }
             };
+
+            int p = 50;
+            if (progress.Day >= 1 && progress.Day <= 2)
+                p = 50;
+            else if (progress.Day >= 3 && progress.Day <= 4)
+                p = 40;
+            else if (progress.Day >= 5 && progress.Day <= 6)
+                p = 30;
+            else if (progress.Day >= 7)
+                p = 20;
+
+            customer.MaxPatience = customer.Patience = 50;
+
+            int amountOfEntries = 1;
+            if (progress.Day >= 1 && progress.Day <= 3)
+                amountOfEntries = 1;
+            else if (progress.Day >= 4 && progress.Day <= 6)
+                amountOfEntries = 2;
+            else if (progress.Day >= 7 && progress.Day <= 9)
+                amountOfEntries = 3;
+            else if (progress.Day >= 10)
+                amountOfEntries = 4;
+
+            for (int i = 0; i < amountOfEntries; i++)
+            {
+                var type = (ItemType)Random.Shared.Next(0, 6);
+
+                if (!customer.Order.Select(x => x.Type).Contains(type))
+                {
+                    customer.Order.Add(new()
+                    {
+                        Type = type,
+                        Amount = Random.Shared.Next(1, 4)
+                    });
+                }
+            }
 
             sp = new Sprite(customer.Sprite)
             {
@@ -161,8 +189,12 @@ namespace FrivoloCo.Screens.Play
 
         private void ResetMinInterval()
         {
-            var min = 5000 / progress.Day;
-            var max = 15000 / progress.Day;
+            var min = 5000 - (500 * progress.Day);
+            if (min <= 0)
+                min = 100;
+            var max = 15000 - (500 * progress.Day);
+            if (max <= 0)
+                max = 1000;
             minIntervalBetweenCustomers = Random.Shared.Next(min, max);
         }
 
@@ -259,7 +291,7 @@ namespace FrivoloCo.Screens.Play
 
         public bool HasBeenAngery { get; set; } = false;
 
-        public List<OrderItem> Order { get; set; }
+        public List<OrderItem> Order { get; set; } = new();
     }
 
     public class OrderItem
