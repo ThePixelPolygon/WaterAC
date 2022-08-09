@@ -11,5 +11,7 @@ namespace FrivoloCo.Screens.Play
         public int Day { get; set; } = 1;
 
         public decimal Money { get; set; } = 1;
+
+        public int SongPlayed { get; set; } = 1;
     }
 }

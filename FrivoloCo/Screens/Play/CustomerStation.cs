@@ -29,7 +29,6 @@ namespace FrivoloCo.Screens.Play
         private Sprite sp;
         private Box box;
         private TextBlock tb;
-        private int timeSinceLastCustomer;
 
         private void CustomerEnters()
         {
@@ -37,17 +36,17 @@ namespace FrivoloCo.Screens.Play
             {
             };
 
-            int p = 50;
+            int patience = 50;    // TODO: reimplement these as algorithms instead of this mess lol
             if (progress.Day >= 1 && progress.Day <= 2)
-                p = 50;
+                patience = 50;
             else if (progress.Day >= 3 && progress.Day <= 4)
-                p = 40;
+                patience = 40;
             else if (progress.Day >= 5 && progress.Day <= 6)
-                p = 30;
+                patience = 30;
             else if (progress.Day >= 7)
-                p = 20;
+                patience = 20;
 
-            customer.MaxPatience = customer.Patience = 50;
+            customer.MaxPatience = customer.Patience = patience;
 
             int amountOfEntries = 1;
             if (progress.Day >= 1 && progress.Day <= 3)
@@ -265,25 +264,25 @@ namespace FrivoloCo.Screens.Play
 
         public double Happiness => Patience / MaxPatience;
 
-        public string Sprite { get; set; } = "Assets/Gameplay/Customers/JPlexer/person.png";
+        public string Sprite { get; set; } = "Assets/Gameplay/Customers/Victor/person.png";
 
-        public string WantToOrderSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/iwanttoorder.wav";
+        public string WantToOrderSound { get; set; } = "Assets/Gameplay/Customers/Victor/iwanttoorder.wav";
 
-        public string ImpatientSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/impatient.wav";
+        public string ImpatientSound { get; set; } = "Assets/Gameplay/Customers/Victor/impatient.wav";
 
-        public string ImpatienterSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/impatienter.wav";
+        public string ImpatienterSound { get; set; } = "Assets/Gameplay/Customers/Victor/impatienter.wav";
 
-        public string ImDoneSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/imdone.wav";
+        public string ImDoneSound { get; set; } = "Assets/Gameplay/Customers/Victor/imdone.wav";
 
-        public string AngerySound { get; set; } = "Assets/Gameplay/Customers/JPlexer/angery.wav";
+        public string AngerySound { get; set; } = "Assets/Gameplay/Customers/Victor/angery.wav";
 
-        public string ThankYouHappySound { get; set; } = "Assets/Gameplay/Customers/JPlexer/thankyou.wav";
+        public string ThankYouHappySound { get; set; } = "Assets/Gameplay/Customers/Victor/thankyou.wav";
 
-        public string ThankYouImpatientSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/impatientthankyou.wav";
+        public string ThankYouImpatientSound { get; set; } = "Assets/Gameplay/Customers/Victor/impatientthankyou.wav";
 
-        public string ThankYouAngerySound { get; set; } = "Assets/Gameplay/Customers/JPlexer/angerythankyou.wav";
+        public string ThankYouAngerySound { get; set; } = "Assets/Gameplay/Customers/Victor/angerythankyou.wav";
 
-        public string WrongOrderSound { get; set; } = "Assets/Gameplay/Customers/JPlexer/wrongorder.wav";
+        public string WrongOrderSound { get; set; } = "Assets/Gameplay/Customers/Victor/wrongorder.wav";
 
         public bool HasBeenImpatient { get; set; } = false;
 

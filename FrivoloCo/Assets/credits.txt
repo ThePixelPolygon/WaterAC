@@ -1,8 +1,14 @@
 ﻿Developed by Squid Grill for the August 2022 bits & Bytes Game Jam
 
 --Music and Sound--
+(pretty much all from dova syndrome, a japanese site where you can get royalty free music)
 Main Menu - "Fashionable cafe" by Notzan ACT (https://dova-s.jp/EN/bgm/play11995.html)
 Gameplay 1 - "Late Morning" by Notzan ACT (https://dova-s.jp/EN/bgm/play16423.html)
+Gameplay 2 - "Town coffee shop" by shimtone (https://dova-s.jp/EN/bgm/play17049.html)
+Gameplay 3 - "Blue sky and you" by Kamaboko Sachiko (https://dova-s.jp/EN/bgm/play17097.html)
+Gameplay 4 - "Ice Green Tea" by Fukagawa (https://dova-s.jp/EN/bgm/play17169.html)
+Gameplay 5 - "Jazzy Metaphor" by Keido Honda (https://dova-s.jp/EN/bgm/play17169.html)
+Failure - "Evening view at the end of summer" by Notzan ACT (https://dova-s.jp/EN/bgm/play13411.html)
 Other sound effects by Notzan ACT and others
 
 --Voice Lines--

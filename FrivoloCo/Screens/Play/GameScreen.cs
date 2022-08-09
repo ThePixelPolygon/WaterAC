@@ -46,7 +46,19 @@ namespace FrivoloCo.Screens.Play
             title = Game.MainGame.Window.Title;
             Game.Input.KeyDown += Input_KeyDown;
 
-            MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
+            if (progressState.SongPlayed >= 6)
+                progressState.SongPlayed = 1;
+            if (progressState.SongPlayed == 1)
+                MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
+            else if (progressState.SongPlayed == 2)
+                MediaPlayer.Play(Song.FromUri("gameplay-2", new("Assets/Music/gameplay-2.ogg", UriKind.Relative)));
+            else if (progressState.SongPlayed == 3)
+                MediaPlayer.Play(Song.FromUri("gameplay-3", new("Assets/Music/gameplay-3.ogg", UriKind.Relative)));
+            else if (progressState.SongPlayed == 4)
+                MediaPlayer.Play(Song.FromUri("gameplay-4", new("Assets/Music/gameplay-4.ogg", UriKind.Relative)));
+            else if (progressState.SongPlayed == 5)
+                MediaPlayer.Play(Song.FromUri("gameplay-5", new("Assets/Music/gameplay-5.ogg", UriKind.Relative)));
+            progressState.SongPlayed++;
             // Playfield
             rc = new RenderContainer(Game.GraphicsDevice)
             {
@@ -138,7 +150,7 @@ namespace FrivoloCo.Screens.Play
 
             var statusBox = new Box()
             {
-                RelativePosition = new(0, 0, 250, 30),
+                RelativePosition = new(0, 0, 300, 30),
                 Layout = Layout.AnchorTopLeft,
                 Margin = 10,
                 Color = Color.White
@@ -173,7 +185,7 @@ namespace FrivoloCo.Screens.Play
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
                 ScreenManager.ChangeScreen(new GameScreen(new ProgressState()));
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F4)
-                State.TimeLeft = 2000;
+                State.TimeLeft = 1;
         }
 
         public GameState State { get; private set; } = new();
@@ -202,7 +214,7 @@ namespace FrivoloCo.Screens.Play
             State.TimeDelayBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
             moneyTb.Text = $"${progressState.Money:0..00}";
-            statusTb.Text = $"Day {progressState.Day}    {State.TimeLeft} (<- placeholder)";
+            statusTb.Text = $"Day {progressState.Day} | {Math.Round(TimeSpan.FromMilliseconds(State.TimeLeft).TotalSeconds)} s left | {State.Strikes}/3 strikes";
         }
     }
 }

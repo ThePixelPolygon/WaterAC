@@ -11,6 +11,7 @@ using Water.Graphics;
 using Water.Graphics.Controls;
 using FrivoloCo.Screens.Menu;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace FrivoloCo.Screens.Play
 {
@@ -78,9 +79,24 @@ namespace FrivoloCo.Screens.Play
             }
         }
 
+        private double counter;
+        private bool hasPlayedBeingFired = false;
+        private bool hasPlayedDontFireMe = false;
+
         public override void Update(GameTime gameTime)
         {
-            
+            counter += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (!hasPlayedBeingFired && counter >= 5 && counter <= 9.5)
+            {
+                hasPlayedBeingFired = true;
+                SoundEffect.FromFile("Assets/Gameplay/Customers/Victor/fired.wav").Play();
+            }
+            if (!hasPlayedDontFireMe && counter >= 9.6)
+            {
+                hasPlayedDontFireMe = true;
+                SoundEffect.FromFile("Assets/Gameplay/Customers/Ian/dontfiremepls.wav").Play();
+            }
         }
     }
 }
