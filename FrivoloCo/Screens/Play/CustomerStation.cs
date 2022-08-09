@@ -202,11 +202,12 @@ namespace FrivoloCo.Screens.Play
         private void ResetMinInterval()
         {
             var min = 5000 - (500 * progress.Day);
-            if (min <= 0)
-                min = 100;
             var max = 15000 - (500 * progress.Day);
-            if (max <= 0)
-                max = 1000;
+            if (min <= 0)
+            {
+                min = 1;
+                max = 2;
+            }
             minIntervalBetweenCustomers = Random.Shared.Next(min, max);
         }
 
@@ -221,8 +222,8 @@ namespace FrivoloCo.Screens.Play
                 minIntervalBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (minIntervalBetweenCustomers <= 0)
                 {
-                    var diceRoll = Random.Shared.Next(0, 5000);
-                    if (diceRoll == 5 && state.TimeDelayBetweenCustomers <= 0)
+                    //var diceRoll = Random.Shared.Next(0, 5000);
+                    if (/*diceRoll == 5 && */state.TimeDelayBetweenCustomers <= 0)
                     {
                         CustomerEnters();
                         ResetMinInterval();

@@ -209,7 +209,9 @@ namespace FrivoloCo.Screens.Play
             }
 
             //Game.MainGame.Window.Title = State.CurrentlyDraggedItem?.ToString() ?? "nothing";
-            //Game.MainGame.Window.Title = State.TimeDelayBetweenCustomers.ToString();
+#if DEBUG
+            Game.MainGame.Window.Title = State.TimeDelayBetweenCustomers.ToString();
+#endif
             State.TimeLeft -= gameTime.ElapsedGameTime.TotalMilliseconds;
             State.TimeDelayBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
 
