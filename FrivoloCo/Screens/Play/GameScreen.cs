@@ -69,10 +69,7 @@ namespace FrivoloCo.Screens.Play
 
             AddChild(rc);
 
-            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
-            {
-                Layout = Layout.AnchorBottomLeft,
-            }));
+            
 
             co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
             {
@@ -94,6 +91,33 @@ namespace FrivoloCo.Screens.Play
             {
                 RelativePosition = new(1538, 98, 365, 534)
             }));
+
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
+            {
+                RelativePosition = new(0, 850, 120, 230)
+            }));
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.IceTea, State)
+            {
+                RelativePosition = new(120, 850, 120, 230)
+            }));
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.HotChocolate, State)
+            {
+                RelativePosition = new(240, 850, 120, 230)
+            }));
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Latte, State)
+            {
+                RelativePosition = new(360, 850, 120, 230)
+            }));
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Espresso, State)
+            {
+                RelativePosition = new(480, 850, 120, 230)
+            }));
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Cappuccino, State)
+            {
+                RelativePosition = new(600, 850, 120, 230)
+            }));
+
+            co.CalculateChildrenPositions();
             // HUD
             var moneyBox = new Box()
             {

@@ -15,7 +15,7 @@ namespace FrivoloCo.Screens.Play.Items
 
         public virtual string Name { get; set; } = "Placeholder";
 
-        public ItemType Type { get; set; } = ItemType.Placeholder;
+        public ItemType Type { get; set; } = ItemType.FlatWhite;
 
         private GameState state;
 

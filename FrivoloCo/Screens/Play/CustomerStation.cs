@@ -39,8 +39,8 @@ namespace FrivoloCo.Screens.Play
                 {
                     new()
                     {
-                        Type = ItemType.FlatWhite,
-                        Amount = 1
+                        Type = (ItemType)Random.Shared.Next(0, 6),
+                        Amount = Random.Shared.Next(1, 4)
                     }
                 }
             };
@@ -70,12 +70,7 @@ namespace FrivoloCo.Screens.Play
             state.TimeDelayBetweenCustomers = state.TimeDelayBetweenCustomersMax;
         }
 
-        private void ResetMinInterval()
-        {
-            var min = 5000 / progress.Day;
-            var max = 15000 / progress.Day;
-            minIntervalBetweenCustomers = Random.Shared.Next(min, max);
-        }
+        
 
         private void CustomerLeaves()
         {
@@ -137,12 +132,24 @@ namespace FrivoloCo.Screens.Play
         {
             if (Game.Input.IsMouseWithin(this) && state.CurrentlyDraggedItem != null)
             {
+                if (customer is null) return;
+
+                var wasRightOrder = false;
                 foreach (var entry in customer.Order)
                 {
                     if (entry.Type == state.CurrentlyDraggedItem.Type)
+                    {
                         entry.AmountGotten++;
+                        wasRightOrder = true;
+                    }
                 }
                 scheduledObjectRemoval = state.CurrentlyDraggedItem;
+                if (!wasRightOrder)
+                {
+                    SoundEffect.FromFile(customer.WrongOrderSound).Play();
+                    state.Strikes++;
+                    return;
+                }
                 foreach (var entry in customer.Order)
                 {
                     if (entry.AmountGotten < entry.Amount)
@@ -150,6 +157,13 @@ namespace FrivoloCo.Screens.Play
                 }
                 CustomerLeaves();
             }
+        }
+
+        private void ResetMinInterval()
+        {
+            var min = 5000 / progress.Day;
+            var max = 15000 / progress.Day;
+            minIntervalBetweenCustomers = Random.Shared.Next(min, max);
         }
 
         public override void Update(GameTime gameTime)
