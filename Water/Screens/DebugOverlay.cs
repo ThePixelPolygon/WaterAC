@@ -95,14 +95,6 @@ namespace Water.Screens
 
         public override void Update(GameTime gameTime)
         {
-            //var intersectedObjects = new List<string>();
-            //foreach (var obj in Game.AllObjects)
-            //{
-            //    if (new Rectangle(Mouse.GetState(Window).Position, new(10, 10)).Intersects(obj.ActualPosition))
-            //    {
-            //        intersectedObjects.Add($"{obj.ToString().ToUpper()} Actual: {obj.ActualPosition} Relative: {obj.RelativePosition} Parent: {obj.Parent} Children: {string.Join(',', obj.Children)}");
-            //    }
-            //}
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
             if (showExtended) framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} frames/s, {Math.Round(updatesPerSecond, 0)} updates/s, {Game.AllObjects.Count} objects, {ScreenManager.Screens.Count} screens";
             else framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} fps";

@@ -55,7 +55,7 @@ namespace Water.Graphics
         }
         public void Update(GameTime gameTime)
         {
-            Input.Update(gameTime);
+            Input.Update();
             Audio.Update(gameTime);
 
             foreach (var obj in AllObjects)

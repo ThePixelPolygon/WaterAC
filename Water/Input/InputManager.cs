@@ -35,7 +35,7 @@ namespace Water.Input
         private MouseState previousMouseState;
         private MouseState currentMouseState;
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             currentKbState = Keyboard.GetState();
             currentMouseState = Mouse.GetState();
@@ -92,8 +92,8 @@ namespace Water.Input
                 
                 var rcVirtualized = parentRenderContainer.Children[0].RelativePosition;
 
-                var scaleX = (float)rcVirtualized.Width / parentRenderContainer.ActualPosition.Width /*/ rcVirtualized.Width*/;
-                var scaleY = (float)rcVirtualized.Height / parentRenderContainer.ActualPosition.Height /*/ rcVirtualized.Height*/;
+                var scaleX = (float)rcVirtualized.Width / parentRenderContainer.ActualPosition.Width;
+                var scaleY = (float)rcVirtualized.Height / parentRenderContainer.ActualPosition.Height;
 
                 var aa = ((container.RelativePosition.X + currentMouseState.X) * scaleX);
                 var a = parentRenderContainer.ActualPosition.X + (int)Math.Round(aa);
@@ -101,9 +101,7 @@ namespace Water.Input
                 return new(a,
                     b);
             }
-            //return new(100, 100);
-            //else
-                return new((int)Math.Round((container.RelativePosition.X + currentMouseState.X + offsetX) * (scaleFactorX * 1)), (int)Math.Round((container.RelativePosition.Y + currentMouseState.Y + offsetY) * (scaleFactorY * 1)));
+            return new((int)Math.Round((container.RelativePosition.X + currentMouseState.X + offsetX) * (scaleFactorX * 1)), (int)Math.Round((container.RelativePosition.Y + currentMouseState.Y + offsetY) * (scaleFactorY * 1)));
         }
 
         public bool IsMouseWithin(IContainer container)
