@@ -76,11 +76,11 @@ namespace FrivoloCo.Screens.Play.Items
         private Item GetItemForItemType(ItemType type) => type switch
         {
             ItemType.FlatWhite => new Item("Assets/Gameplay/Items/flatwhite.png", true, "Flat White", ItemType.FlatWhite, state),
-            ItemType.Cappuccino => new Item("Assets/Gameplay/Items/cappuccino.png", true, "Cappuccino", ItemType.Cappuccino, state),
+            ItemType.Cappuccino => new Item("Assets/Gameplay/Items/cappuccino.png", true, "Cappu", ItemType.Cappuccino, state),
             ItemType.Latte => new Item("Assets/Gameplay/Items/latte.png", true, "Latte", ItemType.Latte, state),
             ItemType.Espresso => new Item("Assets/Gameplay/Items/espresso.png", true, "Espresso", ItemType.Espresso, state),
-            ItemType.HotChocolate => new Item("Assets/Gameplay/Items/hotchoco.png", true, "Hot Chocolate", ItemType.HotChocolate, state),
-            ItemType.IceTea => new Item("Assets/Gameplay/Items/icetea.png", true, "FUZE Iced Tea", ItemType.IceTea, state),
+            ItemType.HotChocolate => new Item("Assets/Gameplay/Items/hotchoco.png", true, "Hot Choco", ItemType.HotChocolate, state),
+            ItemType.IceTea => new Item("Assets/Gameplay/Items/icetea.png", true, "Iced Tea", ItemType.IceTea, state),
              _ => new Item("Assets/Gameplay/Items/placeholder.png", true, "If you see this, a bug occured", ItemType.FlatWhite, state)
         };
     }
