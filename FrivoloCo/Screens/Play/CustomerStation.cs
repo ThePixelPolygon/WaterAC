@@ -140,11 +140,13 @@ namespace FrivoloCo.Screens.Play
             {
                 SoundEffect.FromFile(customer.ImDoneSound).Play();
                 state.Strikes++;
+                progress.TotalStrikes++;
                 happy = false;
             }
             if (happy)
             {
                 progress.Money += (decimal)(10 * customer.Happiness * progress.Day);
+                progress.CustomersServed++;
                 SoundEffect.FromFile("Assets/Gameplay/kaching.wav").Play();
             }
             customer = null;
@@ -188,6 +190,7 @@ namespace FrivoloCo.Screens.Play
                 {
                     SoundEffect.FromFile(customer.WrongOrderSound).Play();
                     state.Strikes++;
+                    progress.TotalStrikes++;
                     return;
                 }
                 foreach (var entry in customer.Order)
@@ -222,8 +225,7 @@ namespace FrivoloCo.Screens.Play
                 minIntervalBetweenCustomers -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (minIntervalBetweenCustomers <= 0)
                 {
-                    //var diceRoll = Random.Shared.Next(0, 5000);
-                    if (/*diceRoll == 5 && */state.TimeDelayBetweenCustomers <= 0)
+                    if (state.TimeDelayBetweenCustomers <= 0)
                     {
                         CustomerEnters();
                         ResetMinInterval();

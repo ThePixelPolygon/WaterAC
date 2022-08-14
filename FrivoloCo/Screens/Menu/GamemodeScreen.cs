@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Water.Graphics;
 using Water.Graphics.Containers;
 using Water.Graphics.Controls;
 using Water.Graphics.Screens;
@@ -40,11 +41,18 @@ namespace FrivoloCo.Screens.Menu
             {
                 Layout = Water.Graphics.Layout.Fill
             };
+
+            var co = new Container()
+            {
+                RelativePosition = new(0, 0, 1920, 1080)
+            };
+            rc.AddChild(co);
+
             sp = new Sprite("Assets/FrivoloCoBackground.png")
             {
                 RelativePosition = new(0, 0, 1920, 1080)
             };
-            rc.AddChild(Game.AddObject(sp));
+            co.AddChild(Game.AddObject(sp));
             AddChild(rc);
 
             bt = new SpriteButton("Assets/endless.png", "Assets/endlessA.png", () => { beginGame = true; })
@@ -52,21 +60,21 @@ namespace FrivoloCo.Screens.Menu
                 RelativePosition = new(0, 300, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            AddChild(Game.AddObject(bt));
+            co.AddChild(Game.AddObject(bt));
 
             bt2 = new SpriteButton("Assets/tutorial.png", "Assets/tutorialA.png", () => { ScreenManager.ChangeScreen(new OptionsScreen()); })
             {
                 RelativePosition = new(0, 450, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            AddChild(Game.AddObject(bt2));
+            co.AddChild(Game.AddObject(bt2));
 
             bt3 = new SpriteButton("Assets/back.png", "Assets/backA.png", () => { ScreenManager.ChangeScreen(new MenuScreen()); })
             {
                 RelativePosition = new(0, 600, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            AddChild(Game.AddObject(bt3));
+            co.AddChild(Game.AddObject(bt3));
         }
 
         private double counter = 1;
