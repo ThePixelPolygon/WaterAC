@@ -46,6 +46,11 @@ namespace FrivoloCo.Screens.Play
         private CustomerStation s4;
         private CustomerStation s5;
 
+        private Sprite sunriseSp;
+        private Sprite daySp;
+        private Sprite sunsetSp;
+        private Sprite nightSp;
+
         private RenderContainer rc;
 
         public override void Initialize()
@@ -71,18 +76,37 @@ namespace FrivoloCo.Screens.Play
             {
                 Layout = Layout.Fill
             };
-            var sp = new Sprite("Assets/Gameplay/gameplayday.png")
+            //sunriseSp = new Sprite("Assets/Gameplay/gameplaysunrise.png")
+            //{
+            //    RelativePosition = new(0, 0, 1920, 1080),
+            //    Layout = Layout.Fill
+            //};
+            daySp = new Sprite("Assets/Gameplay/gameplayday.png")
             {
                 RelativePosition = new(0, 0, 1920, 1080),
                 Layout = Layout.Fill
             };
+            //sunsetSp = new Sprite("Assets/Gameplay/gameplaysunset.png")
+            //{
+            //    RelativePosition = new(0, 0, 1920, 1080),
+            //    Layout = Layout.Fill
+            //};
+            //nightSp = new Sprite("Assets/Gameplay/gameplaynight.png")
+            //{
+            //    RelativePosition = new(0, 0, 1920, 1080),
+            //    Layout = Layout.Fill
+            //};
+
             var co = new Container()
             {
                 RelativePosition = new(0, 0, 1920, 1080),
                 Layout = Layout.Center
             };
 
-            co.AddChild(Game.AddObject(sp));
+            //co.AddChild(Game.AddObject(sunriseSp));
+            co.AddChild(Game.AddObject(daySp));
+            //co.AddChild(Game.AddObject(sunsetSp));
+            //co.AddChild(Game.AddObject(nightSp));
 
             rc.AddChild(co);
 
@@ -203,11 +227,52 @@ namespace FrivoloCo.Screens.Play
 
         private bool CustomersAreNotStillPresent => s1.IsEmpty && s2.IsEmpty && s3.IsEmpty && s4.IsEmpty && s5.IsEmpty;
 
+        //private int stage = 0;
+        //private double counter = 15000;
+
         private double delayBeforeScreenAdvance = 3;
 
         public override void Update(GameTime gameTime)
         {
             if (State.Paused) return;
+
+            //counter -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            //if (stage == 0)
+            //{
+            //    sunriseSp.Color = Color.White * (float)(counter / 15000);
+            //    if (counter <= 0)
+            //    {
+            //        counter = 15000;
+            //        stage++;
+            //    }
+            //}
+            //else if (stage == 1)
+            //{
+            //    daySp.Color = Color.White * (float)(counter / 15000);
+            //    if (counter <= 0)
+            //    {
+            //        counter = 15000;
+            //        stage++;
+            //    }
+            //}
+            //else if (stage == 2)
+            //{
+            //    sunsetSp.Color = Color.White * (float)(counter / 15000);
+            //    if (counter <= 0)
+            //    {
+            //        counter = 15000;
+            //        stage++;
+            //    }
+            //}
+            //else if (stage == 3)
+            //{
+            //    nightSp.Color = Color.White * (float)(counter / 15000);
+            //    if (counter <= 0)
+            //    {
+            //        counter = 15000;
+            //        stage++;
+            //    }
+            //}
 
             if (State.Strikes >= 3)
             {
