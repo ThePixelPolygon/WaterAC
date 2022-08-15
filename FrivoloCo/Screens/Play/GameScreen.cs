@@ -203,6 +203,8 @@ namespace FrivoloCo.Screens.Play
 
         private bool CustomersAreNotStillPresent => s1.IsEmpty && s2.IsEmpty && s3.IsEmpty && s4.IsEmpty && s5.IsEmpty;
 
+        private double delayBeforeScreenAdvance = 3;
+
         public override void Update(GameTime gameTime)
         {
             if (State.Paused) return;
@@ -216,15 +218,17 @@ namespace FrivoloCo.Screens.Play
 
             if (State.TimeLeft <= 0)
             {
+                State.TimeDelayBetweenCustomers = 999;
                 if (CustomersAreNotStillPresent)
                 {
-                    progressState.Day++;
-                    ScreenManager.ChangeScreen(new PreGameScreen(progressState));
-                    return;
-                }
-                else
-                {
-                    State.TimeDelayBetweenCustomers = 999;
+                    MediaPlayer.Stop();
+                    delayBeforeScreenAdvance -= gameTime.ElapsedGameTime.TotalSeconds;
+                    if (delayBeforeScreenAdvance <= 0)
+                    {
+                        progressState.Day++;
+                        ScreenManager.ChangeScreen(new PreGameScreen(progressState));
+                        return;
+                    }
                 }
             }
 
