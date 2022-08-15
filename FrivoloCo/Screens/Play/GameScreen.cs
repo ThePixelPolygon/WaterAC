@@ -39,6 +39,13 @@ namespace FrivoloCo.Screens.Play
 
         private TextBlock moneyTb;
         private TextBlock statusTb;
+
+        private CustomerStation s1;
+        private CustomerStation s2;
+        private CustomerStation s3;
+        private CustomerStation s4;
+        private CustomerStation s5;
+
         private RenderContainer rc;
 
         public override void Initialize()
@@ -81,34 +88,38 @@ namespace FrivoloCo.Screens.Play
 
             AddChild(rc);
 
-            
 
-            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
+            s1 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(18, 98, 365, 534)
-            }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
+            };
+            co.AddChild(Game.AddObject(s1));
+            s2 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(398, 98, 365, 534)
-            }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
+            };
+            co.AddChild(Game.AddObject(s2));
+            s3 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(778, 98, 365, 534)
-            }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
+            };
+            co.AddChild(Game.AddObject(s3));
+            s4 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(1158, 98, 365, 534)
-            }));
-            co.AddChild(Game.AddObject(new CustomerStation(State, progressState)
+            };
+            co.AddChild(Game.AddObject(s4));
+            s5 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(1538, 98, 365, 534)
-            }));
+            };
+            co.AddChild(Game.AddObject(s5));
 
-            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.IceTea, State)
             {
                 RelativePosition = new(550, 850, 120, 230)
             }));
-            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.IceTea, State)
+            co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
             {
                 RelativePosition = new(690, 850, 120, 230)
             }));
@@ -185,10 +196,12 @@ namespace FrivoloCo.Screens.Play
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
                 ScreenManager.ChangeScreen(new GameScreen(new ProgressState()));
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F4)
-                State.TimeLeft = 1;
+                State.TimeLeft = 10;
         }
 
         public GameState State { get; private set; } = new();
+
+        private bool CustomersAreNotStillPresent => s1.IsEmpty && s2.IsEmpty && s3.IsEmpty && s4.IsEmpty && s5.IsEmpty;
 
         public override void Update(GameTime gameTime)
         {
@@ -203,12 +216,18 @@ namespace FrivoloCo.Screens.Play
 
             if (State.TimeLeft <= 0)
             {
-                progressState.Day++;
-                ScreenManager.ChangeScreen(new PreGameScreen(progressState));
-                return;
+                if (CustomersAreNotStillPresent)
+                {
+                    progressState.Day++;
+                    ScreenManager.ChangeScreen(new PreGameScreen(progressState));
+                    return;
+                }
+                else
+                {
+                    State.TimeDelayBetweenCustomers = 999;
+                }
             }
 
-            //Game.MainGame.Window.Title = State.CurrentlyDraggedItem?.ToString() ?? "nothing";
 #if DEBUG
             Game.MainGame.Window.Title = State.TimeDelayBetweenCustomers.ToString();
 #endif

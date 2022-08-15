@@ -98,8 +98,7 @@ namespace Water.Input
                 var aa = ((container.RelativePosition.X + currentMouseState.X) * scaleX);
                 var a = parentRenderContainer.ActualPosition.X + (int)Math.Round(aa);
                 var b = parentRenderContainer.ActualPosition.Y + (int)Math.Round((float)( container.RelativePosition.Y + currentMouseState.Y) * scaleY);
-                return new(a,
-                    b);
+                return new(a, b);
             }
             return new((int)Math.Round((container.RelativePosition.X + currentMouseState.X + offsetX) * (scaleFactorX * 1)), (int)Math.Round((container.RelativePosition.Y + currentMouseState.Y + offsetY) * (scaleFactorY * 1)));
         }

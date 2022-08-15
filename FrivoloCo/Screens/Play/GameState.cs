@@ -9,7 +9,7 @@ namespace FrivoloCo.Screens.Play
 {
     public class GameState
     {
-        public double TimeLeft { get; set; } = 120000; // 2 minutes in milliseconds
+        public double TimeLeft { get; set; } = 60000; // 2 minutes in milliseconds
 
         public double TableTopOffset { get; set; } = 448; // Pixels to top edge of visible table
 

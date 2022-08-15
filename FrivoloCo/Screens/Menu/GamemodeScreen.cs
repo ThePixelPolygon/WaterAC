@@ -62,7 +62,7 @@ namespace FrivoloCo.Screens.Menu
             };
             co.AddChild(Game.AddObject(bt));
 
-            bt2 = new SpriteButton("Assets/tutorial.png", "Assets/tutorialA.png", () => { ScreenManager.ChangeScreen(new OptionsScreen()); })
+            bt2 = new SpriteButton("Assets/tutorial.png", "Assets/tutorialA.png", () => { ScreenManager.ChangeScreen(new TutorialScreen()); })
             {
                 RelativePosition = new(0, 450, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter

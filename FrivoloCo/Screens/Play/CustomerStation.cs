@@ -15,6 +15,8 @@ namespace FrivoloCo.Screens.Play
 {
     public class CustomerStation : GameObject
     {
+        public bool IsEmpty => customer is null;
+
         private Customer customer;
 
         private readonly GameState state;
@@ -43,32 +45,61 @@ namespace FrivoloCo.Screens.Play
             };
 
             int patience = 50;    // TODO: reimplement these as algorithms instead of this mess lol
-            if (progress.Day >= 1 && progress.Day <= 2)
-                patience = 50;
-            else if (progress.Day >= 3 && progress.Day <= 4)
-                patience = 40;
-            else if (progress.Day >= 5 && progress.Day <= 6)
-                patience = 30;
-            else if (progress.Day >= 7 && progress.Day <= 9)
-                patience = 20;
-            else if (progress.Day >= 10 && progress.Day <= 15)
-                patience = 10;
-            else if (progress.Day >= 16)
-                patience = 5;
+            switch (progress.Day)
+            {
+                case >= 1 and <= 2:
+                    patience = 50;
+                    break;
+                case >= 3 and <= 4:
+                    patience = 40;
+                    break;
+                case >= 5 and <= 6:
+                    patience = 30;
+                    break;
+                case >= 7 and <= 9:
+                    patience = 20;
+                    break;
+                case >= 10 and <= 11:
+                    patience = 10;
+                    break;
+                case 12:
+                    patience = 9;
+                    break;
+                case 13:
+                    patience = 8;
+                    break;
+                case 14:
+                    patience = 7;
+                    break;
+                case 15:
+                    patience = 6;
+                    break;
+                case >= 16:
+                    patience = 5;
+                    break;
+            }
 
             customer.MaxPatience = customer.Patience = patience;
 
             int amountOfEntries = 1;
-            if (progress.Day >= 1 && progress.Day <= 3)
-                amountOfEntries = 1;
-            else if (progress.Day >= 4 && progress.Day <= 6)
-                amountOfEntries = 2;
-            else if (progress.Day >= 7 && progress.Day <= 9)
-                amountOfEntries = 3;
-            else if (progress.Day >= 10 && progress.Day <= 13)
-                amountOfEntries = 4;
-            else if (progress.Day >= 15)
-                amountOfEntries = 5;
+            switch (progress.Day)
+            {
+                case >= 1 and <= 3:
+                    amountOfEntries = 1;
+                    break;
+                case >= 4 and <= 6:
+                    amountOfEntries = 2;
+                    break;
+                case >= 7 and <= 9:
+                    amountOfEntries = 3;
+                    break;
+                case >= 10 and <= 14:
+                    amountOfEntries = 4;
+                    break;
+                case >= 15:
+                    amountOfEntries = 5;
+                    break;
+            }
 
             for (int i = 0; i < amountOfEntries; i++)
             {
@@ -120,28 +151,26 @@ namespace FrivoloCo.Screens.Play
             box = null;
             tb = null;
             var happy = true;
-            if (customer.Happiness >= 0.61)
+            switch (customer.Happiness)
             {
-                SoundEffect.FromFile(customer.ThankYouHappySound).Play();
-            }
-            else if (customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
-            {
-                SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
-            }
-            else if (customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
-            {
-                SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
-            }
-            else if (customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
-            {
-                SoundEffect.FromFile(customer.ThankYouAngerySound).Play();
-            }
-            else if (customer.Happiness <= 0)
-            {
-                SoundEffect.FromFile(customer.ImDoneSound).Play();
-                state.Strikes++;
-                progress.TotalStrikes++;
-                happy = false;
+                case >= 0.61:
+                    SoundEffect.FromFile(customer.ThankYouHappySound).Play();
+                    break;
+                case <= 0.60 and >= 0.45:
+                    SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
+                    break;
+                case <= 0.45 and >= 0.20:
+                    SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
+                    break;
+                case <= 0.20 and >= 0.01:
+                    SoundEffect.FromFile(customer.ThankYouAngerySound).Play();
+                    break;
+                case <= 0:
+                    SoundEffect.FromFile(customer.ImDoneSound).Play();
+                    state.Strikes++;
+                    progress.TotalStrikes++;
+                    happy = false;
+                    break;
             }
             if (happy)
             {
