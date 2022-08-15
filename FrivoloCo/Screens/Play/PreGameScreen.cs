@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Water.Graphics;
+using Water.Graphics.Containers;
 using Water.Graphics.Controls;
 using Water.Graphics.Screens;
 
@@ -32,8 +34,20 @@ namespace FrivoloCo.Screens.Play
             
         }
         private TextBlock tb;
+        private RenderContainer rc;
         public override void Initialize()
         {
+            rc = new RenderContainer(Game.GraphicsDevice)
+            {
+                Layout = Water.Graphics.Layout.Fill
+            };
+            AddChild(rc);
+            var co = new Container()
+            {
+                Layout = Layout.Fill,
+                RelativePosition = new(0, 0, 1920, 1080)
+            };
+            rc.AddChild(co);
             tb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 90), "", Color.White)
             {
                 Layout = Water.Graphics.Layout.Center,
@@ -42,7 +56,7 @@ namespace FrivoloCo.Screens.Play
                 LineSpacing = 110
             };
             tb.Text = $"Day\n{state.Day}\nat FrivoloCo!\n\n${state.Money:0..00}";
-            AddChild(Game.AddObject(tb));
+            co.AddChild(Game.AddObject(tb));
             MediaPlayer.Stop();
             var fx = SoundEffect.FromFile("Assets/Music/gamestart.wav");
             fx.Play();

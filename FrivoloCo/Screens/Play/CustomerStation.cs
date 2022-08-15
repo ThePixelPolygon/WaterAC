@@ -291,7 +291,19 @@ namespace FrivoloCo.Screens.Play
                 foreach (var x in customer.Order)
                 {
                     if (x.AmountGotten < x.Amount)
-                        sb.AppendLine($"{x.Type}");
+                    {
+                        var name = x.Type switch
+                        {
+                            ItemType.IceTea => "Ice Tea",
+                            ItemType.Espresso => "Espresso",
+                            ItemType.FlatWhite => "Flat White",
+                            ItemType.Cappuccino => "Cappuccino",
+                            ItemType.HotChocolate => "Hot Chocolate",
+                            ItemType.Latte => "Latte",
+                            _ => "something went horribly wrong"
+                        };
+                        sb.AppendLine($"{name}");
+                    }
                 }
                 sb.AppendLine($"{customer.Happiness * 100:F1}% happiness");
                 tb.Text = sb.ToString();
