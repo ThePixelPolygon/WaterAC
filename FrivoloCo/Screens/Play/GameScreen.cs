@@ -220,7 +220,10 @@ namespace FrivoloCo.Screens.Play
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F5)
                 ScreenManager.ChangeScreen(new GameScreen(new ProgressState()));
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.F4)
-                State.TimeLeft = 10;
+            {
+                progressState.Day++;
+                ScreenManager.ChangeScreen(new PreGameScreen(progressState));
+            }
         }
 
         public GameState State { get; private set; } = new();

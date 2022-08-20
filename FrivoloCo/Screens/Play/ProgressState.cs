@@ -8,6 +8,8 @@ namespace FrivoloCo.Screens.Play
 {
     public class ProgressState
     {
+        public DateTime StartedPlaying { get; set; } = DateTime.Now;
+
         public int Day { get; set; } = 1;
 
         public decimal Money { get; set; } = 1;

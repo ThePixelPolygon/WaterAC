@@ -12,6 +12,7 @@ using Water.Graphics.Controls;
 using FrivoloCo.Screens.Menu;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using Water.Utils;
 
 namespace FrivoloCo.Screens.Play
 {
@@ -33,7 +34,7 @@ namespace FrivoloCo.Screens.Play
             
         }
 
-        public override void Initialize()
+        public override async void Initialize()
         {
             Game.Input.KeyDown += Input_KeyDown;
 
@@ -66,14 +67,45 @@ namespace FrivoloCo.Screens.Play
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Center
             };
+
+            await WriteRecordAsync();
+            var records = await ReadRecordsAsync();
+            var sb = new StringBuilder();
+            int i = 1;
+            var top = records.OrderByDescending(x => x.Money);
+
+            if (progress.Money == top.ToList().First().Money)
+                sb.AppendLine("Leaderboard: New high score! :o");
+            else sb.AppendLine("Leaderboard");
+
+            foreach (var record in records.OrderByDescending(x => x.Money))
+            {
+                sb.AppendLine($"{i}: ${record.Money:0..00} (Day {record.Day}) {record.StartedPlaying}");
+                i++;
+            }
+
             tb.Text = 
                 $"FAILED\nYour terrible performance caused people to stop going to FrivoloCo,\n" +
                 $"so you were fired.\n" +
                 $"(press ESC to go back)\n" +
                 $"\n" +
                 $"Score: ${progress.Money:0..00}\n" +
-                $"Mistakes: {progress.TotalStrikes}   Customers Served: {progress.CustomersServed}    Day: {progress.Day}";
+                $"Mistakes: {progress.TotalStrikes}   Customers Served: {progress.CustomersServed}    Day: {progress.Day}\n" +
+                $"\n" +
+                $"{sb}";
             co.AddChild(Game.AddObject(tb));
+        }
+
+        private async Task<List<ProgressState>> ReadRecordsAsync()
+        {
+            return await JsonUtils.ReadAsync<List<ProgressState>>("records.json");
+        }
+
+        private async Task WriteRecordAsync()
+        {
+            var records = await ReadRecordsAsync();
+            records.Add(progress);
+            await JsonUtils.WriteAsync("records.json", records);
         }
 
         private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
