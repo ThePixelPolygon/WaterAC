@@ -231,9 +231,23 @@ namespace FrivoloCo.Screens.Play
         //private double counter = 15000;
 
         private double delayBeforeScreenAdvance = 3;
+        private bool inactivePause = false;
 
         public override void Update(GameTime gameTime)
         {
+            if (!Game.MainGame.IsActive && !State.Paused)
+            {
+                State.Paused = true;
+                inactivePause = true;
+                MediaPlayer.Pause();
+            }
+            else if (Game.MainGame.IsActive && inactivePause)
+            {
+                State.Paused = false;
+                inactivePause = false;
+                MediaPlayer.Resume();
+            }
+
             if (State.Paused) return;
 
             //counter -= gameTime.ElapsedGameTime.TotalMilliseconds;

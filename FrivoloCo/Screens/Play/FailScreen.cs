@@ -69,17 +69,20 @@ namespace FrivoloCo.Screens.Play
             tb.Text = 
                 $"FAILED\nYour terrible performance caused people to stop going to FrivoloCo,\n" +
                 $"so you were fired.\n" +
-                $"(press any key to go back)\n" +
+                $"(press ESC to go back)\n" +
                 $"\n" +
                 $"Score: ${progress.Money:0..00}\n" +
-                $"Mistakes: {progress.TotalStrikes}   Customers Served: {progress.CustomersServed}";
+                $"Mistakes: {progress.TotalStrikes}   Customers Served: {progress.CustomersServed}    Day: {progress.Day}";
             co.AddChild(Game.AddObject(tb));
         }
 
         private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
         {
-            MediaPlayer.Stop();
-            ScreenManager.ChangeScreen(new MenuScreen());
+            if (e.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+            {
+                MediaPlayer.Stop();
+                ScreenManager.ChangeScreen(new MenuScreen());
+            }
         }
 
         private double counter;
