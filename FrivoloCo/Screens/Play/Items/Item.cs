@@ -74,8 +74,10 @@ namespace FrivoloCo.Screens.Play.Items
             {
                 if (Parent is not null)
                 {
-                    if (RelativePosition.Y <= Parent.ActualPosition.Height - state.TableTopOffset + RelativePosition.Height)
-                        RelativePosition = new(RelativePosition.X, RelativePosition.Y + 1, RelativePosition.Width, RelativePosition.Height);
+                    RelativePosition = new(RelativePosition.X, RelativePosition.Y + 1, RelativePosition.Width, RelativePosition.Height);
+
+                    if (!Parent.ActualPosition.Intersects(ActualPosition))
+                        Game.RemoveObject(this);
                 }
             }
             base.Update(gameTime);

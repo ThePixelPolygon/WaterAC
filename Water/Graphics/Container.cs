@@ -188,8 +188,8 @@ namespace Water.Graphics
                 }
                 else
                 {
-                    var childrenThatHaveObjectsInThem = child.Children.Where(x => x is GameObject);
-                    foreach (var child2 in childrenThatHaveObjectsInThem)
+                    var childrenThatHaveChildrenThatAreGameObjects = child.Children.Where(x => x is GameObject);
+                    foreach (var child2 in childrenThatHaveChildrenThatAreGameObjects)
                     {
                         if (child2 is GameObject obj2) obj2.Draw(gameTime, spriteBatch, graphicsDevice);
                     }

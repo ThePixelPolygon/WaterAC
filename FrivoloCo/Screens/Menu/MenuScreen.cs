@@ -96,7 +96,7 @@ namespace FrivoloCo.Screens.Menu
             };
             co.AddChild(Game.AddObject(bt4));
 
-            tx = new TextBlock(new(0, 0, 400, 18), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 20), "Ver. 1 - initial Game Jam release", Color.White)
+            tx = new TextBlock(new(0, 0, 400, 18), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 20), "Ver. 1.1", Color.White)
             {
                 Layout = Water.Graphics.Layout.AnchorBottomLeft,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,

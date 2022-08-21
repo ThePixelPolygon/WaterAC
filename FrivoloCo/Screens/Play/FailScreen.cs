@@ -98,14 +98,14 @@ namespace FrivoloCo.Screens.Play
 
         private async Task<List<ProgressState>> ReadRecordsAsync()
         {
-            return await JsonUtils.ReadAsync<List<ProgressState>>("records.json");
+            return await JsonUtils.ReadAsync<List<ProgressState>>("Data/records.json");
         }
 
         private async Task WriteRecordAsync()
         {
             var records = await ReadRecordsAsync();
             records.Add(progress);
-            await JsonUtils.WriteAsync("records.json", records);
+            await JsonUtils.WriteAsync("Data/records.json", records);
         }
 
         private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)

@@ -42,7 +42,6 @@ namespace FrivoloCo.Screens
             rc.AddChild(Game.AddObject(sp));
             AddChild(rc);
 
-            MediaPlayer.Volume = 0.5f; // TODO: volume control
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(Song.FromUri("mainmenu", new("Assets/Music/mainmenu.ogg", UriKind.Relative)));
         }
