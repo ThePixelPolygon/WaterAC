@@ -297,7 +297,7 @@ namespace FrivoloCo.Screens.Play
                             ItemType.IceTea => "Ice Tea",
                             ItemType.Espresso => "Espresso",
                             ItemType.FlatWhite => "Flat White",
-                            ItemType.Cappuccino => "Cappuccino",
+                            ItemType.Cappuccino => "Cappucino",
                             ItemType.HotChocolate => "Hot Chocolate",
                             ItemType.Latte => "Latte",
                             _ => "something went horribly wrong"

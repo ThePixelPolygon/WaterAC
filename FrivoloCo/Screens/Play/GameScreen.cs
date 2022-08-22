@@ -46,10 +46,7 @@ namespace FrivoloCo.Screens.Play
         private CustomerStation s4;
         private CustomerStation s5;
 
-        private Sprite sunriseSp;
-        private Sprite daySp;
-        private Sprite sunsetSp;
-        private Sprite nightSp;
+        private Sprite backgroundSp;
 
         private RenderContainer rc;
 
@@ -81,7 +78,14 @@ namespace FrivoloCo.Screens.Play
             //    RelativePosition = new(0, 0, 1920, 1080),
             //    Layout = Layout.Fill
             //};
-            daySp = new Sprite("Assets/Gameplay/gameplayday.png")
+            backgroundSp = new Sprite(progressState.SongPlayed switch
+            {
+                2 => "Assets/Gameplay/gameplaysunrise.png",
+                3 => "Assets/Gameplay/gameplaysunset.png",
+                4 => "Assets/Gameplay/gameplaynight.png",
+                5 => "Assets/Gameplay/gameplayday.png",
+                _ or 6 => "Assets/Gameplay/gameplayday.png",
+            })
             {
                 RelativePosition = new(0, 0, 1920, 1080),
                 Layout = Layout.Fill
@@ -103,10 +107,7 @@ namespace FrivoloCo.Screens.Play
                 Layout = Layout.Center
             };
 
-            //co.AddChild(Game.AddObject(sunriseSp));
-            co.AddChild(Game.AddObject(daySp));
-            //co.AddChild(Game.AddObject(sunsetSp));
-            //co.AddChild(Game.AddObject(nightSp));
+            co.AddChild(Game.AddObject(backgroundSp));
 
             rc.AddChild(co);
 
