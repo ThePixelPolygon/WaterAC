@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading.Tasks;
 using Water.Configuration;
 using Water.Graphics;
 using Water.Graphics.Screens;
@@ -47,7 +48,7 @@ namespace Water
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1);
             Graphics.ApplyChanges();
-            
+
             gameObjectManager = new(GraphicsDevice, this);
 
             Screen = new(gameObjectManager, Window);
@@ -60,15 +61,17 @@ namespace Water
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            SoundEffect.MasterVolume = EngineConfig.EffectVolume * EngineConfig.MasterVolume;
-            MediaPlayer.Volume = EngineConfig.MusicVolume * EngineConfig.MasterVolume;
-
             gameObjectManager.Input.KeyDown += Input_KeyDown;
         }
 
-        private async void LoadConfig() // doing it this way so that we can get graphics/window settings from the start
+        private async void LoadConfig() => await LoadConfigAsync(); // this is really cursed :sob:
+
+        public async Task LoadConfigAsync()
         {
             EngineConfig = await JsonUtils.ReadAsync<ConfigFile>("Data/engineconfig.json");
+
+            SoundEffect.MasterVolume = EngineConfig.EffectVolume * EngineConfig.MasterVolume;
+            MediaPlayer.Volume = EngineConfig.MusicVolume * EngineConfig.MasterVolume;
         }
 
         private void Input_KeyDown(object sender, Input.KeyEventArgs e)

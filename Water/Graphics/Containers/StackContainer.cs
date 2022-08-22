@@ -19,13 +19,13 @@ namespace Water.Graphics.Containers
             {
                 if (Orientation == Orientation.Horizontal)
                 { 
-                    child.ActualPosition = new(offset, child.RelativePosition.Y, child.RelativePosition.Width, child.RelativePosition.Height);
-                    offset += child.RelativePosition.X;
+                    child.ActualPosition = new(offset + Margin, child.ActualPosition.Y + Margin, child.ActualPosition.Width, child.ActualPosition.Height);
+                    offset += child.ActualPosition.X + Margin;
                 }
                 else if (Orientation == Orientation.Vertical)
                 {
-                    child.ActualPosition = new(child.RelativePosition.X, offset, child.RelativePosition.Width, child.RelativePosition.Height);
-                    offset += child.RelativePosition.Y;
+                    child.ActualPosition = new(child.ActualPosition.X + Margin, offset + Margin, child.ActualPosition.Width, child.ActualPosition.Height);
+                    offset += child.ActualPosition.Y + Margin;
                 }
                 child.CalculateChildrenPositions();
             }
