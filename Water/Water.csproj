@@ -8,6 +8,7 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
