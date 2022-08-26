@@ -46,7 +46,7 @@ namespace TestGame.Screens
         {
             //if (Game.Input.IsMouseWithin(Parent)) Color = Color.Red;
             //else Color = Color.White;
-            var pos = Game.Input.GetMousePositionRelativeTo(Parent.Parent);
+            var pos = Game.Input.GetMousePositionRelativeTo(Parent);
             RelativePosition = new(pos.X, pos.Y, 10, 10);
             counter--;
             if (counter < 0)

@@ -6,44 +6,40 @@ using System.Text;
 using System.Threading.Tasks;
 using ManagedBass;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Water.Audio.BASS;
 
 namespace Water.Audio
 {
     public class AudioManager
     {
-        public List<IPlayable> Tracks { get; private set; } = new();
+        public List<IAudioTrack> Tracks { get; private set; } = new();
 
         public double MasterVolume { get; set; } = 1;
         public double MusicVolume { get; set; } = 0.5;
         public double EffectVolume { get; set; } = 1;
 
+        private readonly IAudioService audioService;
+
         public AudioManager()
         {
-
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                audioService = new BASSAudioService();
         }
 
-        public void Initialize()
-        {
-            var n = 0;
-            var info = new DeviceInfo();
-            while (Bass.GetDeviceInfo(n, out info))
-            {
-                Debug.WriteLine($"{n}: Default?: {info.IsDefault} Name: {info.Name}");
-                n++;
-            }
-
-            if (!Bass.Init(-1))
-            {
-                var error = Bass.LastError;
-                throw new Exception($"Kyaa! Bass failed to initialize with error {error}.");
-            }
-        }
+        /// <summary>
+        /// Initializes the audio service
+        /// </summary>
+        /// <returns>False if audio playback is not available.</returns>
+        public bool Initialize() => audioService?.Initialize() ?? false;
 
         public void Update(GameTime gameTime)
         {
             foreach (var track in Tracks)
             {
-                if (track is AudioTrack t)
+                if (track is IAudioTrack t)
                 {
                     if (t.IsLeftOver && t.AutoDispose)
                         t.Dispose();

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ManagedBass;
 
-namespace Water.Audio
+namespace Water.Audio.BASS
 {
-    public class AudioTrack : IPlayable
+    public class BASSAudioTrack : IAudioTrack
     {
         public string FilePath { get; }
 
@@ -32,6 +32,10 @@ namespace Water.Audio
             {
                 return Bass.ChannelBytes2Seconds(Stream, Bass.ChannelGetPosition(Stream) * 1000);
             }
+            set
+            {
+                Seek(value);
+            }
         }
 
         public int Frequency { get; private set; }
@@ -54,14 +58,14 @@ namespace Water.Audio
 
         public double Volume
         {
-            get => Bass.ChannelGetAttribute(Stream, ChannelAttribute.Volume) * 100;
-            set => Bass.ChannelSetAttribute(Stream, ChannelAttribute.Volume, (float)(value / 100f));
+            get => Bass.ChannelGetAttribute(Stream, ChannelAttribute.Volume);
+            set => Bass.ChannelSetAttribute(Stream, ChannelAttribute.Volume, (float)value);
         }
 
-        public double Time => Bass.ChannelBytes2Seconds(Stream, Bass.ChannelGetPosition((Stream)) * 1000);
+        public double Time => Bass.ChannelBytes2Seconds(Stream, Bass.ChannelGetPosition(Stream) * 1000);
 
         private AudioManager audioManager;
-        public AudioTrack(AudioManager audioManager, string path, bool autoDispose = true)
+        public BASSAudioTrack(AudioManager audioManager, string path, bool autoDispose = true)
         {
             this.audioManager = audioManager;
             FilePath = path;
@@ -93,7 +97,7 @@ namespace Water.Audio
         {
             CheckIfDisposed();
 
-            if (!IsPlaying || IsPaused)
+            if (IsPlaying || IsPaused)
                 throw new Exception("Kyaa! Tried to play a track that's already playing");
 
             var previous = Time;
