@@ -28,9 +28,7 @@ namespace TestGame.Screens
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.E)
             {
-                var x = new BASSAudioTrack(Game.Audio, @"Assets/03. Dream Walker.mp3");
-                x.Volume = 2f;
-                x.Play();
+                Game.Audio.PlayTrack("Assets/03. Dream Walker.mp3");
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.R)
             {

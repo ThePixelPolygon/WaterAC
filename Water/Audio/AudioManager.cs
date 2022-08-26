@@ -32,8 +32,16 @@ namespace Water.Audio
         /// <summary>
         /// Initializes the audio service
         /// </summary>
-        /// <returns>False if audio playback is not available.</returns>
-        public bool Initialize() => audioService?.Initialize() ?? false;
+        /// <returns>False if audio playback is not available</returns>
+        public bool Initialize()
+        {
+            audioService.Audio = this;
+            return audioService?.Initialize() ?? false;
+        }
+
+        public void PlayTrack(string filePath) => audioService.PlayTrack(filePath);
+
+        private List<IAudioTrack> tracksToRemove = new();
 
         public void Update(GameTime gameTime)
         {
@@ -46,11 +54,15 @@ namespace Water.Audio
 
                     if (t.IsDisposed)
                     {
-                        Tracks.Remove(t);
+                        tracksToRemove.Add(t);
                         continue;
                     }
                 }
             }
+
+            foreach (var track in tracksToRemove)
+                Tracks.Remove(track);
+            tracksToRemove.Clear();
         }
     }
 }
