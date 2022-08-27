@@ -67,13 +67,13 @@ namespace Water.Audio.BASS
         public double Time => Bass.ChannelBytes2Seconds(Stream, Bass.ChannelGetPosition(Stream) * 1000);
 
         private AudioManager audioManager;
-        public BASSMusicTrack(AudioManager audioManager, string path, bool isLooping, bool autoDispose = true)
+        public BASSMusicTrack(AudioManager audioManager, double volume, string path, bool isLooping, bool autoDispose = true)
         {
             this.audioManager = audioManager;
             IsLooping = isLooping;
             FilePath = path;
             AutoDispose = autoDispose;
-            Volume = 1f;
+            Volume = volume;
             Stream = Bass.CreateStream(path/*, Flags: BassFlags.Decode | BassFlags.Prescan*/);
 
             AfterLoad();

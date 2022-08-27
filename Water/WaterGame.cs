@@ -40,7 +40,7 @@ namespace Water
         private GameObjectManager gameObjectManager;
         public WaterGame()
         {
-            LoadConfig();
+            
 
             Graphics = new GraphicsDeviceManager(this);
             Graphics.SynchronizeWithVerticalRetrace = true;
@@ -50,6 +50,8 @@ namespace Water
             Graphics.ApplyChanges();
 
             gameObjectManager = new(GraphicsDevice, this);
+
+            LoadConfig();
 
             Screen = new(gameObjectManager, Window);
             Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
@@ -70,8 +72,10 @@ namespace Water
         {
             EngineConfig = await JsonUtils.ReadAsync<ConfigFile>("Data/engineconfig.json");
 
-            SoundEffect.MasterVolume = EngineConfig.EffectVolume * EngineConfig.MasterVolume;
-            MediaPlayer.Volume = EngineConfig.MusicVolume * EngineConfig.MasterVolume;
+            gameObjectManager.Audio.MasterVolume = EngineConfig.MasterVolume;
+            gameObjectManager.Audio.MusicVolume = EngineConfig.MusicVolume;
+            gameObjectManager.Audio.EffectVolume = EngineConfig.EffectVolume;
+            gameObjectManager.Audio.UpdateVolumes();
         }
 
         private void Input_KeyDown(object sender, Input.KeyEventArgs e)

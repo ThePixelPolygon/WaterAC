@@ -55,6 +55,8 @@ namespace FrivoloCo.Screens.Play
             title = Game.MainGame.Window.Title;
             Game.Input.KeyDown += Input_KeyDown;
 
+            Game.Audio.StopAllEffects();
+
             if (progressState.SongPlayed >= 6)
                 progressState.SongPlayed = 1;
             if (progressState.SongPlayed == 1)
@@ -117,13 +119,13 @@ namespace FrivoloCo.Screens.Play
             s1 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(18, 98, 365, 534),
-                StereoPan = -0.5f
+                StereoPan = -0.35f
             };
             co.AddChild(Game.AddObject(s1));
             s2 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(398, 98, 365, 534),
-                StereoPan = -0.25f
+                StereoPan = -0.225f
             };
             co.AddChild(Game.AddObject(s2));
             s3 = new CustomerStation(State, progressState)
@@ -135,13 +137,13 @@ namespace FrivoloCo.Screens.Play
             s4 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(1158, 98, 365, 534),
-                StereoPan = 0.25f
+                StereoPan = 0.225f
             };
             co.AddChild(Game.AddObject(s4));
             s5 = new CustomerStation(State, progressState)
             {
                 RelativePosition = new(1538, 98, 365, 534),
-                StereoPan = 0.5f
+                StereoPan = 0.35f
             };
             co.AddChild(Game.AddObject(s5));
 

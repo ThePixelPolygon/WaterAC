@@ -32,7 +32,7 @@ namespace Water.Audio.BASS
 
         public double Time { get; }
 
-        public BASSEffectTrack(BASSAudioSample sample, float rate = 1f, float pan = 0f)
+        public BASSEffectTrack(AudioManager audio, BASSAudioSample sample, double volume, float rate = 1f, float pan = 0f)
         {
             this.sample = sample;
 
@@ -40,6 +40,8 @@ namespace Water.Audio.BASS
                 throw new Exception("Kyaa! Sample already disposed!");
 
             id = Bass.SampleGetChannel(sample.Id);
+
+            Volume = volume;
 
             if (rate != 1f)
             {

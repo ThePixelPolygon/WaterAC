@@ -14,6 +14,8 @@ namespace Water.Audio
         public bool IsStopped { get; }
         public bool HasStopped { get; }
 
+        public double Volume { get; set; }
+
         public bool IsLeftOver { get; }
     }
 }

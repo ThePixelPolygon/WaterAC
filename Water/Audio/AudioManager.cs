@@ -81,6 +81,14 @@ namespace Water.Audio
             }
         }
 
+        public void UpdateVolumes()
+        {
+            foreach (var track in Tracks)
+                track.Volume = MusicVolume * MasterVolume;
+            foreach (var effect in Effects)
+                effect.Volume = EffectVolume * MasterVolume;
+        }
+
         public void PlayEffect(string filePath, bool canOnlyPlayOnce, float rate = 0f, float pan = 0f) => audioService?.PlayEffect(filePath, canOnlyPlayOnce, rate, pan);
 
         private List<IAudioTrack> tracksToRemove = new();

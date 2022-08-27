@@ -215,7 +215,7 @@ namespace FrivoloCo.Screens.Play
                         wasRightOrder = true;
                     }
                 }
-                Game.Audio.PlayEffect("Assets/Gameplay/hereyougo.wav", true, 1, StereoPan);
+                Game.Audio.PlayEffect("Assets/Gameplay/Ian/hereyougo.wav", true, 1, StereoPan);
                 scheduledObjectRemoval = state.CurrentlyDraggedItem;
                 if (!wasRightOrder)
                 {
