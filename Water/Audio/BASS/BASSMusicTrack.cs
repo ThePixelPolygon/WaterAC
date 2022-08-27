@@ -7,7 +7,7 @@ using ManagedBass;
 
 namespace Water.Audio.BASS
 {
-    public class BASSAudioTrack : IAudioTrack
+    public class BASSMusicTrack : IAudioTrack
     {
         public string FilePath { get; }
 
@@ -65,7 +65,7 @@ namespace Water.Audio.BASS
         public double Time => Bass.ChannelBytes2Seconds(Stream, Bass.ChannelGetPosition(Stream) * 1000);
 
         private AudioManager audioManager;
-        public BASSAudioTrack(AudioManager audioManager, string path, bool autoDispose = true)
+        public BASSMusicTrack(AudioManager audioManager, string path, bool autoDispose = true)
         {
             this.audioManager = audioManager;
             FilePath = path;

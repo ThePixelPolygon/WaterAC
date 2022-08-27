@@ -35,11 +35,5 @@ namespace Water.Audio
         public double Volume { get; set; }
 
         public double Time { get; }
-
-        public void Play();
-
-        public void Pause();
-
-        public void Stop();
     }
 }

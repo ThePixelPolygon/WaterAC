@@ -56,11 +56,11 @@ namespace Water.Graphics
         public void Update(GameTime gameTime)
         {
             Input.Update();
-            Audio.Update(gameTime);
+            Audio.Update();
 
             foreach (var obj in AllObjects)
                 obj.Update(gameTime);
-            MainGame.Window.Title = $"{TimeSpan.FromSeconds(Audio.Tracks.Count != 0 ? Audio.Tracks[0].Position : 1)}";
+
             AllObjects.AddRange(objectsToAdd);
             objectsToAdd.Clear();
             foreach (var obj in objectsToRemove)

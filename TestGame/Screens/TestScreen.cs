@@ -28,12 +28,19 @@ namespace TestGame.Screens
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.E)
             {
-                Game.Audio.PlayTrack("Assets/03. Dream Walker.mp3");
+                Game.Audio.SwitchToTrack("Assets/03. Dream Walker.mp3");
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.R)
             {
-                SoundEffect.MasterVolume = 0.5f;
-                SoundEffect.FromFile("Assets/you_あ、見つかりましたぁ.wav").Play();
+                Game.Audio.PlayEffect("Assets/you_あ、見つかりましたぁ.wav", true, 1, -1);
+            }
+            else if (e.Key == Microsoft.Xna.Framework.Input.Keys.T)
+            {
+                Game.Audio.PlayEffect("Assets/you_あ、見つかりましたぁ.wav", true, 1, 0);
+            }
+            else if (e.Key == Microsoft.Xna.Framework.Input.Keys.Y)
+            {
+                Game.Audio.PlayEffect("Assets/you_あ、見つかりましたぁ.wav", true, 1, 1);
             }
         }
 

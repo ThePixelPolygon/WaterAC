@@ -15,6 +15,8 @@ namespace Water.Audio
     {
         public List<IAudioTrack> Tracks { get; private set; } = new();
 
+        public List<IEffectTrack> Effects { get; private set; } = new();
+
         public double MasterVolume { get; set; } = 1;
         public double MusicVolume { get; set; } = 0.5;
         public double EffectVolume { get; set; } = 1;
@@ -39,11 +41,28 @@ namespace Water.Audio
             return audioService?.Initialize() ?? false;
         }
 
-        public void PlayTrack(string filePath) => audioService.PlayTrack(filePath);
+        public void PlayTrack(string filePath) => audioService?.PlayTrack(filePath);
+
+        public void SwitchToTrack(string filePath)
+        {
+            StopPlayingAllTracks();
+            PlayTrack(filePath);
+        }
+
+        public void StopPlayingAllTracks()
+        {
+            foreach (var track in Tracks)
+            {
+                track.Stop();
+            }
+        }
+
+        public void PlayEffect(string filePath, bool canOnlyPlayOnce, float rate = 0f, float pan = 0f) => audioService?.PlayEffect(filePath, canOnlyPlayOnce, rate, pan);
 
         private List<IAudioTrack> tracksToRemove = new();
+        private List<IEffectTrack> effectsToRemove = new();
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             foreach (var track in Tracks)
             {
@@ -60,9 +79,20 @@ namespace Water.Audio
                 }
             }
 
+            foreach (var effect in Effects)
+            {
+                if (effect.IsLeftOver)
+                    effect.Dispose();
+                effectsToRemove.Add(effect);
+            }
+
             foreach (var track in tracksToRemove)
                 Tracks.Remove(track);
             tracksToRemove.Clear();
+
+            foreach (var effect in effectsToRemove)
+                Effects.Remove(effect);
+            effectsToRemove.Clear();
         }
     }
 }

@@ -31,6 +31,13 @@ namespace Water.Audio.BASS
             else return true;
         }
 
-        public void PlayTrack(string filePath) => new BASSAudioTrack(Audio, filePath).Play();
+        public void PlayTrack(string filePath) => new BASSMusicTrack(Audio, filePath).Play();
+
+        public void PlayEffect(string filePath, bool canOnlyPlayOnce, float rate = 0f, float pan = 0f)
+        {
+            var x = new BASSEffectTrack(new(filePath, canOnlyPlayOnce), rate, pan);
+            x.Play();
+            Audio.Effects.Add(x);
+        }
     }
 }
