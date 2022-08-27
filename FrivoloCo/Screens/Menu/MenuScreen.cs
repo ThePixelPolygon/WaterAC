@@ -38,8 +38,8 @@ namespace FrivoloCo.Screens.Menu
 
         public override void Initialize()
         {
-            if (MediaPlayer.State != MediaState.Playing)
-                MediaPlayer.Play(Song.FromUri("mainmenu", new("Assets/Music/mainmenu.ogg", UriKind.Relative)));
+            if (Game.Audio.Tracks.Find(x => x.FilePath == "Assets/Music/mainmenu.ogg") is null)
+                Game.Audio.SwitchToTrack("Assets/Music/mainmenu.ogg", true);
 
             rc = new RenderContainer(Game.GraphicsDevice)
             {

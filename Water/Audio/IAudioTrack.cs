@@ -24,6 +24,8 @@ namespace Water.Audio
 
         public bool IsPlaying { get; }
 
+        public bool IsLooping { get; set; }
+
         public bool IsPaused { get; }
 
         public bool IsStopped { get; }
@@ -35,5 +37,7 @@ namespace Water.Audio
         public double Volume { get; set; }
 
         public double Time { get; }
+
+        public void Restart();
     }
 }

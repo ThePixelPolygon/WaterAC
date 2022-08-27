@@ -31,7 +31,7 @@ namespace Water.Audio.BASS
             else return true;
         }
 
-        public void PlayTrack(string filePath) => new BASSMusicTrack(Audio, filePath).Play();
+        public void PlayTrack(string filePath, bool isLooping) => new BASSMusicTrack(Audio, filePath, isLooping).Play();
 
         public void PlayEffect(string filePath, bool canOnlyPlayOnce, float rate = 0f, float pan = 0f)
         {

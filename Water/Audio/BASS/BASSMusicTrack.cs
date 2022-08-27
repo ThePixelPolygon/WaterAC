@@ -52,6 +52,8 @@ namespace Water.Audio.BASS
 
         public bool IsStopped => Bass.ChannelIsActive(Stream) == PlaybackState.Stopped;
 
+        public bool IsLooping { get; set; }
+
         public bool IsLeftOver => HasPlayed && IsStopped;
 
         public bool AutoDispose { get; }
@@ -65,9 +67,10 @@ namespace Water.Audio.BASS
         public double Time => Bass.ChannelBytes2Seconds(Stream, Bass.ChannelGetPosition(Stream) * 1000);
 
         private AudioManager audioManager;
-        public BASSMusicTrack(AudioManager audioManager, string path, bool autoDispose = true)
+        public BASSMusicTrack(AudioManager audioManager, string path, bool isLooping, bool autoDispose = true)
         {
             this.audioManager = audioManager;
+            IsLooping = isLooping;
             FilePath = path;
             AutoDispose = autoDispose;
             Volume = 1f;
@@ -97,7 +100,7 @@ namespace Water.Audio.BASS
         {
             CheckIfDisposed();
 
-            if (IsPlaying || IsPaused)
+            if (IsPlaying)
                 throw new Exception("Kyaa! Tried to play a track that's already playing");
 
             var previous = Time;

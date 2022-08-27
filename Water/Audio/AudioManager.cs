@@ -41,19 +41,43 @@ namespace Water.Audio
             return audioService?.Initialize() ?? false;
         }
 
-        public void PlayTrack(string filePath) => audioService?.PlayTrack(filePath);
+        public void PlayTrack(string filePath, bool isLooping) => audioService?.PlayTrack(filePath, isLooping);
 
-        public void SwitchToTrack(string filePath)
+        public void SwitchToTrack(string filePath, bool isLooping)
         {
             StopPlayingAllTracks();
-            PlayTrack(filePath);
+            PlayTrack(filePath, isLooping);
         }
 
         public void StopPlayingAllTracks()
         {
             foreach (var track in Tracks)
             {
+                track.IsLooping = false;
                 track.Stop();
+            }
+        }
+
+        public void PauseAllTracks()
+        {
+            foreach (var track in Tracks)
+                track.Pause();
+        }
+
+        public void ResumeAllTracks()
+        {
+            foreach (var track in Tracks)
+            {
+                track.IsLooping = false;
+                track.Play();
+            }
+        }
+
+        public void StopAllEffects()
+        {
+            foreach (var effect in Effects)
+            {
+                effect.Stop();
             }
         }
 
@@ -68,7 +92,13 @@ namespace Water.Audio
             {
                 if (track is IAudioTrack t)
                 {
-                    if (t.IsLeftOver && t.AutoDispose)
+                    if (t.IsStopped && t.IsLooping)
+                    {
+                        t.Restart();
+                        continue;
+                    }
+
+                    if (t.IsLeftOver && t.AutoDispose && !t.IsLooping)
                         t.Dispose();
 
                     if (t.IsDisposed)
@@ -82,8 +112,10 @@ namespace Water.Audio
             foreach (var effect in Effects)
             {
                 if (effect.IsLeftOver)
+                {
                     effect.Dispose();
-                effectsToRemove.Add(effect);
+                    effectsToRemove.Add(effect);
+                }
             }
 
             foreach (var track in tracksToRemove)

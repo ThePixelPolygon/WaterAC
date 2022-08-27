@@ -57,9 +57,9 @@ namespace FrivoloCo.Screens.Play
             };
             tb.Text = $"Day\n{state.Day}\nat FrivoloCo!\n\n${state.Money:0..00}";
             co.AddChild(Game.AddObject(tb));
-            MediaPlayer.Stop();
-            var fx = SoundEffect.FromFile("Assets/Music/gamestart.wav");
-            fx.Play();
+            Game.Audio.StopPlayingAllTracks();
+            Game.Audio.StopAllEffects();
+            Game.Audio.PlayEffect("Assets/Music/gamestart.wav", true);
         }
 
         private double fadeIn = 0;

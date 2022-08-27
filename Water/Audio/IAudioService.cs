@@ -12,7 +12,7 @@ namespace Water.Audio
 
         public bool Initialize();
 
-        public void PlayTrack(string filePath);
+        public void PlayTrack(string filePath, bool isLooping);
 
         public void PlayEffect(string filePath, bool canOnlyPlayOnce, float rate = 1f, float pan = 0f);
     }

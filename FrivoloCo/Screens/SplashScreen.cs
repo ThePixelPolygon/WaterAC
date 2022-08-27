@@ -42,8 +42,7 @@ namespace FrivoloCo.Screens
             rc.AddChild(Game.AddObject(sp));
             AddChild(rc);
 
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Song.FromUri("mainmenu", new("Assets/Music/mainmenu.ogg", UriKind.Relative)));
+            Game.Audio.SwitchToTrack("Assets/Music/mainmenu.ogg", true);
         }
 
         private double counter = 0;

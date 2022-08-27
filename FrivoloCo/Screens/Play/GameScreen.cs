@@ -58,15 +58,15 @@ namespace FrivoloCo.Screens.Play
             if (progressState.SongPlayed >= 6)
                 progressState.SongPlayed = 1;
             if (progressState.SongPlayed == 1)
-                MediaPlayer.Play(Song.FromUri("gameplay-1", new("Assets/Music/gameplay-1.ogg", UriKind.Relative)));
+                Game.Audio.SwitchToTrack("Assets/Music/gameplay-1.ogg", true);
             else if (progressState.SongPlayed == 2)
-                MediaPlayer.Play(Song.FromUri("gameplay-2", new("Assets/Music/gameplay-2.ogg", UriKind.Relative)));
+                Game.Audio.SwitchToTrack("Assets/Music/gameplay-2.ogg", true);
             else if (progressState.SongPlayed == 3)
-                MediaPlayer.Play(Song.FromUri("gameplay-3", new("Assets/Music/gameplay-3.ogg", UriKind.Relative)));
+                Game.Audio.SwitchToTrack("Assets/Music/gameplay-3.ogg", true);
             else if (progressState.SongPlayed == 4)
-                MediaPlayer.Play(Song.FromUri("gameplay-4", new("Assets/Music/gameplay-4.ogg", UriKind.Relative)));
+                Game.Audio.SwitchToTrack("Assets/Music/gameplay-4.ogg", true);
             else if (progressState.SongPlayed == 5)
-                MediaPlayer.Play(Song.FromUri("gameplay-5", new("Assets/Music/gameplay-5.ogg", UriKind.Relative)));
+                Game.Audio.SwitchToTrack("Assets/Music/gameplay-5.ogg", true);
             progressState.SongPlayed++;
             // Playfield
             rc = new RenderContainer(Game.GraphicsDevice)
@@ -116,27 +116,32 @@ namespace FrivoloCo.Screens.Play
 
             s1 = new CustomerStation(State, progressState)
             {
-                RelativePosition = new(18, 98, 365, 534)
+                RelativePosition = new(18, 98, 365, 534),
+                StereoPan = -0.5f
             };
             co.AddChild(Game.AddObject(s1));
             s2 = new CustomerStation(State, progressState)
             {
-                RelativePosition = new(398, 98, 365, 534)
+                RelativePosition = new(398, 98, 365, 534),
+                StereoPan = -0.25f
             };
             co.AddChild(Game.AddObject(s2));
             s3 = new CustomerStation(State, progressState)
             {
-                RelativePosition = new(778, 98, 365, 534)
+                RelativePosition = new(778, 98, 365, 534),
+                StereoPan = 0f
             };
             co.AddChild(Game.AddObject(s3));
             s4 = new CustomerStation(State, progressState)
             {
-                RelativePosition = new(1158, 98, 365, 534)
+                RelativePosition = new(1158, 98, 365, 534),
+                StereoPan = 0.25f
             };
             co.AddChild(Game.AddObject(s4));
             s5 = new CustomerStation(State, progressState)
             {
-                RelativePosition = new(1538, 98, 365, 534)
+                RelativePosition = new(1538, 98, 365, 534),
+                StereoPan = 0.5f
             };
             co.AddChild(Game.AddObject(s5));
 
@@ -209,12 +214,12 @@ namespace FrivoloCo.Screens.Play
                 State.Paused = !State.Paused;
                 if (State.Paused)
                 {
-                    MediaPlayer.Pause();
+                    Game.Audio.PauseAllTracks();
                     Window.Title = "Game paused, hit ESC to continue";
                 }
                 else
                 {
-                    MediaPlayer.Resume();
+                    Game.Audio.ResumeAllTracks();
                     Window.Title = title;
                 } // temporary stopgap solution
             }
@@ -243,13 +248,13 @@ namespace FrivoloCo.Screens.Play
             {
                 State.Paused = true;
                 inactivePause = true;
-                MediaPlayer.Pause();
+                Game.Audio.PauseAllTracks();
             }
             else if (Game.MainGame.IsActive && inactivePause)
             {
                 State.Paused = false;
                 inactivePause = false;
-                MediaPlayer.Resume();
+                Game.Audio.ResumeAllTracks();
             }
 
             if (State.Paused) return;
@@ -294,7 +299,7 @@ namespace FrivoloCo.Screens.Play
 
             if (State.Strikes >= 3)
             {
-                MediaPlayer.Stop();
+                Game.Audio.StopPlayingAllTracks();
                 ScreenManager.ChangeScreen(new FailScreen(progressState));
                 return;
             }
@@ -304,7 +309,7 @@ namespace FrivoloCo.Screens.Play
                 State.TimeDelayBetweenCustomers = 999;
                 if (CustomersAreNotStillPresent)
                 {
-                    MediaPlayer.Stop();
+                    Game.Audio.StopPlayingAllTracks();
                     delayBeforeScreenAdvance -= gameTime.ElapsedGameTime.TotalSeconds;
                     if (delayBeforeScreenAdvance <= 0)
                     {

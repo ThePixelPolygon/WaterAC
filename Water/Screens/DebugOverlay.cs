@@ -41,7 +41,7 @@ namespace Water.Screens
             box = new Box()
             {
                 RelativePosition = new(0, 0, 100, 20),
-                Color = Color.White * 0.3f,
+                Color = Color.White * 0.15f,
                 Layout = Layout.AnchorBottom
             };
             framerateText = new(new(0, 0, 10, 10), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 15), "", Color.Black)
@@ -71,6 +71,8 @@ namespace Water.Screens
             }
         }
 
+        private int infoOverlay = 1;
+
         private void Input_KeyDown(object sender, Input.KeyEventArgs e)
         {
             if (e.Key == Keys.LeftControl)
@@ -79,6 +81,12 @@ namespace Water.Screens
                 box.Color = Color.White;
 
                 showExtended = true;      
+            }
+            else if (e.Key == Keys.LeftAlt && Game.Input.IsKeyHeld(Keys.LeftControl))
+            {
+                infoOverlay++;
+                if (infoOverlay == 4)
+                    infoOverlay = 1;
             }
         }
 
@@ -96,7 +104,15 @@ namespace Water.Screens
         public override void Update(GameTime gameTime)
         {
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
-            if (showExtended) framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} frames/s, {Math.Round(updatesPerSecond, 0)} updates/s, {Game.AllObjects.Count} objects, {ScreenManager.Screens.Count} screens";
+            if (showExtended)
+            {
+                framerateText.Text = infoOverlay switch
+                {
+                    1 => $"{Math.Round(drawsPerSecond, 0)} frames/s, {Math.Round(updatesPerSecond, 0)} updates/s, {Game.AllObjects.Count} objects, {ScreenManager.Screens.Count} screens",
+                    2 => $"{Game.Audio.Tracks.Count} tracks, {Game.Audio.Effects.Count} effects",
+                    _ or 3 => $"i don't have anything for this yet lol"
+                };
+            }
             else framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} fps";
 
             if (WaterGame.UseExperimentalDrawingMode) framerateText.Text += " EXD";

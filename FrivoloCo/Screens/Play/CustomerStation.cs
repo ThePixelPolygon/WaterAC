@@ -15,6 +15,8 @@ namespace FrivoloCo.Screens.Play
 {
     public class CustomerStation : GameObject
     {
+        public float StereoPan { get; init; }
+
         public bool IsEmpty => customer is null;
 
         private Customer customer;
@@ -135,7 +137,7 @@ namespace FrivoloCo.Screens.Play
             };
             AddChild(Game.AddObject(box));
             box.AddChild(Game.AddObject(tb));
-            SoundEffect.FromFile(customer.WantToOrderSound).Play();
+            Game.Audio.PlayEffect(customer.WantToOrderSound, true, 1, StereoPan);
 
             state.TimeDelayBetweenCustomers = state.TimeDelayBetweenCustomersMax;
         }
@@ -154,19 +156,19 @@ namespace FrivoloCo.Screens.Play
             switch (customer.Happiness)
             {
                 case >= 0.61:
-                    SoundEffect.FromFile(customer.ThankYouHappySound).Play();
+                    Game.Audio.PlayEffect(customer.ThankYouHappySound, true, 1, StereoPan);
                     break;
                 case <= 0.60 and >= 0.45:
-                    SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
+                    Game.Audio.PlayEffect(customer.ThankYouImpatientSound, true, 1, StereoPan);
                     break;
                 case <= 0.45 and >= 0.20:
-                    SoundEffect.FromFile(customer.ThankYouImpatientSound).Play();
+                    Game.Audio.PlayEffect(customer.ThankYouImpatientSound, true, 1, StereoPan);
                     break;
                 case <= 0.20 and >= 0.01:
-                    SoundEffect.FromFile(customer.ThankYouAngerySound).Play();
+                    Game.Audio.PlayEffect(customer.ThankYouAngerySound, true, 1, StereoPan);
                     break;
                 case <= 0:
-                    SoundEffect.FromFile(customer.ImDoneSound).Play();
+                    Game.Audio.PlayEffect(customer.ImDoneSound, true, 1, StereoPan);
                     state.Strikes++;
                     progress.TotalStrikes++;
                     happy = false;
@@ -176,7 +178,7 @@ namespace FrivoloCo.Screens.Play
             {
                 progress.Money += (decimal)(10 * customer.Happiness * progress.Day);
                 progress.CustomersServed++;
-                SoundEffect.FromFile("Assets/Gameplay/kaching.wav").Play();
+                Game.Audio.PlayEffect("Assets/Gameplay/kaching.wav", true, 1, StereoPan);
             }
             customer = null;
         }
@@ -213,11 +215,11 @@ namespace FrivoloCo.Screens.Play
                         wasRightOrder = true;
                     }
                 }
-                SoundEffect.FromFile("Assets/Gameplay/Ian/hereyougo.wav").Play();
+                Game.Audio.PlayEffect("Assets/Gameplay/hereyougo.wav", true, 1, StereoPan);
                 scheduledObjectRemoval = state.CurrentlyDraggedItem;
                 if (!wasRightOrder)
                 {
-                    SoundEffect.FromFile(customer.WrongOrderSound).Play();
+                    Game.Audio.PlayEffect(customer.WrongOrderSound, true, 1, StereoPan);
                     state.Strikes++;
                     progress.TotalStrikes++;
                     return;
@@ -267,17 +269,17 @@ namespace FrivoloCo.Screens.Play
                 customer.Patience -= gameTime.ElapsedGameTime.TotalSeconds;
                 if (!customer.HasBeenImpatient && customer.Happiness <= 0.60 && customer.Happiness >= 0.45)
                 {
-                    SoundEffect.FromFile(customer.ImpatientSound).Play();
+                    Game.Audio.PlayEffect(customer.ImpatientSound, true, 1, StereoPan);
                     customer.HasBeenImpatient = true;
                 }
                 else if (!customer.HasBeenImpatienter && customer.Happiness <= 0.45 && customer.Happiness >= 0.20)
                 {
-                    SoundEffect.FromFile(customer.ImpatienterSound).Play();
+                    Game.Audio.PlayEffect(customer.ImpatienterSound, true, 1, StereoPan);
                     customer.HasBeenImpatienter = true;
                 }
                 else if (!customer.HasBeenAngery && customer.Happiness <= 0.20 && customer.Happiness >= 0.01)
                 {
-                    SoundEffect.FromFile(customer.AngerySound).Play();
+                    Game.Audio.PlayEffect(customer.AngerySound, true, 1, StereoPan);
                     customer.HasBeenAngery = true;
                 }
                 else if (customer.Happiness <= 0)
