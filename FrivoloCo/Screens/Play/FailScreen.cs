@@ -38,6 +38,7 @@ namespace FrivoloCo.Screens.Play
         {
             Game.Input.KeyDown += Input_KeyDown;
 
+            Game.Audio.StopAllEffects();
             Game.Audio.SwitchToTrack("Assets/Gameplay/failure.ogg", true);
 
             var rc = new RenderContainer(Game.GraphicsDevice)
@@ -129,12 +130,12 @@ namespace FrivoloCo.Screens.Play
             if (!hasPlayedBeingFired && counter >= 5 && counter <= 9.5)
             {
                 hasPlayedBeingFired = true;
-                Game.Audio.PlayEffect("Assets/Gameplay/Customers/Victor/fired.wav", true);
+                Game.Audio.PlayEffect("Assets/Gameplay/Customers/Victor/fired.wav", true, 1, -0.5f);
             }
             if (!hasPlayedDontFireMe && counter >= 9.6)
             {
                 hasPlayedDontFireMe = true;
-                Game.Audio.PlayEffect("Assets/Gameplay/Ian/dontfiremepls.wav", true);
+                Game.Audio.PlayEffect("Assets/Gameplay/Ian/dontfiremepls.wav", true, 1, 0.5f);
             }
         }
     }

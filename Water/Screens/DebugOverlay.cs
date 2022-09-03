@@ -109,7 +109,7 @@ namespace Water.Screens
                 framerateText.Text = infoOverlay switch
                 {
                     1 => $"{Math.Round(drawsPerSecond, 0)} frames/s, {Math.Round(updatesPerSecond, 0)} updates/s, {Game.AllObjects.Count} objects, {ScreenManager.Screens.Count} screens",
-                    2 => $"{Game.Audio.Tracks.Count} tracks, {Game.Audio.Effects.Count} effects",
+                    2 => $"{Game.Audio.ServiceName}: {Game.Audio.Tracks.Count} tracks, {Game.Audio.Effects.Count} effects",
                     _ or 3 => $"i don't have anything for this yet lol"
                 };
             }

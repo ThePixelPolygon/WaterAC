@@ -17,6 +17,8 @@ namespace Water.Audio
 
         public List<IEffectTrack> Effects { get; private set; } = new();
 
+        public string ServiceName => audioService?.Name ?? "None";
+
         public double MasterVolume { get; set; } = 1;
         public double MusicVolume { get; set; } = 0.5;
         public double EffectVolume { get; set; } = 1;
@@ -54,7 +56,7 @@ namespace Water.Audio
             foreach (var track in Tracks)
             {
                 track.IsLooping = false;
-                track.Stop();
+                if (!track.IsDisposed) track.Stop();
             }
         }
 
@@ -106,7 +108,7 @@ namespace Water.Audio
                         continue;
                     }
 
-                    if (t.IsLeftOver && t.AutoDispose && !t.IsLooping)
+                    if (t.IsLeftOver && t.AutoDispose)
                         t.Dispose();
 
                     if (t.IsDisposed)

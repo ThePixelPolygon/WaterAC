@@ -178,7 +178,7 @@ namespace FrivoloCo.Screens.Play
             {
                 progress.Money += (decimal)(10 * customer.Happiness * progress.Day);
                 progress.CustomersServed++;
-                Game.Audio.PlayEffect("Assets/Gameplay/kaching.wav", true, 1, StereoPan);
+                Game.Audio.PlayEffect("Assets/Gameplay/kaching.wav", true);
             }
             customer = null;
         }
@@ -215,7 +215,7 @@ namespace FrivoloCo.Screens.Play
                         wasRightOrder = true;
                     }
                 }
-                Game.Audio.PlayEffect("Assets/Gameplay/Ian/hereyougo.wav", true, 1, StereoPan);
+                Game.Audio.PlayEffect("Assets/Gameplay/Ian/hereyougo.wav", true);
                 scheduledObjectRemoval = state.CurrentlyDraggedItem;
                 if (!wasRightOrder)
                 {

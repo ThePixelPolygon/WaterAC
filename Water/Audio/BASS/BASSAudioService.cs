@@ -12,6 +12,8 @@ namespace Water.Audio.BASS
     {
         public AudioManager Audio { get; set; }
 
+        public string Name => "BASS";
+
         public bool Initialize()
         {
             var n = 0;

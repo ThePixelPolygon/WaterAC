@@ -10,6 +10,8 @@ namespace Water.Audio
     {
         public AudioManager Audio { get; set; }
 
+        public string Name { get; }
+
         public bool Initialize();
 
         public void PlayTrack(string filePath, bool isLooping);
