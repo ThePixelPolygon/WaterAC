@@ -11,11 +11,21 @@ using Water.Utils;
 
 namespace Water.Graphics
 {
+    /// <summary>
+    /// Main unit of the Water layout system
+    /// </summary>
     public class Container : IContainer
     {
+        /// <summary>
+        /// Actual position of this container relative to the screen for use in the Draw method.
+        /// Do not set this unless calculating children positions
+        /// </summary>
         public Rectangle ActualPosition { get; set; }
 
         private Rectangle relativePosition;
+        /// <summary>
+        /// Position of this container relative to its parent. Some of the values may be ignored depending on the <see cref="Layout"/>
+        /// </summary>
         public Rectangle RelativePosition
         {
             get => relativePosition;
@@ -25,18 +35,35 @@ namespace Water.Graphics
                 if (Parent is not null) Parent.CalculateChildrenPositions();
             }
         }
+        /// <summary>
+        /// Parent of this container. May be null if this is a root object (for example a <see cref="Screen"/>)
+        /// </summary>
         public IContainer Parent { get; set; }
+        /// <summary>
+        /// Children of this container
+        /// </summary>
         public List<IContainer> Children { get; private set; } = new();
 
+        /// <summary>
+        /// The way this container will be laid out by its parent. This might be ignored depending on the type of parent container.
+        /// </summary>
         public Layout Layout { get; set; } = Layout.Manual;
         public int Margin { get; set; } = 0;
 
+        /// <summary>
+        /// Adds a child to this container
+        /// </summary>
+        /// <param name="child"></param>
         public virtual void AddChild(IContainer child)
         {
             child.Parent = this;
             Children.Add(child);
             CalculateChildrenPositions();
         }
+        /// <summary>
+        /// Removes a child from this container
+        /// </summary>
+        /// <param name="child"></param>
         public virtual void RemoveChild(IContainer child)
         {
             child.Parent = null;
@@ -44,6 +71,9 @@ namespace Water.Graphics
             CalculateChildrenPositions();
         }
 
+        /// <summary>
+        /// Calculates the ActualPositions of this container's children. Override if you are a special kind of container
+        /// </summary>
         public virtual void CalculateChildrenPositions()
         {
             foreach (var child in Children)
@@ -178,6 +208,12 @@ namespace Water.Graphics
             }
         } 
 
+        /// <summary>
+        /// Calls the Draw method of all of this container's children. Override if you need special children drawing behavior
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
+        /// <param name="graphicsDevice"></param>
         public virtual void DrawChildren(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {    
             foreach (var child in Children)

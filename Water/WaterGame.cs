@@ -18,20 +18,43 @@ namespace Water
 {
     public class WaterGame : Game
     {
-        public static bool UseExperimentalDrawingMode { get; private set; } = false;
-
+        /// <summary>
+        /// The way the entire game will be scaled
+        /// </summary>
         public GameScalingMode GameScalingMode { get; init; } = GameScalingMode.None;
 
+        /// <summary>
+        /// Color that areas of the screen that haven't been drawn to will be drawn in
+        /// </summary>
         public Color BackgroundColor { get; set; } = Color.Black;
 
+        /// <summary>
+        /// Engine configuration (volumes, fullscreen, etc.), call <see cref="LoadConfigAsync"/> when done editing
+        /// </summary>
         public ConfigFile EngineConfig { get; set; }
 
+        /// <summary>
+        /// Default window width; also used for aspect ratio calculations with <see cref="GameScalingMode.MaintainAspectRatio"/>
+        /// </summary>
         public int TargetWidth { get; set; } = 1920;
+        /// <summary>
+        /// Default window height; also used for aspect ratio calculations with <see cref="GameScalingMode.MaintainAspectRatio"/>
+        /// </summary>
         public int TargetHeight { get; set; } = 1080;
 
+        /// <summary>
+        /// Aspect ratio the game will target with <see cref="GameScalingMode.MaintainAspectRatio"/>
+        /// </summary>
         public float TargetAspectRatio => TargetWidth / TargetHeight;
 
+        /// <summary>
+        /// Screen manager. Use to change to first screen on startup
+        /// </summary>
         public ScreenManager Screen { get; private set; }
+
+        /// <summary>
+        /// Project name, shown in the window title and potentionally other places
+        /// </summary>
         public virtual string ProjectName { get; }
 
         public GraphicsDeviceManager Graphics;
@@ -86,9 +109,6 @@ namespace Water
                     //Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                     //Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                     //Graphics.ToggleFullScreen();
-                    break;
-                case Keys.F10:
-                    UseExperimentalDrawingMode = !UseExperimentalDrawingMode;
                     break;
                 case Keys.F9:
                     GC.Collect(2);

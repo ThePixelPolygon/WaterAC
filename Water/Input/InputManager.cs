@@ -137,21 +137,7 @@ namespace Water.Input
         public bool IsKeyHeld(Keys key) => currentKbState.GetPressedKeys().Contains(key);
     }
 
-    public class KeyEventArgs : EventArgs
-    {
-        public Keys Key { get; init; }
+    
 
-        public KeyEventArgs(Keys key)
-        {
-            Key = key;
-        }
-    }
-
-    public class MousePressEventArgs : EventArgs
-    {
-        public MousePressEventArgs()
-        {
-            // to be used in the future
-        }
-    }
+    
 }

@@ -114,8 +114,6 @@ namespace Water.Screens
                 };
             }
             else framerateText.Text = $"{Math.Round(drawsPerSecond, 0)} fps";
-
-            if (WaterGame.UseExperimentalDrawingMode) framerateText.Text += " EXD";
         }
     }
 }

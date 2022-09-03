@@ -12,6 +12,9 @@ namespace Water.Graphics.Screens
 {
     public class ScreenManager
     {
+        /// <summary>
+        /// All screens in the game
+        /// </summary>
         public List<Screen> Screens { get; } = new();
         public bool HasScreens { get => Screens.Count > 0; }
 
@@ -41,6 +44,10 @@ namespace Water.Graphics.Screens
             return screen;
         }
 
+        /// <summary>
+        /// Adds a screen to the end of the screen stack
+        /// </summary>
+        /// <param name="screen"></param>
         public void AddScreen(Screen screen)
         {
             Debug.WriteLine($"Added {screen}");
@@ -56,6 +63,11 @@ namespace Water.Graphics.Screens
             gameObjectManager.RootObjects = new(Screens);
         }
 
+        /// <summary>
+        /// Inserts a screen into the screen stack
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="screen"></param>
         public void InsertScreen(int index, Screen screen)
         {
             Debug.WriteLine($"Inserted {screen} to {index}");
@@ -67,6 +79,10 @@ namespace Water.Graphics.Screens
             gameObjectManager.RootObjects = new(Screens);
         }
 
+        /// <summary>
+        /// Removes a screen from the stack. All of the screen's children will also be removed from the game
+        /// </summary>
+        /// <param name="screen"></param>
         public void RemoveScreen(Screen screen)
         {
             Debug.WriteLine($"Removed {screen}");
@@ -74,6 +90,9 @@ namespace Water.Graphics.Screens
             Screens.Remove(screen);
             gameObjectManager.RootObjects.Remove(screen);
         }
+        /// <summary>
+        /// Removes all screens from the stack
+        /// </summary>
         public void RemoveAllScreens()
         {
             Debug.WriteLine("Remove all screens!");
@@ -85,12 +104,20 @@ namespace Water.Graphics.Screens
             gameObjectManager.RootObjects.Clear();
         }
 
+        /// <summary>
+        /// Removes all screens, then adds the screen
+        /// </summary>
+        /// <param name="screen"></param>
         public void ChangeScreen(Screen screen)
         {
             RemoveAllScreens();   
             AddScreen(screen);
         }
 
+        /// <summary>
+        /// Updates all of the game screen's sizes to the new size of the screen
+        /// </summary>
+        /// <param name="newSize">The new size of the screen</param>
         public void UpdateScreenSize(Rectangle newSize)
         {
             currentScreenSize = newSize;

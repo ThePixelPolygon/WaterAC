@@ -9,6 +9,9 @@ using Water.Audio;
 
 namespace Water.Graphics
 {
+    /// <summary>
+    /// Manages updating and drawing for the entire game and hosts all of Water's subsystems
+    /// </summary>
     public class GameObjectManager : IDrawableThing
     {
         public List<GameObject> AllObjects { get; private set; } = new();
@@ -18,7 +21,6 @@ namespace Water.Graphics
         public FontCache Fonts { get; private set; }
         public InputManager Input { get; private set; }
         public AudioManager Audio { get; private set; }
-        public float GameSpeed { get; set; } = 100f;
 
         private readonly List<GameObject> objectsToAdd = new();
         private readonly List<GameObject> objectsToRemove = new();
@@ -39,6 +41,11 @@ namespace Water.Graphics
         /// </summary>
         public List<GameObject> RootObjects { get; set; } = new();
 
+        /// <summary>
+        /// Adds an object to the game and initializes it
+        /// </summary>
+        /// <param name="obj">The object to add</param>
+        /// <returns>The object that was added</returns>
         public GameObject AddObject(GameObject obj)
         {
             obj.Game = this;
@@ -46,6 +53,11 @@ namespace Water.Graphics
             objectsToAdd.Add(obj);
             return obj;
         }
+        /// <summary>
+        /// Removes an object from the game and deinitializes it. The object will also be removed from its parent.
+        /// </summary>
+        /// <param name="obj">The object to remove</param>
+        /// <returns></returns>
         public GameObject RemoveObject(GameObject obj)
         {
             obj.Deinitialize();
@@ -69,39 +81,16 @@ namespace Water.Graphics
             }
             objectsToRemove.Clear();
         }
-        private Rectangle scissor, previousScissor;
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            if (!WaterGame.UseExperimentalDrawingMode)
+            spriteBatch.Begin();
+            foreach (var rootObject in RootObjects)
             {
-                spriteBatch.Begin();
-                foreach (var rootObject in RootObjects)
-                {
-                    rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
-                    rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
-                }
-                spriteBatch.End();
+                rootObject.Draw(gameTime, spriteBatch, graphicsDevice);
+                rootObject.DrawChildren(gameTime, spriteBatch, graphicsDevice);
             }
-            else
-            {
-                foreach (var rootObject in RootObjects)
-                {
-                    var objectsInOrder = ExtensionClass.FlattenWithLevel<IContainer>(rootObject, x => x.Children);
-
-                    foreach (var y in objectsInOrder)
-                    {
-                        scissor = y.Item1.ActualPosition;
-                        previousScissor = graphicsDevice.ScissorRectangle;
-                        graphicsDevice.ScissorRectangle = scissor;
-
-                        spriteBatch.Begin(SpriteSortMode.Deferred, rasterizerState: new() { ScissorTestEnable = true });
-                        if (y.Item1 is GameObject b)
-                            b.Draw(gameTime, spriteBatch, graphicsDevice);
-                        spriteBatch.End();
-                        graphicsDevice.ScissorRectangle = previousScissor;
-                    }
-                }
-            }
+            spriteBatch.End();
         }
  
     }
