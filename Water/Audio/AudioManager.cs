@@ -27,10 +27,10 @@ namespace Water.Audio
 
         public AudioManager()
         {
-            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ||
-            //    RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
-            //    RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            //    audioService = new BASSAudioService();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                audioService = new BASSAudioService();
         }
 
         /// <summary>
