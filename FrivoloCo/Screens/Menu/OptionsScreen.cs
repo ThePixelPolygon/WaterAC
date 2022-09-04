@@ -53,14 +53,14 @@ namespace FrivoloCo.Screens.Menu
                 Layout = Water.Graphics.Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,
                 VerticalTextAlignment = VerticalTextAlignment.Top,
-                Margin = 10
+                Margins = new(10)
             };
             tb.Text = "since we don't have a proper options UI yet, the config file should have been opened with your text editor.\n" +
                 "just edit that and your changes will be saved when you hit the back button :)";
             var box = new Box()
             {
                 Layout = Water.Graphics.Layout.Fill,
-                Margin = 10,
+                Margins = new(10),
                 Color = Color.White * 0.5f
             };
             co.AddChild(Game.AddObject(box));
@@ -74,7 +74,7 @@ namespace FrivoloCo.Screens.Menu
             {
                 Layout = Water.Graphics.Layout.AnchorBottomLeft,
                 RelativePosition = new(0, 0, 250, 100),
-                Margin = 10
+                Margins = new(10)
             };
             co.AddChild(Game.AddObject(button));
 

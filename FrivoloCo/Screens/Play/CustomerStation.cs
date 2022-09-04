@@ -133,7 +133,7 @@ namespace FrivoloCo.Screens.Play
             tb = new TextBlock(new(0, 0, 0, 0), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 25), "", Color.Black)
             {
                 Layout = Layout.Fill,
-                Margin = 5
+                Margins = new(5)
             };
             AddChild(Game.AddObject(box));
             box.AddChild(Game.AddObject(tb));

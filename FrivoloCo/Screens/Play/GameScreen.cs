@@ -178,7 +178,7 @@ namespace FrivoloCo.Screens.Play
             {
                 RelativePosition = new(0, 0, 250, 30),
                 Layout = Layout.AnchorTopRight,
-                Margin = 10,
+                Margins = new(10),
                 Color = Color.White
             };
             AddChild(Game.AddObject(moneyBox));
@@ -187,7 +187,7 @@ namespace FrivoloCo.Screens.Play
                 Layout = Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,
                 VerticalTextAlignment = VerticalTextAlignment.Center,
-                Margin = 2
+                Margins = new(2)
             };
             moneyBox.AddChild(Game.AddObject(moneyTb));
 
@@ -195,7 +195,7 @@ namespace FrivoloCo.Screens.Play
             {
                 RelativePosition = new(0, 0, 300, 30),
                 Layout = Layout.AnchorTopLeft,
-                Margin = 10,
+                Margins = new(10),
                 Color = Color.White
             };
             AddChild(Game.AddObject(statusBox));
@@ -204,7 +204,7 @@ namespace FrivoloCo.Screens.Play
                 Layout = Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,
                 VerticalTextAlignment = VerticalTextAlignment.Center,
-                Margin = 2
+                Margins = new(2)
             };
             statusBox.AddChild(Game.AddObject(statusTb));
         }

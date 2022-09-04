@@ -51,7 +51,7 @@ namespace FrivoloCo.Screens.Menu
                 Layout = Water.Graphics.Layout.Fill,
                 HorizontalTextAlignment = HorizontalTextAlignment.Left,
                 VerticalTextAlignment = VerticalTextAlignment.Top,
-                Margin = 10
+                Margins = new(10)
             };
             tb.Text = 
                 "Customers will show up at the counter. Drag and drop the drinks they want to them.\n" +
@@ -60,7 +60,7 @@ namespace FrivoloCo.Screens.Menu
             var box = new Box()
             {
                 Layout = Water.Graphics.Layout.Fill,
-                Margin = 10,
+                Margins = new(10),
                 Color = Color.White * 0.5f
             };
             co.AddChild(Game.AddObject(box));
@@ -70,7 +70,7 @@ namespace FrivoloCo.Screens.Menu
             {
                 Layout = Water.Graphics.Layout.AnchorBottomLeft,
                 RelativePosition = new(0, 0, 250, 100),
-                Margin = 10
+                Margins = new(10)
             };
             co.AddChild(Game.AddObject(button));
         }

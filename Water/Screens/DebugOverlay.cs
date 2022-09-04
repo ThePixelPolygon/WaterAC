@@ -36,7 +36,7 @@ namespace Water.Screens
                 RelativePosition = new(0, 0, 100, 20),
                 Orientation = Orientation.Vertical,
                 Layout = Layout.AnchorTopRight,
-                Margin = 2
+                Margins = new(2)
             };
             box = new Box()
             {

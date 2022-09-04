@@ -64,7 +64,7 @@ namespace FrivoloCo.Screens.Menu
             {
                 RelativePosition = new(0, 0, 393, 225),
                 Layout = Water.Graphics.Layout.AnchorTop,
-                Margin = 50
+                Margins = new(50)
             };
             co.AddChild(Game.AddObject(logo));
 

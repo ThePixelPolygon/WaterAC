@@ -56,7 +56,7 @@ namespace FrivoloCo.Screens.Play.Items
                 HorizontalTextAlignment = HorizontalTextAlignment.Center,
                 VerticalTextAlignment = VerticalTextAlignment.Center,
                 TextWrapping = TextWrapMode.LetterWrap,
-                Margin = 1
+                Margins = new(1)
             };
             labelBox.AddChild(Game.AddObject(tb));
             AddChild(Game.AddObject(labelBox));
