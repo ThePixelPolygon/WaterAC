@@ -17,7 +17,8 @@ namespace Water.Graphics
         public List<IContainer> Children { get; }
 
         public Layout Layout { get; set; }
-        public int Margin { get; set; }
+
+        public Margins Margins { get; set; }
 
         public void AddChild(IContainer child);
         public void RemoveChild(IContainer child);

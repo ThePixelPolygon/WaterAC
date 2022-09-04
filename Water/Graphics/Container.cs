@@ -48,7 +48,8 @@ namespace Water.Graphics
         /// The way this container will be laid out by its parent. This might be ignored depending on the type of parent container.
         /// </summary>
         public Layout Layout { get; set; } = Layout.Manual;
-        public int Margin { get; set; } = 0;
+
+        public Margins Margins { get; set; } = new(0);
 
         /// <summary>
         /// Adds a child to this container
@@ -83,57 +84,57 @@ namespace Water.Graphics
                 {
                     Layout.AnchorLeft => new
                     (
-                        parentPosition.X + child.Margin,
+                        parentPosition.X + child.Margins.Left,
                         parentPosition.Y + ((parentPosition.Height - child.RelativePosition.Height) / 2),
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorTopLeft => new
                     (
-                        parentPosition.X + child.Margin,
-                        parentPosition.Y + child.Margin,
+                        parentPosition.X + child.Margins.Left,
+                        parentPosition.Y + child.Margins.Top,
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorTop => new
                     (
                         parentPosition.X + ((parentPosition.Width - child.RelativePosition.Width) / 2),
-                        parentPosition.Y + child.Margin,
+                        parentPosition.Y + child.Margins.Top,
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorTopRight => new
                     (
-                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
-                        parentPosition.Y + child.Margin,
+                        parentPosition.Right - child.RelativePosition.Width - child.Margins.Right,
+                        parentPosition.Y + child.Margins.Top,
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorRight => new
                     (
-                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
+                        parentPosition.Right - child.RelativePosition.Width - child.Margins.Right,
                         parentPosition.Y + ((parentPosition.Height - child.RelativePosition.Height) / 2),
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorBottomRight => new
                     (
-                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
-                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
+                        parentPosition.Right - child.RelativePosition.Width - child.Margins.Right,
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margins.Bottom,
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorBottom => new
                     (
                         parentPosition.X + ((parentPosition.Width - child.RelativePosition.Width) / 2),
-                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margins.Bottom,
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
                     Layout.AnchorBottomLeft => new
                     (
-                        parentPosition.X + child.Margin,
-                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
+                        parentPosition.X + child.Margins.Left,
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margins.Bottom,
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     ),
@@ -153,46 +154,46 @@ namespace Water.Graphics
                     ),
                     Layout.Fill => new
                     (
-                        parentPosition.X + child.Margin,
-                        parentPosition.Y + child.Margin,
-                        parentPosition.Width - (child.Margin * 2),
-                        parentPosition.Height - (child.Margin * 2)
+                        parentPosition.X + child.Margins.Left,
+                        parentPosition.Y + child.Margins.Top,
+                        parentPosition.Width - ((child.Margins.Left + child.Margins.Right) * 2),
+                        parentPosition.Height - ((child.Margins.Left + child.Margins.Right) * 2)
                     ),
                     Layout.AspectRatioMaintainingFill => new
                     (
                         new Point
                         (
-                            parentPosition.X + child.Margin,
-                            parentPosition.Y + child.Margin
+                            parentPosition.X + child.Margins.Left + child.Margins.Right,
+                            parentPosition.Y + child.Margins.Left + child.Margins.Right
                         ),
                         InterfaceUtils.CalculateAspectRatioMaintainingFill(parentPosition, child.RelativePosition)
                     ),
                     Layout.DockLeft => new
                     (
-                        parentPosition.X + child.Margin,
-                        parentPosition.Y + child.Margin,
+                        parentPosition.X + child.Margins.Left,
+                        parentPosition.Y + child.Margins.Top,
                         child.RelativePosition.Width,
-                        parentPosition.Height - (child.Margin * 2)
+                        parentPosition.Height - ((child.Margins.Top + child.Margins.Bottom) * 2)
                     ),
                     Layout.DockTop => new
                     (
-                        parentPosition.X + child.Margin,
-                        parentPosition.Y + child.Margin,
-                        parentPosition.Width - (child.Margin * 2),
+                        parentPosition.X + child.Margins.Left,
+                        parentPosition.Y + child.Margins.Top,
+                        parentPosition.Width - ((child.Margins.Left + child.Margins.Right) * 2),
                         child.RelativePosition.Height
                     ),
                     Layout.DockRight => new
                     (
-                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
-                        parentPosition.Y + child.Margin,
+                        parentPosition.Right - child.RelativePosition.Width - child.Margins.Right,
+                        parentPosition.Y + child.Margins.Top,
                         child.RelativePosition.Width,
-                        parentPosition.Height - (child.Margin * 2)
+                        parentPosition.Height - ((child.Margins.Top + child.Margins.Bottom) * 2)
                     ),
                     Layout.DockBottom => new
                     (
-                        parentPosition.X + child.Margin,
-                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
-                        parentPosition.Width - (child.Margin * 2),
+                        parentPosition.X + child.Margins.Left,
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margins.Top,
+                        parentPosition.Width - ((child.Margins.Left + child.Margins.Right) * 2),
                         child.RelativePosition.Height
                     ),
                     Layout.Manual or _ => new
@@ -235,5 +236,40 @@ namespace Water.Graphics
         }
 
         
+    }
+
+    public struct Margins
+    {
+        public int Left { get; }
+
+        public int Top { get; }
+
+        public int Right { get; }
+
+        public int Bottom { get; }
+
+        public Margins(int left, int top, int right, int bottom)
+        {
+            Left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+        }
+
+        public Margins(int horizontal, int vertical)
+        {
+            Left = horizontal;
+            Top = vertical;
+            Right = horizontal;
+            Bottom = vertical;
+        }
+
+        public Margins(int value)
+        {
+            Left = value;
+            Top = value;
+            Right = value;
+            Bottom = value;
+        }
     }
 }
