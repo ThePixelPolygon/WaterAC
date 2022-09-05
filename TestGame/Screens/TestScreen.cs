@@ -11,6 +11,7 @@ using Water.Audio;
 using Water.Graphics;
 using Water.Graphics.Containers;
 using Water.Graphics.Controls;
+using Water.Graphics.Controls.UI;
 using Water.Graphics.Screens;
 
 namespace TestGame.Screens
@@ -67,6 +68,8 @@ namespace TestGame.Screens
             }));
             
             AddChild(rc);
+
+            AddChild(Game.AddObject(new UIElement()));
         }
 
         public override void Deinitialize()

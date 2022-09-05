@@ -23,6 +23,9 @@ namespace Water.Graphics
         public void AddChild(IContainer child);
         public void RemoveChild(IContainer child);
 
+        public void OnAddedToScreen();
+        public void OnRemovedFromScreen();
+
         public void CalculateChildrenPositions();
 
         public void DrawChildren(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice);
