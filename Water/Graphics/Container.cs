@@ -59,7 +59,6 @@ namespace Water.Graphics
         {
             child.Parent = this;
             Children.Add(child);
-            child.OnAddedToScreen();
             CalculateChildrenPositions();
         }
         /// <summary>
@@ -70,18 +69,7 @@ namespace Water.Graphics
         {
             child.Parent = null;
             Children.Remove(child);
-            child.OnRemovedFromScreen();
             CalculateChildrenPositions();
-        }
-
-        public virtual void OnAddedToScreen()
-        {
-
-        }
-
-        public virtual void OnRemovedFromScreen()
-        {
-
         }
 
         /// <summary>
