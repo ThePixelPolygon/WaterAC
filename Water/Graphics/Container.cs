@@ -28,7 +28,7 @@ namespace Water.Graphics
         /// </summary>
         public Rectangle RelativePosition
         {
-            get => relativePosition;
+            get => new((int)Math.Round(relativePosition.X * scaleX), (int)Math.Round(relativePosition.Y * scaleY), (int)Math.Round(relativePosition.Width * scaleX), (int)Math.Round(relativePosition.Height * scaleY));
             set
             {
                 relativePosition = value;
@@ -50,6 +50,28 @@ namespace Water.Graphics
         public Layout Layout { get; set; } = Layout.Manual;
 
         public Margins Margins { get; set; } = new(0);
+
+        private float scaleX = 1;
+        public float ScaleX
+        {
+            get => scaleX * (Parent?.ScaleX ?? 1);
+            set
+            {
+                scaleX = value;
+                CalculateChildrenPositions();
+            }
+        }
+
+        private float scaleY = 1;
+        public float ScaleY
+        {
+            get => scaleY * (Parent?.ScaleY ?? 1);
+            set
+            {
+                scaleY = value;
+                CalculateChildrenPositions();
+            }
+        }
 
         /// <summary>
         /// Adds a child to this container
@@ -203,8 +225,9 @@ namespace Water.Graphics
                         child.RelativePosition.Width,
                         child.RelativePosition.Height
                     )
-
                 };
+                child.ScaleX = ScaleX;
+                child.ScaleY = ScaleY;
                 child.CalculateChildrenPositions();
             }
         } 

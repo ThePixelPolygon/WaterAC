@@ -57,18 +57,18 @@ namespace Water.Graphics.Controls
                 if (HorizontalTextAlignment != HorizontalTextAlignment.Left)
                 {
                     if (HorizontalTextAlignment == HorizontalTextAlignment.Right)
-                        pos.X += ActualPosition.Right - m.X;
+                        pos.X += (ActualPosition.Right - m.X) * ScaleX;
                     else if (HorizontalTextAlignment == HorizontalTextAlignment.Center)
-                        pos.X += (ActualPosition.Width - m.X) / 2;
+                        pos.X += ((ActualPosition.Width - m.X) / 2) * ScaleX;
                 }
                 if (VerticalTextAlignment != VerticalTextAlignment.Top)
                 {
                     if (VerticalTextAlignment == VerticalTextAlignment.Bottom)
-                        pos.Y = (ActualPosition.Bottom - (m.Y * ((lines.Length - i) + 1)));
+                        pos.Y = ((ActualPosition.Bottom - (m.Y * ((lines.Length - i) + 1)))) * ScaleY;
                     else if (VerticalTextAlignment == VerticalTextAlignment.Center)
-                        pos.Y += (ActualPosition.Height - m.Y) / 2;
+                        pos.Y += ((ActualPosition.Height - m.Y) / 2) * ScaleY;
                 }
-                spriteBatch.DrawString(font, line, pos, Color);
+                spriteBatch.DrawString(font, line, pos, Color, new(ScaleX, ScaleY));
 
                 pos.Y += LineSpacing;
                 i++;
@@ -85,9 +85,16 @@ namespace Water.Graphics.Controls
  
         }
 
+        private float prevScale = 1;
+
         public override void Update(GameTime gameTime)
         {
-          
+            //if (ScaleX != prevScale)
+            //{
+            //    font.Size *= ScaleX;
+            //}
+
+            //prevScale = ScaleX;
         }
 
         

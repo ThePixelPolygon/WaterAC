@@ -89,6 +89,13 @@ namespace Water
             gameObjectManager.Input.KeyDown += Input_KeyDown;
         }
 
+        public void UpdateWindowSize(Rectangle newSize)
+        {
+            Graphics.PreferredBackBufferWidth = newSize.Width;
+            Graphics.PreferredBackBufferHeight = newSize.Height;
+            Graphics.ApplyChanges();
+        }
+
         private async void LoadConfig() => await LoadConfigAsync(); // this is really cursed :sob:
 
         public async Task LoadConfigAsync()
@@ -109,6 +116,12 @@ namespace Water
                     //Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                     //Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                     //Graphics.ToggleFullScreen();
+                    break;
+                case Keys.OemPlus:
+                    Screen.GameScale += .1f;
+                    break;
+                case Keys.OemMinus:
+                    Screen.GameScale -= .1f;
                     break;
                 case Keys.F9:
                     GC.Collect(2);

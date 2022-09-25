@@ -18,6 +18,19 @@ namespace Water.Graphics.Screens
         public List<Screen> Screens { get; } = new();
         public bool HasScreens { get => Screens.Count > 0; }
 
+        private float gameScale = 1;
+        public float GameScale
+        {
+            get => gameScale;
+            set
+            {
+                gameScale = value;
+                var newSize = new Rectangle(0, 0, (int)Math.Round(currentScreenSize.Width * GameScale), (int)Math.Round(currentScreenSize.Height * GameScale));
+                gameObjectManager.MainGame.UpdateWindowSize(newSize);
+                UpdateScreenProperties(newSize);
+            }
+        }
+
         private GameObjectManager gameObjectManager;
         private GameWindow window;
 
@@ -121,8 +134,15 @@ namespace Water.Graphics.Screens
         public void UpdateScreenSize(Rectangle newSize)
         {
             currentScreenSize = newSize;
+            UpdateScreenProperties(newSize);
+        }
+
+        private void UpdateScreenProperties(Rectangle newSize)
+        {
             foreach (var screen in Screens)
             {
+                screen.ScaleX = gameScale;
+                screen.ScaleY = gameScale;
                 screen.ActualPosition = newSize;
                 screen.RelativePosition = newSize;
                 screen.CalculateChildrenPositions();

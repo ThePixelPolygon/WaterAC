@@ -20,6 +20,9 @@ namespace Water.Graphics
 
         public Margins Margins { get; set; }
 
+        public float ScaleX { get; set; }
+        public float ScaleY { get; set; }
+
         public void AddChild(IContainer child);
         public void RemoveChild(IContainer child);
 

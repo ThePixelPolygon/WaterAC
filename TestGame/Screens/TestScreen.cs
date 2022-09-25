@@ -17,14 +17,29 @@ namespace TestGame.Screens
 {
     public class TestScreen : Screen
     {
+        private bool x = false;
         private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
         {
             if (e.Key == Microsoft.Xna.Framework.Input.Keys.Space)
             {
-                stackPanel.AddChild(Game.AddObject(new Aquarium()
+                if (x)
                 {
-                    Layout = Layout.Fill,
-                }));
+                    stackPanel.AddChild(Game.AddObject(new Box()
+                    {
+                        Color = Color.Black,
+                        Margins = new(10, 0)
+                    }));
+                    x = false;
+                }
+                else
+                {
+                    stackPanel.AddChild(Game.AddObject(new Box()
+                    {
+                        Color = Color.DarkBlue,
+                        Margins = new(10, 0)
+                    }));
+                    x = true;
+                }
             }
             else if (e.Key == Microsoft.Xna.Framework.Input.Keys.E)
             {
@@ -50,23 +65,13 @@ namespace TestGame.Screens
         {
             Game.Input.KeyDown += Input_KeyDown;
             Game.Input.KeyUp += Input_KeyUp;
-            var rc = new RenderContainer(Game.GraphicsDevice)
-            {
-                RelativePosition = new(0, 0, 720, 576),
-                Layout = Layout.Center
-            };
             stackPanel = new UniformStackContainer()
             {
                 RelativePosition = new(0, 0, 100, 100),
                 Layout = Layout.Fill,
                 Orientation = Orientation.Horizontal,
             };
-            rc.AddChild(Game.AddObject(new Aquarium()
-            {
-                RelativePosition = new(0, 0, 1920, 1080)
-            }));
-            
-            AddChild(rc);
+            AddChild(stackPanel);
         }
 
         public override void Deinitialize()
@@ -79,10 +84,7 @@ namespace TestGame.Screens
         {
             if (e.Key == Microsoft.Xna.Framework.Input.Keys.Space)
             {
-                stackPanel.AddChild(Game.AddObject(new Aquarium()
-                {
-                    Layout = Layout.Fill,
-                }));
+
             }
         }
 
