@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,15 +12,9 @@ namespace FrivoloCo.Screens
 {
     public class CreditOverlay : Screen
     {
-        public arcadeShim acShim { get; }
-        public TextBlock creditDisplay { get; set; }
-        
+        private arcadeShim acShim;
+        private TextBlock creditDisplay;
         private UniformStackContainer stackContainer;
-
-        public CreditOverlay()
-        {
-            acShim = arcadeShim.getInstance();
-        }
 
         private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
         {
@@ -39,21 +34,21 @@ namespace FrivoloCo.Screens
         }
         public override void Initialize()
         {
+            acShim = arcadeShim.getInstance();
+            
             Game.Input.KeyDown += Input_KeyDown;   
             
             creditDisplay = new TextBlock(new(0, 0, 100, 60),
                 Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black);
-            /*
+            
             stackContainer = new UniformStackContainer()
             {
                 RelativePosition = new Rectangle(0, 0, 200, 60),
                 Layout = Water.Graphics.Layout.DockBottom
             };
-            */
 
-
-            //AddChild(stackContainer);
-            //stackContainer.AddChild(Game.AddObject(creditDisplay));
+            AddChild(stackContainer);
+            stackContainer.AddChild(Game.AddObject(creditDisplay));
         }
 
         public override void Deinitialize()
@@ -79,30 +74,7 @@ namespace FrivoloCo.Screens
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            
-        }
-    }
 
-    public class CreditOverlayComponent : DrawableGameComponent
-    {
-        private Game thegame;
-        private SpriteBatch spriteBatch;
-        private GraphicsDevice graphicsDevice;
-        private CreditOverlay creditOverlay;
-        
-        public CreditOverlayComponent(Game game, SpriteBatch _spriteBatch, GraphicsDevice _graphicsDevice, CreditOverlay _overlay) : base(game)
-        {
-            creditOverlay = _overlay;
-            thegame = game;
-            spriteBatch = _spriteBatch;
-            graphicsDevice = _graphicsDevice;
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            spriteBatch.Begin();
-            creditOverlay.creditDisplay.Draw(gameTime, spriteBatch, graphicsDevice);
-            spriteBatch.End();
         }
     }
 }

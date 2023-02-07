@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using FrivoloCo.Screens.Play;
 using Water;
 
 namespace FrivoloCo
@@ -31,15 +32,18 @@ namespace FrivoloCo
 
         protected override void Initialize()
         {
+            var gfxDev = Graphics.GraphicsDevice;
             Graphics.PreferredBackBufferWidth = 854;
             Graphics.PreferredBackBufferHeight = 480;
             Graphics.ApplyChanges();
+            
             Screen.UpdateScreenSize(new(0, 0, 854, 480));
             Screen.ChangeScreen(new SplashScreen());
-            CreditOverlay creditOverlay = new CreditOverlay();
-            this.Components.Add(new CreditOverlayComponent(this, new SpriteBatch(this.Graphics.GraphicsDevice), this.Graphics.GraphicsDevice, creditOverlay));
-            Screen.InitializeScreen(creditOverlay);
-            //Screen.AddScreen(creditOverlay);
+            
+            OverlayScreenComponent screenOverlay = new(this, new SpriteBatch(gfxDev), gfxDev, Screen);
+            screenOverlay.AddScreen(new CreditOverlay());
+            //screenOverlay.AddScreen(new FailScreen(new ProgressState()));
+            
             base.Initialize();
         }
 
