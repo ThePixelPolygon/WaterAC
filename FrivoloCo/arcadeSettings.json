@@ -1,0 +1,12 @@
+﻿{
+  "machineData": {
+    "region": "J",
+    "model": "A",
+    "revision": "A",
+    "ver": "20230206"
+  },
+  "coinOption": {
+    "coins": 1,
+    "credits": 1
+  }
+}
