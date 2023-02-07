@@ -44,7 +44,7 @@ namespace Water.Graphics.Screens
             this.window = window;
         }
 
-        private Screen InitializeScreen(Screen screen)
+        public Screen InitializeScreen(Screen screen)
         {
             screen.Game = gameObjectManager;
             screen.ScreenManager = this;

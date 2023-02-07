@@ -36,7 +36,10 @@ namespace FrivoloCo
             Graphics.ApplyChanges();
             Screen.UpdateScreenSize(new(0, 0, 854, 480));
             Screen.ChangeScreen(new SplashScreen());
-            Screen.AddScreen(new CreditOverlay());
+            CreditOverlay creditOverlay = new CreditOverlay();
+            this.Components.Add(new CreditOverlayComponent(this, new SpriteBatch(this.Graphics.GraphicsDevice), this.Graphics.GraphicsDevice, creditOverlay));
+            Screen.InitializeScreen(creditOverlay);
+            //Screen.AddScreen(creditOverlay);
             base.Initialize();
         }
 
