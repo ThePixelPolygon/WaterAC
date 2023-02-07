@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Water.Graphics.Screens;
 
 namespace FrivoloCo;
 
@@ -25,14 +27,17 @@ public class arcadeShim
         return instance;
     }
 
-    public void acceptCoin()
+    public int acceptCoin()
     {
         coinsInserted++;
         if (coinsInserted == coinsPerCredit)
         {
             credits++;
             coinsInserted = 0;
+            return 0;
         }
+        
+        return 1;
     }
 
     public int Credits

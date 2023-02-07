@@ -18,7 +18,16 @@ public class CreditOverlay : Screen
     {
         if (e.Key == Keys.F3)
         {
-            acShim.acceptCoin();
+            int status = acShim.acceptCoin();
+            switch (status)
+            {
+                case 0:
+                    Game.Audio.PlayEffect("Assets/Gameplay/Customers/Logan/thankyou.wav", true);
+                    break;
+                case 1:
+                    Game.Audio.PlayEffect("Assets/Gameplay/kaching.wav", true);
+                    break;
+            }
         }
     }
     public override void Initialize()
@@ -32,6 +41,8 @@ public class CreditOverlay : Screen
 
         creditDisplay = new TextBlock(new(0, 0, 100, 60),
             Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black);
+        AddChild(stackContainer);
+        stackContainer.AddChild(Game.AddObject(creditDisplay));
     }
 
     public override void Deinitialize()
@@ -57,6 +68,6 @@ public class CreditOverlay : Screen
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

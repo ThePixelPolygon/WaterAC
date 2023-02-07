@@ -36,6 +36,7 @@ namespace FrivoloCo
             Graphics.ApplyChanges();
             Screen.UpdateScreenSize(new(0, 0, 854, 480));
             Screen.ChangeScreen(new SplashScreen());
+            Screen.AddScreen(new CreditOverlay());
             base.Initialize();
         }
 
