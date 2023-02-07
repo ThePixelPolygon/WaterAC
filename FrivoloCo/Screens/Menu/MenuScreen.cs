@@ -32,9 +32,9 @@ namespace FrivoloCo.Screens.Menu
         private Sprite logo;
         private Sprite coin;
         private Sprite bt;
-        // private Sprite bt2;
-        // private Sprite bt3;
-        // private Sprite bt4;
+        private Sprite bt2;
+        private Sprite bt3;
+        private Sprite bt4;
         private TextBlock tx;
 
         private Container co;
@@ -72,19 +72,40 @@ namespace FrivoloCo.Screens.Menu
 
             co.AddChild(Game.AddObject(logo));
 
-            coin = new Sprite("Assets/insertCoin.png")
-            {
-                RelativePosition = new Rectangle(0, 500, 964, 200),
-                Layout = Water.Graphics.Layout.HorizontalCenter
-            };
-            
-            co.AddChild(Game.AddObject(coin));
-            
             bt = new SpriteButton("Assets/indulge.png", "Assets/indulgeA.png", () => { ScreenManager.ChangeScreen(new GamemodeScreen()); })
             {
                 RelativePosition = new(0, 300, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
+            co.AddChild(Game.AddObject(bt));
+
+            bt2 = new SpriteButton("Assets/options.png", "Assets/optionsA.png", () => { ScreenManager.ChangeScreen(new OptionsScreen()); })
+            {
+                RelativePosition = new(0, 450, 250, 100),
+                Layout = Water.Graphics.Layout.HorizontalCenter
+            };
+            co.AddChild(Game.AddObject(bt2));
+
+            bt3 = new SpriteButton("Assets/credits.png", "Assets/creditsA.png", () => { ScreenManager.ChangeScreen(new CreditsScreen()); })
+            {
+                RelativePosition = new(0, 600, 250, 100),
+                Layout = Water.Graphics.Layout.HorizontalCenter
+            };
+            co.AddChild(Game.AddObject(bt3));
+                
+            bt4 = new SpriteButton("Assets/exit.png", "Assets/exitA.png", () => { Environment.Exit(0); })
+            {
+                RelativePosition = new(0, 750, 250, 100),
+                Layout = Water.Graphics.Layout.HorizontalCenter
+            };
+            co.AddChild(Game.AddObject(bt4));
+            
+            coin = new Sprite("Assets/insertCoin.png")
+            {
+                RelativePosition = new Rectangle(0, 500, 964, 200),
+                Layout = Water.Graphics.Layout.HorizontalCenter
+            };
+            //co.AddChild(Game.AddObject(coin));
 
             tx = new TextBlock(new(0, 0, 500, 18), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 20), "FCO:U:A:A:20230206", Color.White)
             {

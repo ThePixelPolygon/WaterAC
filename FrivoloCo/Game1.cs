@@ -25,7 +25,7 @@ namespace FrivoloCo
 
         public Game1() : base()
         {
-            GameScalingMode = GameScalingMode.MaintainAspectRatio;
+            GameScalingMode = GameScalingMode.None;
             TargetWidth = 1920;
             TargetHeight = 1080;
         }
@@ -41,7 +41,7 @@ namespace FrivoloCo
             Screen.ChangeScreen(new SplashScreen());
             
             OverlayScreenComponent screenOverlay = new(this, new SpriteBatch(gfxDev), gfxDev, Screen);
-            screenOverlay.AddScreen(new CreditOverlay());
+            //screenOverlay.AddScreen(new CreditOverlay());
             //screenOverlay.AddScreen(new FailScreen(new ProgressState()));
             
             base.Initialize();
