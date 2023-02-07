@@ -63,8 +63,6 @@ namespace Water
         private GameObjectManager gameObjectManager;
         public WaterGame()
         {
-            
-
             Graphics = new GraphicsDeviceManager(this);
             Graphics.SynchronizeWithVerticalRetrace = true;
             Window.AllowUserResizing = true;

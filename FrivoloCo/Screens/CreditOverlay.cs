@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using System.Threading;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Water.Graphics;
@@ -6,68 +8,73 @@ using Water.Graphics.Screens;
 using Water.Graphics.Controls;
 using Water.Graphics.Containers;
 
-namespace FrivoloCo.Screens;
-
-public class CreditOverlay : Screen
+namespace FrivoloCo.Screens
 {
-    private arcadeShim acShim = arcadeShim.getInstance();
-    private UniformStackContainer stackContainer;
-
-    private TextBlock creditDisplay;
-    private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
+    public class CreditOverlay : Screen
     {
-        if (e.Key == Keys.F3)
+        private arcadeShim acShim;
+        private TextBlock creditDisplay;
+        private UniformStackContainer stackContainer;
+
+        private void Input_KeyDown(object sender, Water.Input.KeyEventArgs e)
         {
-            int status = acShim.acceptCoin();
-            switch (status)
+            if (e.Key == Keys.F3)
             {
-                case 0:
-                    Game.Audio.PlayEffect("Assets/Gameplay/Customers/Logan/thankyou.wav", true);
-                    break;
-                case 1:
-                    Game.Audio.PlayEffect("Assets/Gameplay/kaching.wav", true);
-                    break;
+                int status = acShim.acceptCoin();
+                switch (status)
+                {
+                    case 0:
+                        Game.Audio.PlayEffect("Assets/Gameplay/Customers/Logan/thankyou.wav", true);
+                        break;
+                    case 1:
+                        Game.Audio.PlayEffect("Assets/Gameplay/kaching.wav", true);
+                        break;
+                }
             }
         }
-    }
-    public override void Initialize()
-    {
-        Game.Input.KeyDown += Input_KeyDown;
-        stackContainer = new UniformStackContainer()
+        public override void Initialize()
         {
-            RelativePosition = new Rectangle(0, 0, 200, 60),
-            Layout = Water.Graphics.Layout.DockBottom
-        };
+            acShim = arcadeShim.getInstance();
+            
+            Game.Input.KeyDown += Input_KeyDown;   
+            
+            creditDisplay = new TextBlock(new(0, 0, 100, 60),
+                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black);
+            
+            stackContainer = new UniformStackContainer()
+            {
+                RelativePosition = new Rectangle(0, 0, 200, 60),
+                Layout = Water.Graphics.Layout.DockBottom
+            };
 
-        creditDisplay = new TextBlock(new(0, 0, 100, 60),
-            Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black);
-        AddChild(stackContainer);
-        stackContainer.AddChild(Game.AddObject(creditDisplay));
-    }
-
-    public override void Deinitialize()
-    {
-        Game.Input.KeyDown -= Input_KeyDown;
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        int coinsPerCredit = acShim.CoinsPerCredit;
-        int coinsInserted = acShim.CoinsInserted;
-        int credits = acShim.Credits;
-
-        if (coinsPerCredit == 0)
-        {
-            creditDisplay.Text = "FREE PLAY";
+            AddChild(stackContainer);
+            stackContainer.AddChild(Game.AddObject(creditDisplay));
         }
-        else
-        {
-            creditDisplay.Text = $"Credits: {credits} ({coinsInserted}/{coinsPerCredit})";
-        }
-    }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
-    {
-        
+        public override void Deinitialize()
+        {
+            Game.Input.KeyDown -= Input_KeyDown;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            int coinsPerCredit = acShim.CoinsPerCredit;
+            int coinsInserted = acShim.CoinsInserted;
+            int credits = acShim.Credits;
+
+            if (coinsPerCredit == 0)
+            {
+                creditDisplay.Text = "FREE PLAY";
+            }
+            else
+            {
+                creditDisplay.Text = $"Credits: {credits} ({coinsInserted}/{coinsPerCredit})";
+            }
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        {
+
+        }
     }
 }
