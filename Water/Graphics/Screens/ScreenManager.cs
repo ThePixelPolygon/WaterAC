@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Water.Screens;
@@ -16,9 +18,11 @@ namespace Water.Graphics.Screens
         /// All screens in the game
         /// </summary>
         public List<Screen> Screens { get; } = new();
+        public event EventHandler ScreenSizeUpdated;
+        public Rectangle CurrentScreenSize = new(0, 0, 0, 0);
         public bool HasScreens { get => Screens.Count > 0; }
 
-        private float gameScale = 1;
+        public float gameScale = 1;
         public float GameScale
         {
             get => gameScale;
@@ -133,10 +137,12 @@ namespace Water.Graphics.Screens
         /// <param name="newSize">The new size of the screen</param>
         public void UpdateScreenSize(Rectangle newSize)
         {
+            CurrentScreenSize = newSize;
+            ScreenSizeUpdated?.Invoke(this, EventArgs.Empty);
             currentScreenSize = newSize;
             UpdateScreenProperties(newSize);
         }
-
+        
         private void UpdateScreenProperties(Rectangle newSize)
         {
             foreach (var screen in Screens)

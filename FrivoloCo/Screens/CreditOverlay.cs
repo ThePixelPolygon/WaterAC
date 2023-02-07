@@ -39,7 +39,7 @@ namespace FrivoloCo.Screens
             Game.Input.KeyDown += Input_KeyDown;   
             
             creditDisplay = new TextBlock(new(0, 0, 100, 60),
-                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black);
+                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.White);
             
             stackContainer = new UniformStackContainer()
             {

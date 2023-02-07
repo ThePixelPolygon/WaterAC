@@ -61,6 +61,8 @@ namespace Water
         private SpriteBatch _spriteBatch;
 
         private GameObjectManager gameObjectManager;
+        private byte[] backBufferData;
+        
         public WaterGame()
         {
             Graphics = new GraphicsDeviceManager(this);
@@ -197,14 +199,23 @@ namespace Water
         {
             GraphicsDevice.Clear(BackgroundColor);
             gameObjectManager.Draw(gameTime, _spriteBatch, GraphicsDevice);
-           
             base.Draw(gameTime);
+            
+            if (GameScalingMode == GameScalingMode.Box)
+            {
+                //GraphicsDevice.GetBackBufferData();
+                GraphicsDevice.SetRenderTarget(null);
+                _spriteBatch.Begin();
+                //_spriteBatch.Draw(boxRenderTexture, new Rectangle(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight), Color.White);
+                _spriteBatch.End();
+            }
         }
     }
 
     public enum GameScalingMode
     {
         None,
-        MaintainAspectRatio
+        MaintainAspectRatio,
+        Box
     }
 }
