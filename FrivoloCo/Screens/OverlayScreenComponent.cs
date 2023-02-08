@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,6 +18,8 @@ namespace FrivoloCo.Screens
             screenManager = _screenManager;
             spriteBatch = _spriteBatch;
             graphicsDevice = _graphicsDevice;
+
+            screenManager.ScreenSizeUpdated += UpdateScreenSize;
             
             game.Components.Add(this);
         }
@@ -24,6 +27,18 @@ namespace FrivoloCo.Screens
         public void AddScreen(Screen screen)
         {
             Screens.Add(screenManager.InitializeScreen(screen));
+        }
+
+        private void UpdateScreenSize(object sender, EventArgs e)
+        {
+            foreach (var screen in Screens)
+            {
+                screen.ScaleX = screenManager.gameScale;
+                screen.ScaleY = screenManager.gameScale;
+                screen.ActualPosition = screenManager.CurrentScreenSize;
+                screen.RelativePosition = screenManager.CurrentScreenSize;
+                screen.CalculateChildrenPositions();
+            }
         }
 
         public override void Draw(GameTime gameTime)
