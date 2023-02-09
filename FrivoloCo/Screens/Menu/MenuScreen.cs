@@ -78,35 +78,35 @@ namespace FrivoloCo.Screens.Menu
                 RelativePosition = new(0, 300, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            co.AddChild(Game.AddObject(bt));
+            Game.AddObject(bt);
 
             bt2 = new SpriteButton("Assets/options.png", "Assets/optionsA.png", () => { ScreenManager.ChangeScreen(new OptionsScreen()); })
             {
                 RelativePosition = new(0, 450, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            co.AddChild(Game.AddObject(bt2));
+            Game.AddObject(bt2);
 
             bt3 = new SpriteButton("Assets/credits.png", "Assets/creditsA.png", () => { ScreenManager.ChangeScreen(new CreditsScreen()); })
             {
                 RelativePosition = new(0, 600, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            co.AddChild(Game.AddObject(bt3));
-                
+            Game.AddObject(bt3);
+
             bt4 = new SpriteButton("Assets/exit.png", "Assets/exitA.png", () => { Environment.Exit(0); })
             {
                 RelativePosition = new(0, 750, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            co.AddChild(Game.AddObject(bt4));
-            
+            Game.AddObject(bt4);
+
             coin = new Sprite("Assets/insertCoin.png")
             {
                 RelativePosition = new Rectangle(0, 500, 964, 200),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            //co.AddChild(Game.AddObject(coin));
+            Game.AddObject(coin);
 
             tx = new TextBlock(new(0, 0, 500, 18), Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 20), "FCO:U:A:A:20230206", Color.White)
             {
@@ -121,15 +121,43 @@ namespace FrivoloCo.Screens.Menu
         public override void Update(GameTime gameTime)
         {
             counter += gameTime.ElapsedGameTime.TotalSeconds;
-            int currentCredits = ArcadeShim.Credits;
-
-            if (currentCredits > 0)
+            if (ArcadeShim.ArcadeConfig.arcadeMode)
             {
-                
+                if (ArcadeShim.Credits > 0 || ArcadeShim.ArcadeConfig.coinOption.coins == 0)
+                {
+                    co.RemoveChild(coin);
+                    addOnce(bt);
+                }
+                else
+                {
+                    addOnce(coin);
+                }
             }
+            else
+            {
+                addOnce(bt);
+                addOnce(bt2);
+                addOnce(bt3);
+                addOnce(bt4);
+            }
+            
             
             sp.Color = logo.Color = coin.Color = bt.Color = bt2.Color = bt3.Color =
                 bt4.Color = tx.Color = Color.White * (float)counter;
+            
+            if (counter > 1 && !ArcadeShim.ArcadeConfig.arcadeMode)
+            {
+                Game.RemoveObject(coin);
+                coin.Deinitialize();
+            }
+        }
+
+        private void addOnce(GameObject gameObject)
+        {
+            if (!co.Children.Contains(gameObject))
+            {
+                co.AddChild(gameObject);
+            }
         }
     }
 }

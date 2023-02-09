@@ -8,14 +8,12 @@ namespace FrivoloCo.Arcade;
 
 public class ArcadeShim
 {
+    public ArcadeConfig ArcadeConfig;
     private int credits = 0;
-    private int coinsPerCredit = 1;
     private int coinsInserted = 0;
     
     private static ArcadeShim _instance;
     private static Object _threadLock = new Object();
-    
-    public static bool hasInstance { get { return _instance is null; } }
     private ArcadeShim()
     {
         
@@ -36,9 +34,9 @@ public class ArcadeShim
     public int AcceptCoin()
     {
         coinsInserted++;
-        if (coinsInserted == coinsPerCredit)
+        if (coinsInserted == ArcadeConfig.coinOption.coins)
         {
-            credits++;
+            credits += ArcadeConfig.coinOption.credits;
             coinsInserted = 0;
             return 0;
         }
@@ -46,19 +44,19 @@ public class ArcadeShim
         return 1;
     }
 
+    public void TakeCredit()
+    {
+        credits -= credits > 0 ? 1 : 0;
+    }
+
     public int Credits { get { return credits; } }
 
     public int CoinsInserted
     { get { return coinsInserted; } }
 
-    public int CoinsPerCredit
-    { get { return coinsPerCredit; } }
-
     public async Task LoadArcadeAsync()
     {
-        ArcadeConfig arcadeConfig = await JsonUtils.ReadAsync<ArcadeConfig>("arcadeSettings.json");
-
-        coinsPerCredit = arcadeConfig.coinOption.coins;
+        ArcadeConfig = await JsonUtils.ReadAsync<ArcadeConfig>("arcadeSettings.json");
     }
 
     public async Task WriteArcadeAsync()

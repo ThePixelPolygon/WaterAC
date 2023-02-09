@@ -2,6 +2,8 @@ namespace FrivoloCo.Arcade;
 
 public class ArcadeConfig
 {
+    public bool arcadeMode { get; set; }
+    
     public MachineData machineData { get; set; }
     public CoinOption coinOption { get; set; }
 }

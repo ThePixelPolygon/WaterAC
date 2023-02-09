@@ -73,7 +73,7 @@ namespace FrivoloCo.Screens
 
         public override void Update(GameTime gameTime)
         {
-            int coinsPerCredit = acShim.CoinsPerCredit;
+            int coinsPerCredit = acShim.ArcadeConfig.coinOption.coins;
             int coinsInserted = acShim.CoinsInserted;
             int credits = acShim.Credits;
 

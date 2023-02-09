@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrivoloCo.Arcade;
 using Water.Graphics;
 using Water.Graphics.Containers;
 using Water.Graphics.Controls;
@@ -17,7 +18,7 @@ namespace FrivoloCo.Screens.Menu
     public class GamemodeScreen : Screen
     {
         private RenderContainer rc;
-
+        private ArcadeShim arcadeShim;
         public override void Deinitialize()
         {
             rc.Dispose();
@@ -37,6 +38,7 @@ namespace FrivoloCo.Screens.Menu
 
         public override void Initialize()
         {
+            arcadeShim = ArcadeShim.GetInstance();
             rc = new RenderContainer(Game.GraphicsDevice)
             {
                 Layout = Water.Graphics.Layout.Fill
@@ -74,7 +76,16 @@ namespace FrivoloCo.Screens.Menu
                 RelativePosition = new(0, 600, 250, 100),
                 Layout = Water.Graphics.Layout.HorizontalCenter
             };
-            co.AddChild(Game.AddObject(bt3));
+            Game.AddObject(bt3);
+            
+            if (!arcadeShim.ArcadeConfig.arcadeMode)
+            {
+                co.AddChild(bt3);
+            }
+            else
+            {
+                arcadeShim.TakeCredit();
+            }
         }
 
         private double counter = 1;

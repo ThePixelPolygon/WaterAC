@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
+using System.Threading.Tasks;
+using FrivoloCo.Arcade;
 using FrivoloCo.Screens.Play;
 using Water;
 
@@ -33,9 +35,19 @@ namespace FrivoloCo
 
         protected override void Initialize()
         {
-            bool arcadeMode = File.Exists("arcadeSettings.json");
-            
-            
+            bool arcadeMode;
+            ArcadeShim arcadeShim = ArcadeShim.GetInstance();
+            Task loadConfig = Task.Run(() => arcadeShim.LoadArcadeAsync());
+            try
+            {
+                loadConfig.Wait(500);
+                arcadeMode = arcadeShim.ArcadeConfig.arcadeMode;
+            }
+            catch (Exception e)
+            {
+                arcadeMode = false;
+            }
+
             var gfxDev = Graphics.GraphicsDevice;
             Graphics.PreferredBackBufferWidth = 854;
             Graphics.PreferredBackBufferHeight = 480;
@@ -43,7 +55,6 @@ namespace FrivoloCo
             
             Screen.UpdateScreenSize(new(0, 0, 854, 480));
             Screen.ChangeScreen(new SplashScreen());
-            //Screen.ChangeScreen(new CreditOverlay());
             
             OverlayScreenComponent screenOverlay = new(this, new SpriteBatch(gfxDev), gfxDev, Screen);
             if (arcadeMode)
@@ -54,8 +65,6 @@ namespace FrivoloCo
             {
                 screenOverlay.Dispose();
             }
-            
-            //screenOverlay.AddScreen(new FailScreen(new ProgressState()));
             
             base.Initialize();
         }
