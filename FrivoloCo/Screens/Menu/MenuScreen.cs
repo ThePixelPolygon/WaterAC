@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrivoloCo.Arcade;
 using Water.Graphics;
 using Water.Graphics.Containers;
 using Water.Graphics.Controls;
@@ -17,7 +18,7 @@ namespace FrivoloCo.Screens.Menu
     public class MenuScreen : Screen
     {
         private RenderContainer rc;
-        private arcadeShim ArcadeShim = arcadeShim.getInstance();
+        private ArcadeShim ArcadeShim = ArcadeShim.GetInstance();
         public override void Deinitialize()
         {
             rc.Dispose();
@@ -127,9 +128,8 @@ namespace FrivoloCo.Screens.Menu
                 
             }
             
-            sp.Color = logo.Color = coin.Color = bt.Color = tx.Color = Color.White * (float)counter;
-            
-            
+            sp.Color = logo.Color = coin.Color = bt.Color = bt2.Color = bt3.Color =
+                bt4.Color = tx.Color = Color.White * (float)counter;
         }
     }
 }

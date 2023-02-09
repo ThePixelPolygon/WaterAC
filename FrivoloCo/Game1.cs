@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.IO;
 using FrivoloCo.Screens.Play;
 using Water;
 
@@ -32,6 +33,9 @@ namespace FrivoloCo
 
         protected override void Initialize()
         {
+            bool arcadeMode = File.Exists("arcadeSettings.json");
+            
+            
             var gfxDev = Graphics.GraphicsDevice;
             Graphics.PreferredBackBufferWidth = 854;
             Graphics.PreferredBackBufferHeight = 480;
@@ -42,7 +46,15 @@ namespace FrivoloCo
             //Screen.ChangeScreen(new CreditOverlay());
             
             OverlayScreenComponent screenOverlay = new(this, new SpriteBatch(gfxDev), gfxDev, Screen);
-            screenOverlay.AddScreen(new CreditOverlay());
+            if (arcadeMode)
+            {
+                screenOverlay.AddScreen(new CreditOverlay());
+            }
+            else
+            {
+                screenOverlay.Dispose();
+            }
+            
             //screenOverlay.AddScreen(new FailScreen(new ProgressState()));
             
             base.Initialize();

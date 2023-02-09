@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using FrivoloCo.Arcade;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,7 +13,7 @@ namespace FrivoloCo.Screens
 {
     public class CreditOverlay : Screen
     {
-        private arcadeShim acShim;
+        private ArcadeShim acShim;
         private TextBlock creditDisplay;
         private UniformStackContainer stackContainer;
 
@@ -20,7 +21,7 @@ namespace FrivoloCo.Screens
         {
             if (e.Key == Keys.F3)
             {
-                int status = acShim.acceptCoin();
+                int status = acShim.AcceptCoin();
                 switch (status)
                 {
                     case 0:
@@ -34,21 +35,35 @@ namespace FrivoloCo.Screens
         }
         public override void Initialize()
         {
-            acShim = arcadeShim.getInstance();
+            acShim = ArcadeShim.GetInstance();
             
             Game.Input.KeyDown += Input_KeyDown;   
             
             creditDisplay = new TextBlock(new(0, 0, 100, 60),
-                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.White);
+                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black)
+            {
+                Layout = Layout.Fill,
+                VerticalTextAlignment = VerticalTextAlignment.Center,
+                HorizontalTextAlignment = HorizontalTextAlignment.Center
+            };
             
             stackContainer = new UniformStackContainer()
             {
-                RelativePosition = new Rectangle(0, 0, 200, 60),
-                Layout = Water.Graphics.Layout.DockBottom
+                RelativePosition = new Rectangle(0, 0, 1920, 60),
+                Layout = Layout.AnchorBottom
             };
 
+            Box box = new Box()
+            {
+                RelativePosition = new(0, 0, 250, 60),
+                Color = Color.White * 0.20f,
+                Layout = Layout.AnchorBottom
+            };
+            
             AddChild(stackContainer);
-            stackContainer.AddChild(Game.AddObject(creditDisplay));
+            box.AddChild(Game.AddObject(creditDisplay));
+            stackContainer.AddChild(Game.AddObject(box));
+            
         }
 
         public override void Deinitialize()
