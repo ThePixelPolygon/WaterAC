@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrivoloCo.Arcade;
 using Water.Graphics.Containers;
 using Water.Graphics.Screens;
 using Water.Graphics;
@@ -115,6 +116,15 @@ namespace FrivoloCo.Screens.Play
             {
                 Game.Audio.StopPlayingAllTracks();
                 Game.Audio.StopAllEffects();
+                var arcadeShim = ArcadeShim.GetInstance();
+                if (arcadeShim.ArcadeConfig.arcadeMode)
+                {
+                    if (arcadeShim.Credits <= 0 && arcadeShim.ArcadeConfig.coinOption.coins != 0)
+                    {
+                        ScreenManager.ChangeScreen(new SplashScreen());
+                        return;
+                    }
+                }
                 ScreenManager.ChangeScreen(new MenuScreen());
             }
         }
@@ -137,6 +147,8 @@ namespace FrivoloCo.Screens.Play
                 hasPlayedDontFireMe = true;
                 Game.Audio.PlayEffect("Assets/Gameplay/Ian/dontfiremepls.wav", true, 1, 0.5f);
             }
+            
+            
         }
     }
 }

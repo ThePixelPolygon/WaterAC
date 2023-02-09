@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrivoloCo.Arcade;
 using Water.Graphics;
 using Water.Graphics.Containers;
 using Water.Graphics.Controls;
@@ -147,29 +148,31 @@ namespace FrivoloCo.Screens.Play
             };
             co.AddChild(Game.AddObject(s5));
 
+            int acYOffset = ArcadeShim.GetInstance().ArcadeConfig.arcadeMode ? 45 : 0;
+            
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.IceTea, State)
             {
-                RelativePosition = new(550, 850, 120, 230)
+                RelativePosition = new(550, 850 - acYOffset, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.FlatWhite, State)
             {
-                RelativePosition = new(690, 850, 120, 230)
+                RelativePosition = new(690, 850 - acYOffset, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.HotChocolate, State)
             {
-                RelativePosition = new(830, 850, 120, 230)
+                RelativePosition = new(830, 850 - acYOffset, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Latte, State)
             {
-                RelativePosition = new(970, 850, 120, 230)
+                RelativePosition = new(970, 850 - acYOffset, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Espresso, State)
             {
-                RelativePosition = new(1110, 850, 120, 230)
+                RelativePosition = new(1110, 850 - acYOffset, 120, 230)
             }));
             co.AddChild(Game.AddObject(new ItemDispenser(ItemType.Cappuccino, State)
             {
-                RelativePosition = new(1250, 850, 120, 230)
+                RelativePosition = new(1250, 850 - acYOffset, 120, 230)
             }));
 
             co.CalculateChildrenPositions();

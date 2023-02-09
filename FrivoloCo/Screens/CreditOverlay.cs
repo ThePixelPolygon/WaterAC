@@ -39,8 +39,8 @@ namespace FrivoloCo.Screens
             
             Game.Input.KeyDown += Input_KeyDown;   
             
-            creditDisplay = new TextBlock(new(0, 0, 100, 60),
-                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 36), "", Color.Black)
+            creditDisplay = new TextBlock(new(0, 0, 100, 40),
+                Game.Fonts.Get("Assets/IBMPLEXSANS-MEDIUM.TTF", 30), "", Color.Black)
             {
                 Layout = Layout.Fill,
                 VerticalTextAlignment = VerticalTextAlignment.Center,
@@ -49,13 +49,13 @@ namespace FrivoloCo.Screens
             
             stackContainer = new UniformStackContainer()
             {
-                RelativePosition = new Rectangle(0, 0, 1920, 60),
+                RelativePosition = new Rectangle(0, 0, 1920, 40),
                 Layout = Layout.AnchorBottom
             };
 
             Box box = new Box()
             {
-                RelativePosition = new(0, 0, 250, 60),
+                RelativePosition = new(0, 0, 250, 40),
                 Color = Color.White * 0.20f,
                 Layout = Layout.AnchorBottom
             };
